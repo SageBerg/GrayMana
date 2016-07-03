@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/SageBerg/GrayMana#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "express": "^4.14.0",
-    "jquery": "^3.0.0"
+    "jquery": "^3.0.0",
+    "qunit": "^0.9.1",
+    "qunitjs": "^2.0.0"
   }
 }
