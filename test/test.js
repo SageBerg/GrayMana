@@ -13,3 +13,11 @@ describe('getRow("1 0")', function() {
     assert.equal(worldGen.getRow("1 0"), "1");
   });
 });
+
+describe('chooseTileCoords', function() {
+  it('should return \'1 1\'', function() {
+    var potentialTiles = new Set();
+    potentialTiles.add("1 1");
+    assert.equal(worldGen.chooseTileCoords(potentialTiles), "1 1");
+  });
+});

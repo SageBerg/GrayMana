@@ -8,6 +8,7 @@ function genMap() {
 
   setSpawns(potentialGrass, gridSize);
   setSpawns(potentialWater, gridSize);
+  //TODO add different spawn rates for tiles
   while (potentialGrass.size > 0 || potentialWater.size > 0) {
     if (potentialGrass.size > 0) {
       addTile(potentialGrass, filled, grid, 1);
@@ -17,15 +18,6 @@ function genMap() {
     }
   }
   return genMapHTML(grid);
-}
-
-function setSpawns(potentialTiles, gridSize) {
-  spawnCount = Math.floor((Math.random() * 10) + 1);
-  for (var i = 0; i < spawnCount; i++) {
-    var spawn = Math.floor(Math.random() * (gridSize - 1)).toString() + " " +
-      Math.floor(Math.random() * (gridSize - 1)).toString();
-    potentialTiles.add(spawn);
-  }
 }
 
 function build_grid(gridSize) {
@@ -39,19 +31,31 @@ function build_grid(gridSize) {
   return grid;
 }
 
-function addTile(potentialTiles, filled, grid, terrain_id_number) {
-  if (potentialTiles.size > 0) {
-    var tileCoords = chooseTileCoords(potentialTiles);
-    potentialTiles.delete(tileCoords);
-    grid = addTileNumberToGrid(grid, terrain_id_number, tileCoords);
-    filled.add(tileCoords);
-    addPotentials(grid.length, filled, tileCoords, potentialTiles);
+//TODO replace this hardcoding with user supplied parameters
+function setSpawns(potentialTiles, gridSize) {
+  spawnCount = randInt(10) + 1;
+  for (var i = 0; i < spawnCount; i++) {
+    var spawn = randInt(gridSize - 1).toString() + " " +
+      randInt(gridSize - 1).toString();
+    potentialTiles.add(spawn);
   }
+}
+
+function randInt(upperBound) {
+  return Math.floor(Math.random() * upperBound);
+}
+
+function addTile(potentialTiles, filled, grid, terrain_id_number) {
+  var tileCoords = chooseTileCoords(potentialTiles);
+  potentialTiles.delete(tileCoords);
+  grid = addTileNumberToGrid(grid, terrain_id_number, tileCoords);
+  filled.add(tileCoords);
+  addPotentials(grid.length, filled, tileCoords, potentialTiles);
 }
 
 function chooseTileCoords(potentialTiles) {
   size = potentialTiles.size;
-  index = Math.floor(Math.random() * size);
+  index = randInt(size);
   var i = 0;
   for (tileCoords of potentialTiles) {
     if (i === index) {
@@ -66,7 +70,6 @@ function addTileNumberToGrid(grid, tileNumber, tileCoords) {
   return grid;
 }
 
-
 function getRow(coords) {
   return parseInt(coords.split(" ")[0])
 }
@@ -78,33 +81,39 @@ function getCol(coords) {
 function addPotentials(gridSize, filled, tileCoords, potentialTiles) {
   var row = getRow(tileCoords);
   var col = getCol(tileCoords);
-  if (!filled.has((row + 1).toString() + " " + col.toString()) && row + 1 < gridSize) {
-    potentialTiles.add((row + 1).toString() + " " + col.toString());
+
+  var moves = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  for (move of moves) {
+    var modCoords = coordInc(row, col, move[0], move[1])
+    addPotential(modCoords, filled, gridSize, potentialTiles);
   }
-  if (!filled.has((row - 1).toString() + " " + col.toString()) && row - 1 >= 0) {
-    potentialTiles.add((row - 1).toString() + " " + col.toString());
-  }
-  if (!filled.has(row.toString() + " " + (col + 1).toString()) && col + 1 < gridSize) {
-    potentialTiles.add(row.toString() + " " + (col + 1).toString());
-  }
-  if (!filled.has(row.toString() + " " + (col - 1).toString()) && col - 1 >= 0) {
-    potentialTiles.add(row.toString() + " " + (col - 1).toString());
+}
+
+function coordInc(row, col, rowMod, colMod) {
+  return (row + rowMod).toString() + " " + (col + colMod).toString();
+}
+
+function addPotential(modCoords, filled, gridSize, potentialTiles) {
+  if (!filled.has(modCoords) && getRow(modCoords) >= 0 &&
+                                getRow(modCoords) < gridSize &&
+                                getCol(modCoords) >= 0 &&
+                                getCol(modCoords) < gridSize) {
+    potentialTiles.add(modCoords);
   }
 }
 
 function genMapHTML(grid) {
   mapHTML = "";
+  var terrainCodesToNames = {
+    0: 'water', 1: 'grass'
+  };
   for (row of grid) {
-    for (item of row) {
-      switch (item) {
-        case 0:
-          mapHTML += "<div class='water'></div>";
-          break;
-        case 1:
-          mapHTML += "<div class='grass'></div>";
-          break;
-        default:
-          mapHTML += "<div class='tile'>n</div>"
+    for (terrainCode of row) {
+      var terrain = terrainCodesToNames[terrainCode];
+      if (terrain !== 'undefined') {
+        mapHTML += "<div class='" + terrain + "'></div>"
+      } else {
+        mapHTML += "<div class='tile'>n</div>"
       }
     }
   }
@@ -112,5 +121,7 @@ function genMapHTML(grid) {
 }
 
 exports.addTileNumberToGrid = addTileNumberToGrid;
+exports.chooseTileCoords = chooseTileCoords;
 exports.genMap = genMap;
+exports.getMapHTML = genMapHTML;
 exports.getRow = getRow;
