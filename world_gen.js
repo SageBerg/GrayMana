@@ -3,12 +3,16 @@ function genMap() {
   grid = build_grid(gridSize);
 
   filled = new Set();
-  potentialWater = new Set();
-  potentialGrass = new Set();
-  setSpawns(potentialGrass, gridSize);
-  setSpawns(potentialWater, gridSize);
-  populateMap(potentialGrass, potentialWater, filled, grid);
+  potentialTerrains = {"water": new Set(), "grass": new Set(),
+    "sand": new Set()};
 
+  for (var key in potentialTerrains) {
+    if (potentialTerrains.hasOwnProperty(key)) {
+       setSpawns(potentialTerrains[key], gridSize);
+    }
+  }
+
+  populateMap(potentialTerrains['grass'], potentialTerrains['water'], filled, grid);
   return genMapHTML(grid);
 }
 
