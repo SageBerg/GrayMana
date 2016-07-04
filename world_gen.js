@@ -5,18 +5,10 @@ function genMap() {
   filled = new Set();
   potentialWater = new Set();
   potentialGrass = new Set();
-
   setSpawns(potentialGrass, gridSize);
   setSpawns(potentialWater, gridSize);
-  //TODO add different spawn rates for tiles
-  while (potentialGrass.size > 0 || potentialWater.size > 0) {
-    if (potentialGrass.size > 0) {
-      addTile(potentialGrass, filled, grid, 1);
-    }
-    if (potentialWater.size > 0) {
-      addTile(potentialWater, filled, grid, 0);
-    }
-  }
+  populateMap(potentialGrass, potentialWater, filled, grid);
+
   return genMapHTML(grid);
 }
 
@@ -31,13 +23,25 @@ function build_grid(gridSize) {
   return grid;
 }
 
-//TODO replace this hardcoding with user supplied parameters
+//TODO replace this hardcoding with user-supplied parameters
 function setSpawns(potentialTiles, gridSize) {
   spawnCount = randInt(10) + 1;
   for (var i = 0; i < spawnCount; i++) {
     var spawn = randInt(gridSize - 1).toString() + " " +
       randInt(gridSize - 1).toString();
     potentialTiles.add(spawn);
+  }
+}
+
+//TODO add different spawn rates for tiles and replace hardcoding
+function populateMap(potentialGrass, potentialWater, filled, grid) {
+  while (potentialGrass.size > 0 || potentialWater.size > 0) {
+    if (potentialGrass.size > 0) {
+      addTile(potentialGrass, filled, grid, 1);
+    }
+    if (potentialWater.size > 0) {
+      addTile(potentialWater, filled, grid, 0);
+    }
   }
 }
 
@@ -123,5 +127,5 @@ function genMapHTML(grid) {
 exports.addTileNumberToGrid = addTileNumberToGrid;
 exports.chooseTileCoords = chooseTileCoords;
 exports.genMap = genMap;
-exports.getMapHTML = genMapHTML;
+exports.genMapHTML = genMapHTML;
 exports.getRow = getRow;

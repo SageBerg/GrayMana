@@ -21,3 +21,15 @@ describe('chooseTileCoords', function() {
     assert.equal(worldGen.chooseTileCoords(potentialTiles), "1 1");
   });
 });
+
+describe('genMapHTML', function() {
+  it('should return \'<div class=\'grass\'></div>\'', function() {
+    assert.equal(worldGen.genMapHTML([[0]]), '<div class=\'water\'></div>');
+  });
+});
+
+describe('genMapHTML', function() {
+  it('should return \'<div class=\'water\'></div>\'', function() {
+    assert.equal(worldGen.genMapHTML([[1]]), '<div class=\'grass\'></div>');
+  });
+});
