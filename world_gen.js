@@ -5,14 +5,12 @@ function genMap() {
   filled = new Set();
   potentialTerrains = {"water": new Set(), "grass": new Set(),
     "sand": new Set()};
-
   for (var key in potentialTerrains) {
     if (potentialTerrains.hasOwnProperty(key)) {
        setSpawns(potentialTerrains[key], gridSize);
     }
   }
-
-  populateMap(potentialTerrains['grass'], potentialTerrains['water'], filled, grid);
+  populateMap(potentialTerrains, filled, grid);
   return genMapHTML(grid);
 }
 
@@ -37,16 +35,30 @@ function setSpawns(potentialTiles, gridSize) {
   }
 }
 
-//TODO add different spawn rates for tiles and replace hardcoding
-function populateMap(potentialGrass, potentialWater, filled, grid) {
-  while (potentialGrass.size > 0 || potentialWater.size > 0) {
-    if (potentialGrass.size > 0) {
-      addTile(potentialGrass, filled, grid, 1);
+function populateMap(potentials, filled, grid) {
+  var terrainNamesToCodes = {
+    'water': 0, 'grass': 1, 'sand': 2
+  };
+  while (potentialsRemaining(potentials)) {
+    for (var key in potentials) {
+      if (potentials.hasOwnProperty(key)) {
+        if (potentials[key].size > 0) {
+          addTile(potentials[key], filled, grid, terrainNamesToCodes[key]);
+        }
+      }
     }
-    if (potentialWater.size > 0) {
-      addTile(potentialWater, filled, grid, 0);
+  } //end while
+}
+
+function potentialsRemaining(potentials) {
+  for (var key in potentials) {
+    if (potentials.hasOwnProperty(key)) {
+      if (potentials[key].size > 0) {
+        return true;
+      }
     }
   }
+  return false;
 }
 
 function randInt(upperBound) {
@@ -113,7 +125,7 @@ function addPotential(modCoords, filled, gridSize, potentialTiles) {
 function genMapHTML(grid) {
   mapHTML = "";
   var terrainCodesToNames = {
-    0: 'water', 1: 'grass'
+    0: 'water', 1: 'grass', 2: 'sand'
   };
   for (row of grid) {
     for (terrainCode of row) {

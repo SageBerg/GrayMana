@@ -4,7 +4,10 @@ body {
 .grass {
   background-color: #0e2; }
 
-.tile, .grass, .water {
+.sand {
+  background-color: #fd4; }
+
+.tile, .grass, .sand, .water {
   display: inline-block;
   height: 10px;
   width: 10px; }
