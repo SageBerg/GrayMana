@@ -11,7 +11,7 @@ function genMap() {
     }
   }
   populateMap(potentialTerrains, filled, grid);
-  return genMapHTML(grid);
+  return grid;
 }
 
 function build_grid(gridSize) {
@@ -120,24 +120,6 @@ function addPotential(modCoords, filled, gridSize, potentialTiles) {
                                 getCol(modCoords) < gridSize) {
     potentialTiles.add(modCoords);
   }
-}
-
-function genMapHTML(grid) {
-  mapHTML = "";
-  var terrainCodesToNames = {
-    0: 'water', 1: 'grass', 2: 'sand'
-  };
-  for (row of grid) {
-    for (terrainCode of row) {
-      var terrain = terrainCodesToNames[terrainCode];
-      if (terrain !== 'undefined') {
-        mapHTML += "<div class='" + terrain + "'></div>"
-      } else {
-        mapHTML += "<div class='tile'>n</div>"
-      }
-    }
-  }
-  return mapHTML;
 }
 
 exports.addTileNumberToGrid = addTileNumberToGrid;
