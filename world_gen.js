@@ -125,5 +125,4 @@ function addPotential(modCoords, filled, gridSize, potentialTiles) {
 exports.addTileNumberToGrid = addTileNumberToGrid;
 exports.chooseTileCoords = chooseTileCoords;
 exports.genMap = genMap;
-exports.genMapHTML = genMapHTML;
 exports.getRow = getRow;
