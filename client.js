@@ -3,14 +3,20 @@ var CURRENT_CHUNK = {"row": 49, "col": 49};
 var CURRENT_BLOCK = {"row": 0, "col": 0};
 var CHUNKS = [];
 for (var i = 0; i < CHUNK_SIZE; i++) {
-  CHUNKS.push([]);
+  var rowOfChunks = [];
+  CHUNKS.push(rowOfChunks);
   for (var j = 0; j < CHUNK_SIZE; j++) {
-    rowOfBlocks = [];
-    CHUNKS[CHUNKS.length - 1].push(rowOfBlocks);
+    gridOfBlocks = null;
+    CHUNKS[CHUNKS.length - 1].push(gridOfBlocks);
   }
 }
 
-bindKeys();
+setup();
+
+function setup() {
+  loadChunk();
+  bindKeys();
+}
 
 function bindKeys() {
   $(document).keydown(function(event) {
@@ -38,11 +44,10 @@ function bindKeys() {
   });
 }
 
-
 function move(rowInc, colInc) {
   changeCurrentBlock(rowInc, colInc);
-
-  //rerender the view
+  loadChunk();
+  renderMap();
 }
 
 function changeCurrentBlock(row, col) {
@@ -65,14 +70,38 @@ function changeCurrentChunk(rowOrCol) {
   }
 }
 
-$.get("map.json", handleChunk);
-
-function stichMaps() {
-  if (true) {
+function loadChunk() {
+  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
+    console.log("fetching chunk");
+    $.get("map.json", handleChunk);
   }
 }
 
-// should put the new chunk into CHUNKS at the correct coords
 function handleChunk(res) {
-  $("#map").html(res);
+  var grid = res;
+  CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] = grid;
+  renderMap();
+}
+
+function genMapHTML(grid) {
+  mapHTML = "";
+  var terrainCodesToNames = {
+    0: 'water', 1: 'grass', 2: 'sand'
+  };
+  for (row of grid) {
+    for (terrainCode of row) {
+      var terrain = terrainCodesToNames[terrainCode];
+      if (terrain !== 'undefined') {
+        mapHTML += "<div class='" + terrain + "'></div>"
+      } else {
+        mapHTML += "<div class='tile'>n</div>"
+      }
+    }
+  }
+  return mapHTML;
+}
+
+function renderMap() {
+  var grid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
+  $("#map").html(genMapHTML(grid));
 }
