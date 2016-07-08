@@ -88,15 +88,23 @@ function genMapHTML(grid) {
   var terrainCodesToNames = {
     0: 'water', 1: 'grass', 2: 'sand'
   };
+  var r = 0;
   for (row of grid) {
+    var c = 0;
     for (terrainCode of row) {
       var terrain = terrainCodesToNames[terrainCode];
       if (terrain !== 'undefined') {
-        mapHTML += "<div class='" + terrain + "'></div>"
+        if (r === CURRENT_BLOCK.row && c === CURRENT_BLOCK.col) {
+          mapHTML += "<div class='playerCharacter'></div>"
+        } else {
+          mapHTML += "<div class='" + terrain + "'></div>"
+        }
       } else {
         mapHTML += "<div class='tile'>n</div>"
       }
+      c++;
     }
+    r++;
   }
   return mapHTML;
 }

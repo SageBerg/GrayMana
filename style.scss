@@ -7,6 +7,11 @@ body {
   background-color: #0e2;
 }
 
+.playerCharacter {
+  @extend .tile;
+  background-color: chocolate;
+}
+
 .sand {
   @extend .tile;
   background-color: #fd4;
