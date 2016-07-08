@@ -1,9 +1,10 @@
+var CHUNK_SIZE = 100;
 var CURRENT_CHUNK = {"row": 49, "col": 49};
 var CURRENT_BLOCK = {"row": 0, "col": 0};
 var CHUNKS = [];
-for (var i = 0; i < 100; i++) {
+for (var i = 0; i < CHUNK_SIZE; i++) {
   CHUNKS.push([]);
-  for (var j = 0; j < 100; j++) {
+  for (var j = 0; j < CHUNK_SIZE; j++) {
     rowOfBlocks = [];
     CHUNKS[CHUNKS.length - 1].push(rowOfBlocks);
   }
@@ -40,23 +41,29 @@ function bindKeys() {
 
 function move(rowInc, colInc) {
   changeCurrentBlock(rowInc, colInc);
-  //get a new chunk if needed
+
   //rerender the view
 }
 
 function changeCurrentBlock(row, col) {
   CURRENT_BLOCK.row += row;
   CURRENT_BLOCK.col += col;
-  if (CURRENT_BLOCK.row < 0) {
+  changeCurrentChunk("row");
+  changeCurrentChunk("col");
+  console.log("CURRENT_BLOCK: " + CURRENT_BLOCK.row + " " + CURRENT_BLOCK.col);
+  console.log("CURRENT_CHUNK: " + CURRENT_CHUNK.row + " " + CURRENT_CHUNK.col);
+  console.log("\n");
+}
 
+function changeCurrentChunk(rowOrCol) {
+  if (CURRENT_BLOCK[rowOrCol] < 0) {
+    CURRENT_CHUNK[rowOrCol] -= 1;
+    CURRENT_BLOCK[rowOrCol] = CHUNK_SIZE - 1;
+  } else if (CURRENT_BLOCK[rowOrCol] > CHUNK_SIZE - 1) {
+    CURRENT_CHUNK[rowOrCol] += 1;
+    CURRENT_BLOCK[rowOrCol] = 0;
   }
-  console.log(CURRENT_BLOCK);
 }
-
-function changeCurrentChunk(row, col) {
-
-}
-
 
 $.get("map.json", handleChunk);
 
