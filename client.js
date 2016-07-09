@@ -14,8 +14,9 @@ for (var i = 0; i < CHUNK_SIZE; i++) {
 setup();
 
 function setup() {
-  loadChunk();
+  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
   bindKeys();
+  setTimeout(renderMap, 700);
 }
 
 function bindKeys() {
@@ -46,8 +47,15 @@ function bindKeys() {
 
 function move(rowInc, colInc) {
   changeCurrentBlock(rowInc, colInc);
-  loadChunk();
-  renderMap();
+  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
+    loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
+    setTimeout(function() {
+      //$("#map").html(genMapHTML(buildBlankGrid()));
+      renderMap();
+    }, 700);
+  } else {
+    renderMap();
+  }
 }
 
 function changeCurrentBlock(row, col) {
@@ -55,9 +63,6 @@ function changeCurrentBlock(row, col) {
   CURRENT_BLOCK.col += col;
   changeCurrentChunk("row");
   changeCurrentChunk("col");
-  console.log("CURRENT_BLOCK: " + CURRENT_BLOCK.row + " " + CURRENT_BLOCK.col);
-  console.log("CURRENT_CHUNK: " + CURRENT_CHUNK.row + " " + CURRENT_CHUNK.col);
-  console.log("\n");
 }
 
 function changeCurrentChunk(rowOrCol) {
@@ -70,9 +75,8 @@ function changeCurrentChunk(rowOrCol) {
   }
 }
 
-function loadChunk() {
-  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
-    console.log("fetching chunk");
+function loadChunk(row, col) {
+  if (CHUNKS[CURRENT_CHUNK["row"]][CURRENT_CHUNK["col"]] === null) {
     $.get("map.json", handleChunk);
   }
 }
@@ -80,7 +84,10 @@ function loadChunk() {
 function handleChunk(res) {
   var grid = res;
   CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] = grid;
-  renderMap();
+}
+
+function renderMap() {
+  $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
 }
 
 function genMapHTML(grid) {
@@ -109,7 +116,42 @@ function genMapHTML(grid) {
   return mapHTML;
 }
 
-function renderMap() {
-  var grid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
-  $("#map").html(genMapHTML(grid));
+function stitchChunks(grid) {
+  var row = CURRENT_BLOCK.row;
+  var col = CURRENT_BLOCK.col;
+  var currentGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
+  loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col);
+  var downGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col];
+  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
+  var rightGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1];
+  loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col + 1);
+  var downRightGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1];
+
+  for (var i = 0; i < CHUNK_SIZE; i++) {
+    for (var j = 0; j < CHUNK_SIZE; j++) {
+      var adjustedRow = row + i;
+      var adjustedCol = col + j
+      if (adjustedRow < CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
+        grid[i][j] = currentGrid[adjustedRow][adjustedCol];
+      } else if (adjustedRow >= CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
+        grid[i][j] = downGrid[adjustedRow - CHUNK_SIZE][adjustedCol];
+      } else if (adjustedRow < CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
+        grid[i][j] = rightGrid[adjustedRow][adjustedCol - CHUNK_SIZE];
+      } else if (adjustedRow >= CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
+        grid[i][j] = downRightGrid[adjustedRow - CHUNK_SIZE][adjustedCol - CHUNK_SIZE];
+      }
+    } //end for i loop
+  } //end for j loop
+  return grid;
+}
+
+function buildBlankGrid() {
+  var grid = [];
+  for (var i = 0; i < CHUNK_SIZE; i++) {
+    grid.push([]);
+    for (var j = 0; j < CHUNK_SIZE; j++) {
+      grid[i].push(null);
+    }
+  }
+  return grid;
 }
