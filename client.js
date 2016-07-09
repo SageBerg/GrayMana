@@ -50,11 +50,23 @@ function move(rowInc, colInc) {
   if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
     loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
     setTimeout(function() {
-      //$("#map").html(genMapHTML(buildBlankGrid()));
-      renderMap();
+      waitForStichPrep();
     }, 700);
   } else {
-    renderMap();
+      waitForStichPrep();
+  }
+}
+
+function waitForStichPrep() {
+  var grid = stitchChunksPrep(buildBlankGrid())
+  if (CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col] === null ||
+      CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
+      CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1] === null) {
+    setTimeout(function() {
+      $("#map").html(genMapHTML(grid));
+    }, 1000);
+  } else {
+    $("#map").html(genMapHTML(grid));
   }
 }
 
@@ -76,14 +88,12 @@ function changeCurrentChunk(rowOrCol) {
 }
 
 function loadChunk(row, col) {
-  if (CHUNKS[CURRENT_CHUNK["row"]][CURRENT_CHUNK["col"]] === null) {
-    $.get("map.json", handleChunk);
+  if (CHUNKS[row][col] === null) {
+    $.get("map.json", function(res) {
+      CHUNKS[row][col] = res;
+      console.log("loaded chunk");
+    });
   }
-}
-
-function handleChunk(res) {
-  var grid = res;
-  CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] = grid;
 }
 
 function renderMap() {
@@ -101,7 +111,7 @@ function genMapHTML(grid) {
     for (terrainCode of row) {
       var terrain = terrainCodesToNames[terrainCode];
       if (terrain !== 'undefined') {
-        if (r === CURRENT_BLOCK.row && c === CURRENT_BLOCK.col) {
+        if (r === 49 && c === 49) { //draw player in center of map
           mapHTML += "<div class='playerCharacter'></div>"
         } else {
           mapHTML += "<div class='" + terrain + "'></div>"
@@ -116,17 +126,29 @@ function genMapHTML(grid) {
   return mapHTML;
 }
 
+function stitchChunksPrep(grid) {
+  if (CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col] === null ||
+      CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
+      CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1] === null) {
+    loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col);
+    loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
+    loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col + 1);
+    setTimeout(function() {
+      stitchChunks(grid);
+    }, 1000);
+  } else {
+    stitchChunks(grid);
+  }
+  return grid;
+}
+
 function stitchChunks(grid) {
   var row = CURRENT_BLOCK.row;
   var col = CURRENT_BLOCK.col;
   var currentGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
-  loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col);
   var downGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col];
-  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
   var rightGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1];
-  loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col + 1);
   var downRightGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1];
-
   for (var i = 0; i < CHUNK_SIZE; i++) {
     for (var j = 0; j < CHUNK_SIZE; j++) {
       var adjustedRow = row + i;
