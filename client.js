@@ -1,5 +1,6 @@
-var CHUNK_SIZE = 100;
-var CURRENT_CHUNK = {"row": 49, "col": 49};
+var CHUNK_SIZE = 20;
+var CURRENT_CHUNK = {"row": Math.floor(CHUNK_SIZE / 2),
+  "col": Math.floor(CHUNK_SIZE / 2)};
 var CURRENT_BLOCK = {"row": 0, "col": 0};
 var CHUNKS = [];
 for (var i = 0; i < CHUNK_SIZE; i++) {
@@ -97,6 +98,7 @@ function loadChunk(row, col) {
 }
 
 function renderMap() {
+  $("#map").css("width", CHUNK_SIZE * 10);
   $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
 }
 
@@ -111,7 +113,7 @@ function genMapHTML(grid) {
     for (terrainCode of row) {
       var terrain = terrainCodesToNames[terrainCode];
       if (terrain !== 'undefined') {
-        if (r === 49 && c === 49) { //draw player in center of map
+        if (r === Math.floor(CHUNK_SIZE / 2) && c === Math.floor(CHUNK_SIZE / 2)) { //draw player in center of map
           mapHTML += "<div class='playerCharacter'></div>"
         } else {
           mapHTML += "<div class='" + terrain + "'></div>"
