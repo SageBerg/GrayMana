@@ -1,4 +1,4 @@
-var CHUNK_SIZE = 20;
+var CHUNK_SIZE = 40;
 var CURRENT_CHUNK = {"row": Math.floor(CHUNK_SIZE / 2),
   "col": Math.floor(CHUNK_SIZE / 2)};
 var CURRENT_BLOCK = {"row": 0, "col": 0};
@@ -47,16 +47,21 @@ function bindKeys() {
 }
 
 function move(rowInc, colInc) {
-  changeCurrentBlock(rowInc, colInc);
-  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
-    loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
-    setTimeout(function() {
-      console.log("slow because of loading chunks");
-      waitForStichPrep();
-    }, 700);
+  if (chunkBoundsCheck(CURRENT_CHUNK.row + rowInc,
+    CURRENT_CHUNK.col + colInc)) {
+    changeCurrentBlock(rowInc, colInc);
+    if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
+      loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
+      setTimeout(function() {
+        console.log("slow because of loading chunks");
+        waitForStichPrep();
+      }, 700);
+    } else {
+        waitForStichPrep();
+    }
   } else {
-      waitForStichPrep();
-  }
+    console.log("you can't go off the edge of the map");
+  } //end bounds check if
 }
 
 function waitForStichPrep() {
@@ -113,7 +118,8 @@ function genMapHTML(grid) {
     for (terrainCode of row) {
       var terrain = terrainCodesToNames[terrainCode];
       if (terrain !== 'undefined') {
-        if (r === Math.floor(CHUNK_SIZE / 2) && c === Math.floor(CHUNK_SIZE / 2)) { //draw player in center of map
+        if (r === Math.floor(CHUNK_SIZE / 2) &&
+            c === Math.floor(CHUNK_SIZE / 2)) { //draw player in center of map
           mapHTML += "<div class='playerCharacter'></div>"
         } else {
           mapHTML += "<div class='" + terrain + "'></div>"
@@ -162,7 +168,8 @@ function stitchChunks(grid) {
       } else if (adjustedRow < CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
         grid[i][j] = rightGrid[adjustedRow][adjustedCol - CHUNK_SIZE];
       } else if (adjustedRow >= CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
-        grid[i][j] = downRightGrid[adjustedRow - CHUNK_SIZE][adjustedCol - CHUNK_SIZE];
+        grid[i][j] =
+          downRightGrid[adjustedRow - CHUNK_SIZE][adjustedCol - CHUNK_SIZE];
       }
     } //end for i loop
   } //end for j loop
@@ -178,4 +185,8 @@ function buildBlankGrid() {
     }
   }
   return grid;
+}
+
+function chunkBoundsCheck(row, col) {
+  return row >= 0 && row < CHUNK_SIZE - 1 && col >= 0 && col < CHUNK_SIZE - 1;
 }
