@@ -1,5 +1,5 @@
 function genMap() {
-  gridSize = 20;
+  gridSize = 40;
   grid = build_grid(gridSize);
 
   filled = new Set();
