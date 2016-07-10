@@ -128,12 +128,12 @@ function genMapHTML(grid) {
 }
 
 function stitchChunksPrep(grid) {
-  if (CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col] === null ||
+  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null ||
       CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
-      CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1] === null) {
-    loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col);
+      CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
+    loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col);
     loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
-    loadChunk(CURRENT_CHUNK.row - 1, CURRENT_CHUNK.col + 1);
+    loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1);
     setTimeout(function() {
       stitchChunks(grid);
     }, 1000);
