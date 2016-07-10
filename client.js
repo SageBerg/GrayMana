@@ -92,7 +92,6 @@ function loadChunk(row, col) {
   if (CHUNKS[row][col] === null) {
     $.get("map.json", function(res) {
       CHUNKS[row][col] = res;
-      console.log("loaded chunk");
     });
   }
 }
@@ -148,13 +147,13 @@ function stitchChunks(grid) {
   var row = CURRENT_BLOCK.row;
   var col = CURRENT_BLOCK.col;
   var currentGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
-  var downGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col];
+  var downGrid = CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col];
   var rightGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1];
-  var downRightGrid = CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1];
+  var downRightGrid = CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1];
   for (var i = 0; i < CHUNK_SIZE; i++) {
     for (var j = 0; j < CHUNK_SIZE; j++) {
-      var adjustedRow = row + i;
-      var adjustedCol = col + j
+      var adjustedRow = i + row;
+      var adjustedCol = j + col;
       if (adjustedRow < CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
         grid[i][j] = currentGrid[adjustedRow][adjustedCol];
       } else if (adjustedRow >= CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
