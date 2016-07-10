@@ -51,6 +51,7 @@ function move(rowInc, colInc) {
   if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
     loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
     setTimeout(function() {
+      console.log("slow because of loading chunks");
       waitForStichPrep();
     }, 700);
   } else {
@@ -60,9 +61,9 @@ function move(rowInc, colInc) {
 
 function waitForStichPrep() {
   var grid = stitchChunksPrep(buildBlankGrid())
-  if (CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col] === null ||
+  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null ||
       CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
-      CHUNKS[CURRENT_CHUNK.row - 1][CURRENT_CHUNK.col + 1] === null) {
+      CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
     setTimeout(function() {
       $("#map").html(genMapHTML(grid));
     }, 1000);
