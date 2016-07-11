@@ -1,10 +1,19 @@
-function genMap() {
+function genMap(presetPotentialTiles) {
   gridSize = 40;
-  grid = build_grid(gridSize);
+  var grid = build_grid(gridSize);
 
-  filled = new Set();
-  potentialTerrains = {"water": new Set(), "grass": new Set(),
+  console.log("#############");
+  console.log(presetPotentialTiles['list[]']);
+  console.log("#############");
+
+  var filled = new Set();
+  var potentialTerrains = {"water": new Set(), "grass": new Set(),
     "sand": new Set()};
+  try {
+    loadPresetPotentialTiles(presetPotentialTiles['list[]'], potentialTerrains);
+  } catch (e) {
+    console.log(e);
+  }
   for (var key in potentialTerrains) {
     if (potentialTerrains.hasOwnProperty(key)) {
        setSpawns(potentialTerrains[key], gridSize);
@@ -25,9 +34,21 @@ function build_grid(gridSize) {
   return grid;
 }
 
+function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
+  console.log(potentialTerrains["water"]);
+  for (var i = 0; i < presetPotentialTiles.length; i++) {
+    var parsedPresetPotentialTiles = presetPotentialTiles[i].split(" ");
+    var row = parsedPresetPotentialTiles[0];
+    var col = parsedPresetPotentialTiles[1];
+    var terrain = parsedPresetPotentialTiles[2];
+    potentialTerrains[terrain].add(row + " " + col);
+  }
+  console.log(potentialTerrains["water"]);
+}
+
 //TODO replace this hardcoding with user-supplied parameters
 function setSpawns(potentialTiles, gridSize) {
-  spawnCount = randInt(10) + 1;
+  var spawnCount = randInt(10) + 1;
   for (var i = 0; i < spawnCount; i++) {
     var spawn = randInt(gridSize - 1).toString() + " " +
       randInt(gridSize - 1).toString();

@@ -51,7 +51,8 @@ function move(rowInc, colInc) {
     CURRENT_CHUNK.col + colInc)) {
     changeCurrentBlock(rowInc, colInc);
     if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
-      loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
+      //loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
+      loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
       setTimeout(function() {
         console.log("slow because of loading chunks");
         waitForStichPrep();
@@ -102,6 +103,38 @@ function loadChunk(row, col) {
   }
 }
 
+function loadInfluencedChunk(row, col) {
+  if (CHUNKS[row][col] === null) {
+    var presetPotentialTiles = getPresetPotentialTiles(row, col);
+    $.post("influenced_map.json", presetPotentialTiles, function(res) {
+      CHUNKS[row][col] = res;
+    });
+  }
+}
+
+function getPresetPotentialTiles(row, col) {
+  if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
+    var presetPotentialTiles = {"list": []};
+    var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
+    for (var i = 0; i < relevantRow.length; i++) {
+      switch (relevantRow[i]) {
+        case 0:
+          presetPotentialTiles.list.push("0 " + i + " water");
+          break;
+        case 1:
+          presetPotentialTiles.list.push("0 " + i + " grass");
+          break;
+        case 2:
+          presetPotentialTiles.list.push("0 " + i + " sand");
+          break;
+        default:
+          console.log("error: invalid tilecode " + relevantRow[i] + "found");
+      } //end switch
+    } //end for
+    return presetPotentialTiles;
+  } //end if
+}
+
 function renderMap() {
   $("#map").css("width", CHUNK_SIZE * 10);
   $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
@@ -138,9 +171,14 @@ function stitchChunksPrep(grid) {
   if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null ||
       CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
       CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
+    /*
     loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col);
     loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
     loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1);
+    */
+    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col);
+    loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
+    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1);
     setTimeout(function() {
       stitchChunks(grid);
     }, 1000);
