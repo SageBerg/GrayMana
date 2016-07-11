@@ -116,23 +116,27 @@ function getPresetPotentialTiles(row, col) {
   if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
     var presetPotentialTiles = {"list": []};
     var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
-    for (var i = 0; i < relevantRow.length; i++) {
-      switch (relevantRow[i]) {
-        case 0:
-          presetPotentialTiles.list.push("0 " + i + " water");
-          break;
-        case 1:
-          presetPotentialTiles.list.push("0 " + i + " grass");
-          break;
-        case 2:
-          presetPotentialTiles.list.push("0 " + i + " sand");
-          break;
-        default:
-          console.log("error: invalid tilecode " + relevantRow[i] + "found");
-      } //end switch
-    } //end for
+    addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles);
     return presetPotentialTiles;
   } //end if
+}
+
+function addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles) {
+  for (var i = 0; i < relevantRow.length; i++) {
+    switch (relevantRow[i]) {
+      case 0:
+        presetPotentialTiles.list.push("0 " + i + " water");
+        break;
+      case 1:
+        presetPotentialTiles.list.push("0 " + i + " grass");
+        break;
+      case 2:
+        presetPotentialTiles.list.push("0 " + i + " sand");
+        break;
+      default:
+        console.log("error: invalid tilecode " + relevantRow[i] + "found");
+    } //end switch
+  } //end for
 }
 
 function renderMap() {
