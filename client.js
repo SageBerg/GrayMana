@@ -117,12 +117,13 @@ function getPresetPotentialTiles(row, col) {
 
   if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
     var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
-    addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles);
+    addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
   }
 
   if (row + 1 < CHUNK_SIZE && CHUNKS[row + 1][col] !== null) {
     var relevantRow = CHUNKS[row + 1][col][0];
-    addLowerPresetPotentialTiles(relevantRow, presetPotentialTiles);
+    addPresetPotentialTiles(relevantRow, presetPotentialTiles,
+      "(CHUNK_SIZE - 1).toString() + \" \" + i");
   }
 
   if (col + 1 < CHUNK_SIZE) {
@@ -134,7 +135,8 @@ function getPresetPotentialTiles(row, col) {
         console.log(exception);
       }
     }
-    addLeftPresetPotentialTiles(relevantCol, presetPotentialTiles);
+    addPresetPotentialTiles(relevantCol, presetPotentialTiles,
+      "i + \" \" + (CHUNK_SIZE - 1).toString()");
   }
 
   if (col - 1 >= 0) {
@@ -146,80 +148,26 @@ function getPresetPotentialTiles(row, col) {
         console.log(exception);
       }
     }
-    addRightPresetPotentialTiles(relevantCol, presetPotentialTiles);
+    addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
   }
 
   return presetPotentialTiles;
 }
 
-function addLowerPresetPotentialTiles(relevantRow, presetPotentialTiles) {
-  for (var i = 0; i < relevantRow.length; i++) {
-    switch (relevantRow[i]) {
+function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
+  for (var i = 0; i < tileArray.length; i++) {
+    switch (tileArray[i]) {
       case 0:
-        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " water");
+        presetPotentialTiles.list.push(eval(evalString) + " water");
         break;
       case 1:
-        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " grass");
+        presetPotentialTiles.list.push(eval(evalString) + " grass");
         break;
       case 2:
-        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " sand");
+        presetPotentialTiles.list.push(eval(evalString) + " sand");
         break;
       default:
-        console.log("error: invalid tilecode " + relevantRow[i] + "found");
-    } //end switch
-  } //end for
-}
-
-function addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles) {
-  for (var i = 0; i < relevantRow.length; i++) {
-    switch (relevantRow[i]) {
-      case 0:
-        presetPotentialTiles.list.push("0 " + i + " water");
-        break;
-      case 1:
-        presetPotentialTiles.list.push("0 " + i + " grass");
-        break;
-      case 2:
-        presetPotentialTiles.list.push("0 " + i + " sand");
-        break;
-      default:
-        console.log("error: invalid tilecode " + relevantRow[i] + "found");
-    } //end switch
-  } //end for
-}
-
-function addLeftPresetPotentialTiles(relevantCol, presetPotentialTiles) {
-  for (var i = 0; i < relevantCol.length; i++) {
-    switch (relevantCol[i]) {
-      case 0:
-        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " water");
-        break;
-      case 1:
-        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " grass");
-        break;
-      case 2:
-        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " sand");
-        break;
-      default:
-        console.log("error: invalid tilecode " + relevantCol[i] + "found");
-    } //end switch
-  } //end for
-}
-
-function addRightPresetPotentialTiles(relevantCol, presetPotentialTiles) {
-  for (var i = 0; i < relevantCol.length; i++) {
-    switch (relevantCol[i]) {
-      case 0:
-        presetPotentialTiles.list.push(i + " 0 water");
-        break;
-      case 1:
-        presetPotentialTiles.list.push(i + " 0 grass");
-        break;
-      case 2:
-        presetPotentialTiles.list.push(i + " 0 sand");
-        break;
-      default:
-        console.log("error: invalid tilecode " + relevantCol[i] + "found");
+        console.log("error: invalid tilecode " + tileArray[i] + "found");
     } //end switch
   } //end for
 }
