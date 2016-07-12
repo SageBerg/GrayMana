@@ -15,9 +15,22 @@ for (var i = 0; i < CHUNK_SIZE; i++) {
 setup();
 
 function setup() {
-  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
+  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col, renderMap);
   bindKeys();
-  setTimeout(renderMap, 700);
+}
+
+function loadChunk(row, col, callback) {
+  if (CHUNKS[row][col] === null) {
+    $.get("map.json", function(res) {
+      CHUNKS[row][col] = res;
+      callback(); //can use to render map
+    });
+  }
+}
+
+function renderMap() {
+  $("#map").css("width", CHUNK_SIZE * 10);
+  $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
 }
 
 function bindKeys() {
@@ -57,6 +70,7 @@ function move(rowInc, colInc) {
   if (chunkBoundsCheck(CURRENT_CHUNK.row + rowInc,
     CURRENT_CHUNK.col + colInc)){// && nextBlock !== 0) {
     changeCurrentBlock(rowInc, colInc);
+
     if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
       loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
       setTimeout(function() {
@@ -66,9 +80,30 @@ function move(rowInc, colInc) {
     } else {
         waitForStichPrep();
     }
+
   } else {
-    console.log("you can't go in water or off edge of map");
+    console.log("move not permitted");
   } //end bounds check if
+}
+
+function chunkBoundsCheck(row, col) {
+  return row >= 0 && row < CHUNK_SIZE - 1 && col >= 0 && col < CHUNK_SIZE - 1;
+}
+
+function changeCurrentBlock(row, col) {
+  CURRENT_BLOCK.row += row;
+  CURRENT_BLOCK.col += col;
+  changeCurrentChunk("row");
+  changeCurrentChunk("col");
+}
+
+function loadInfluencedChunk(row, col) {
+  if (CHUNKS[row][col] === null) {
+    var presetPotentialTiles = getPresetPotentialTiles(row, col);
+    $.post("influenced_map.json", presetPotentialTiles, function(res) {
+      CHUNKS[row][col] = res;
+    });
+  }
 }
 
 function waitForStichPrep() {
@@ -84,13 +119,6 @@ function waitForStichPrep() {
   }
 }
 
-function changeCurrentBlock(row, col) {
-  CURRENT_BLOCK.row += row;
-  CURRENT_BLOCK.col += col;
-  changeCurrentChunk("row");
-  changeCurrentChunk("col");
-}
-
 function changeCurrentChunk(rowOrCol) {
   if (CURRENT_BLOCK[rowOrCol] < 0) {
     CURRENT_CHUNK[rowOrCol] -= 1;
@@ -98,23 +126,6 @@ function changeCurrentChunk(rowOrCol) {
   } else if (CURRENT_BLOCK[rowOrCol] > CHUNK_SIZE - 1) {
     CURRENT_CHUNK[rowOrCol] += 1;
     CURRENT_BLOCK[rowOrCol] = 0;
-  }
-}
-
-function loadChunk(row, col) {
-  if (CHUNKS[row][col] === null) {
-    $.get("map.json", function(res) {
-      CHUNKS[row][col] = res;
-    });
-  }
-}
-
-function loadInfluencedChunk(row, col) {
-  if (CHUNKS[row][col] === null) {
-    var presetPotentialTiles = getPresetPotentialTiles(row, col);
-    $.post("influenced_map.json", presetPotentialTiles, function(res) {
-      CHUNKS[row][col] = res;
-    });
   }
 }
 
@@ -176,11 +187,6 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
         console.log("error: invalid tilecode " + tileArray[i] + "found");
     } //end switch
   } //end for
-}
-
-function renderMap() {
-  $("#map").css("width", CHUNK_SIZE * 10);
-  $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
 }
 
 function genMapHTML(grid) {
@@ -261,8 +267,4 @@ function buildBlankGrid() {
     }
   }
   return grid;
-}
-
-function chunkBoundsCheck(row, col) {
-  return row >= 0 && row < CHUNK_SIZE - 1 && col >= 0 && col < CHUNK_SIZE - 1;
 }
