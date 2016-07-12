@@ -113,16 +113,40 @@ function loadInfluencedChunk(row, col) {
 }
 
 function getPresetPotentialTiles(row, col) {
+  var presetPotentialTiles = {"list": []};
+
   if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
-    var presetPotentialTiles = {"list": []};
     var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
     addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles);
   }
 
   if (row + 1 < CHUNK_SIZE && CHUNKS[row + 1][col] !== null) {
-    var presetPotentialTiles = {"list": []};
     var relevantRow = CHUNKS[row + 1][col][0];
     addLowerPresetPotentialTiles(relevantRow, presetPotentialTiles);
+  }
+
+  if (col + 1 < CHUNK_SIZE) {
+    var relevantCol = [];
+    for (var i = 0; i < CHUNK_SIZE; i++) {
+      try {
+        relevantCol.push(CHUNKS[row][col + 1][i][0]);
+      } catch(exception) {
+        console.log(exception);
+      }
+    }
+    addLeftPresetPotentialTiles(relevantCol, presetPotentialTiles);
+  }
+
+  if (col - 1 >= 0) {
+    var relevantCol = [];
+    for (var i = 0; i < CHUNK_SIZE; i++) {
+      try {
+        relevantCol.push(CHUNKS[row][col - 1][i][CHUNK_SIZE - 1]);
+      } catch(exception) {
+        console.log(exception);
+      }
+    }
+    addRightPresetPotentialTiles(relevantCol, presetPotentialTiles);
   }
 
   return presetPotentialTiles;
@@ -160,6 +184,42 @@ function addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles) {
         break;
       default:
         console.log("error: invalid tilecode " + relevantRow[i] + "found");
+    } //end switch
+  } //end for
+}
+
+function addLeftPresetPotentialTiles(relevantCol, presetPotentialTiles) {
+  for (var i = 0; i < relevantCol.length; i++) {
+    switch (relevantCol[i]) {
+      case 0:
+        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " water");
+        break;
+      case 1:
+        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " grass");
+        break;
+      case 2:
+        presetPotentialTiles.list.push(i + " " + (CHUNK_SIZE - 1).toString() + " sand");
+        break;
+      default:
+        console.log("error: invalid tilecode " + relevantCol[i] + "found");
+    } //end switch
+  } //end for
+}
+
+function addRightPresetPotentialTiles(relevantCol, presetPotentialTiles) {
+  for (var i = 0; i < relevantCol.length; i++) {
+    switch (relevantCol[i]) {
+      case 0:
+        presetPotentialTiles.list.push(i + " 0 water");
+        break;
+      case 1:
+        presetPotentialTiles.list.push(i + " 0 grass");
+        break;
+      case 2:
+        presetPotentialTiles.list.push(i + " 0 sand");
+        break;
+      default:
+        console.log("error: invalid tilecode " + relevantCol[i] + "found");
     } //end switch
   } //end for
 }
