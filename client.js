@@ -47,11 +47,17 @@ function bindKeys() {
 }
 
 function move(rowInc, colInc) {
+  /*
+  var blockRow = CURRENT_BLOCK.row + Math.floor(CHUNK_SIZE / 2) + rowInc;
+  var blockCol = CURRENT_BLOCK.col + Math.floor(CHUNK_SIZE / 2) + colInc;
+  var nextBlock =
+    CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col][blockRow][blockCol];
+  console.log(nextBlock);
+  */
   if (chunkBoundsCheck(CURRENT_CHUNK.row + rowInc,
-    CURRENT_CHUNK.col + colInc)) {
+    CURRENT_CHUNK.col + colInc)){// && nextBlock !== 0) {
     changeCurrentBlock(rowInc, colInc);
     if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col] === null) {
-      //loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
       loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col);
       setTimeout(function() {
         console.log("slow because of loading chunks");
@@ -61,7 +67,7 @@ function move(rowInc, colInc) {
         waitForStichPrep();
     }
   } else {
-    console.log("you can't go off the edge of the map");
+    console.log("you can't go in water or off edge of map");
   } //end bounds check if
 }
 
@@ -132,7 +138,7 @@ function getPresetPotentialTiles(row, col) {
       try {
         relevantCol.push(CHUNKS[row][col + 1][i][0]);
       } catch(exception) {
-        console.log(exception);
+        //console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles,
@@ -145,7 +151,7 @@ function getPresetPotentialTiles(row, col) {
       try {
         relevantCol.push(CHUNKS[row][col - 1][i][CHUNK_SIZE - 1]);
       } catch(exception) {
-        console.log(exception);
+        //console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
@@ -208,11 +214,6 @@ function stitchChunksPrep(grid) {
   if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null ||
       CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null ||
       CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
-    /*
-    loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col);
-    loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
-    loadChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1);
-    */
     loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col);
     loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1);
     loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1);
