@@ -117,8 +117,33 @@ function getPresetPotentialTiles(row, col) {
     var presetPotentialTiles = {"list": []};
     var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
     addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles);
-    return presetPotentialTiles;
-  } //end if
+  }
+
+  if (row + 1 < CHUNK_SIZE && CHUNKS[row + 1][col] !== null) {
+    var presetPotentialTiles = {"list": []};
+    var relevantRow = CHUNKS[row + 1][col][0];
+    addLowerPresetPotentialTiles(relevantRow, presetPotentialTiles);
+  }
+
+  return presetPotentialTiles;
+}
+
+function addLowerPresetPotentialTiles(relevantRow, presetPotentialTiles) {
+  for (var i = 0; i < relevantRow.length; i++) {
+    switch (relevantRow[i]) {
+      case 0:
+        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " water");
+        break;
+      case 1:
+        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " grass");
+        break;
+      case 2:
+        presetPotentialTiles.list.push((CHUNK_SIZE - 1).toString() + " " + i + " sand");
+        break;
+      default:
+        console.log("error: invalid tilecode " + relevantRow[i] + "found");
+    } //end switch
+  } //end for
 }
 
 function addUpperPresetPotentialTiles(relevantRow, presetPotentialTiles) {
