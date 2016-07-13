@@ -60,9 +60,9 @@ function bindKeys() {
 }
 
 function move(rowInc, colInc) {
-  var chunkRow = CURRENT_CHUNK.row;
-  var chunkCol = CURRENT_CHUNK.col;
-  if (chunkBoundsCheck(chunkRow + rowInc, chunkCol + colInc)) {
+  var chunkRow = CURRENT_CHUNK.row + rowInc;
+  var chunkCol = CURRENT_CHUNK.col + colInc;
+  if (chunkBoundsCheck(chunkRow, chunkCol)) {
     changeCurrentBlock(rowInc, colInc);
     if (CHUNKS[chunkRow][chunkCol] === null) {
       loadInfluencedChunk(chunkRow, chunkCol, stitchChunksPrep);
@@ -117,26 +117,26 @@ function getPresetPotentialTiles(row, col) {
       "(CHUNK_SIZE - 1).toString() + \" \" + i");
   }
 
-  if (col + 1 < CHUNK_SIZE) {
+  if (col + 1 < CHUNK_SIZE && CHUNKS[row][col + 1] !== null) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
       try {
         relevantCol.push(CHUNKS[row][col + 1][i][0]);
       } catch(exception) {
-        //console.log(exception);
+        console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles,
       "i + \" \" + (CHUNK_SIZE - 1).toString()");
   }
 
-  if (col - 1 >= 0) {
+  if (col - 1 >= 0 && CHUNKS[row][col - 1] !== null) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
       try {
         relevantCol.push(CHUNKS[row][col - 1][i][CHUNK_SIZE - 1]);
       } catch(exception) {
-        //console.log(exception);
+        console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
@@ -192,27 +192,26 @@ function genMapHTML(grid) {
 
 function stitchChunksPrep() {
   if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null) {
-    loadDownGrid();
+    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col, loadRightGrid);
+  } else if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null) {
+    loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1, loadDownRightGrid);
+  } else if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
+    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1, stitchChunks);
+  } else {
+    stitchChunks();
   }
-  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null) {
-    loadRightGrid();
-  }
-  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
-    loadDownRightGrid();
-  }
-  stitchChunks();
-}
-
-function loadDownGrid() {
-  loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col, stitchChunks);
 }
 
 function loadRightGrid() {
-  loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1, stitchChunks);
+  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null) {
+    loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1, loadDownRightGrid);
+  }
 }
 
 function loadDownRightGrid() {
-  loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1, stitchChunks);
+  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
+    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1, stitchChunks);
+  }
 }
 
 function stitchChunks() {
@@ -224,10 +223,18 @@ function stitchChunks() {
   var rightGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1];
   var downRightGrid = CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1];
 
-  if (currentGrid === null || downGrid === null || rightGrid === null ||
-      downRightGrid === null) {
-        console.log("too early");
-        return;
+  if (currentGrid === null) {
+    console.log("tried to render currentGrid too early");
+    return;
+  } else if (downGrid === null) {
+    console.log("tried to render downGrid too early");
+    return;
+  } else if (rightGrid === null) {
+    console.log("tried to render rightGrid too early");
+    return;
+  } else if (downRightGrid === null) {
+    console.log("tried to render downRightGrid too early");
+    return;
   }
 
   for (var i = 0; i < CHUNK_SIZE; i++) {
@@ -247,7 +254,6 @@ function stitchChunks() {
     } //end for i loop
   } //end for j loop
   $("#map").html(genMapHTML(grid));
-  //return grid;
 }
 
 function buildBlankGrid() {
