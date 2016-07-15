@@ -91,8 +91,7 @@ function changeCurrentBlock(row, col) {
 function loadInfluencedChunk(chunkCoords, callback) {
   var row = parseInt(chunkCoords.split(" ")[1]);
   var col = parseInt(chunkCoords.split(" ")[0]);
-  console.log(row, col);
-  var presetPotentialTiles = getPresetPotentialTiles(row, col);
+  var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
   $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
     "presetPotentialTiles": presetPotentialTiles}, function(res) {
     CHUNKS[chunkCoords] = res;
@@ -120,29 +119,34 @@ function changeCurrentChunkX() {
   }
 }
 
-function getPresetPotentialTiles(row, col) {
+function getPresetPotentialTiles(chunkCoords) {
   var presetPotentialTiles = [];
 
-  yPlus = getIncrementedChunkCoords(0, 1);
-  if (row - 1 >= 0 && CHUNKS[yPlus] !== undefined) {
-    var relevantRow = CHUNKS[yPlus][CHUNK_SIZE - 1];
+  var x = parseInt(chunkCoords.split(" ")[0]);
+  var y = parseInt(chunkCoords.split(" ")[1]);
+
+  var upInfluencerChunk = x + " " + (y - 1);
+  var downInfluenceChunk = x + " " + (y + 1);
+  var rightInfluencerChunk = (x + 1) + " " + y;
+  var leftInfluencerChunk = (x - 1) + " " + y;
+
+  if (CHUNKS[upInfluencerChunk] !== undefined) {
+    var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
   }
 
-  yMinus = getIncrementedChunkCoords(0, -1);
-  if (row + 1 < CHUNK_SIZE && CHUNKS[yMinus] !== undefined) {
-    var relevantRow = CHUNKS[yMinus][0];
+  if (CHUNKS[downInfluenceChunk] !== undefined) {
+    var relevantRow = CHUNKS[downInfluenceChunk][0];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles,
       "(CHUNK_SIZE - 1).toString() + \" \" + i");
   }
 
-/*
 
-  if (col + 1 < CHUNK_SIZE && CHUNKS[row][col + 1] !== null) {
+  if (CHUNKS[rightInfluencerChunk] !== undefined) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
       try {
-        relevantCol.push(CHUNKS[row][col + 1][i][0]);
+        relevantCol.push(CHUNKS[rightInfluencerChunk][i][0]);
       } catch(exception) {
         console.log(exception);
       }
@@ -151,19 +155,17 @@ function getPresetPotentialTiles(row, col) {
       "i + \" \" + (CHUNK_SIZE - 1).toString()");
   }
 
-  if (col - 1 >= 0 && CHUNKS[row][col - 1] !== null) {
+  if (CHUNKS[leftInfluencerChunk] !== undefined) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
       try {
-        relevantCol.push(CHUNKS[row][col - 1][i][CHUNK_SIZE - 1]);
+        relevantCol.push(CHUNKS[leftInfluencerChunk][i][CHUNK_SIZE - 1]);
       } catch(exception) {
         console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
   }
-
-  */
 
   return presetPotentialTiles;
 }
