@@ -78,11 +78,7 @@ function move(rowInc, colInc) {
   var chunkY = CURRENT_CHUNK.y + rowInc;
   var chunkX = CURRENT_CHUNK.x + colInc;
   changeCurrentBlock(rowInc, colInc);
-  if (CHUNKS[chunkX + " " + chunkY] === undefined) {
-    loadInfluencedChunk(chunkX + " " + chunkY, stitchChunksPrep);
-  } else {
-    stitchChunksPrep();
-  }
+  stitchChunksPrep();
 }
 
 function changeCurrentBlock(row, col) {
@@ -93,8 +89,10 @@ function changeCurrentBlock(row, col) {
 }
 
 function loadInfluencedChunk(chunkCoords, callback) {
-  console.log("loading: " + chunkCoords);
-  var presetPotentialTiles = [] //getPresetPotentialTiles(row, col);
+  var row = parseInt(chunkCoords.split(" ")[1]);
+  var col = parseInt(chunkCoords.split(" ")[0]);
+  console.log(row, col);
+  var presetPotentialTiles = getPresetPotentialTiles(row, col);
   $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
     "presetPotentialTiles": presetPotentialTiles}, function(res) {
     CHUNKS[chunkCoords] = res;
@@ -122,20 +120,23 @@ function changeCurrentChunkX() {
   }
 }
 
-/*
 function getPresetPotentialTiles(row, col) {
   var presetPotentialTiles = [];
 
-  if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
-    var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
+  yPlus = getIncrementedChunkCoords(0, 1);
+  if (row - 1 >= 0 && CHUNKS[yPlus] !== undefined) {
+    var relevantRow = CHUNKS[yPlus][CHUNK_SIZE - 1];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
   }
 
-  if (row + 1 < CHUNK_SIZE && CHUNKS[row + 1][col] !== null) {
-    var relevantRow = CHUNKS[row + 1][col][0];
+  yMinus = getIncrementedChunkCoords(0, -1);
+  if (row + 1 < CHUNK_SIZE && CHUNKS[yMinus] !== undefined) {
+    var relevantRow = CHUNKS[yMinus][0];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles,
       "(CHUNK_SIZE - 1).toString() + \" \" + i");
   }
+
+/*
 
   if (col + 1 < CHUNK_SIZE && CHUNKS[row][col + 1] !== null) {
     var relevantCol = [];
@@ -162,6 +163,8 @@ function getPresetPotentialTiles(row, col) {
     addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
   }
 
+  */
+
   return presetPotentialTiles;
 }
 
@@ -182,7 +185,6 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
     } //end switch
   } //end for
 }
-*/
 
 function genMapHTML(grid) {
   mapHTML = "";
@@ -212,32 +214,21 @@ function genMapHTML(grid) {
 }
 
 function stitchChunksPrep() {
+  var current = getChunkCoords();
   var xPlus = getIncrementedChunkCoords(1, 0);
   var yPlus = getIncrementedChunkCoords(0, 1);
   var xyPlus = getIncrementedChunkCoords(1, 1);
 
-  if (CHUNKS[yPlus] === undefined) {
-    loadInfluencedChunk(yPlus, loadRightGrid);
+  if (CHUNKS[current] === undefined) {
+    loadInfluencedChunk(current, stitchChunksPrep);
+  } else if (CHUNKS[yPlus] === undefined) {
+    loadInfluencedChunk(yPlus, stitchChunksPrep);
   } else if (CHUNKS[xPlus] === undefined) {
-    loadInfluencedChunk(xPlus, loadDownRightGrid);
+    loadInfluencedChunk(xPlus, stitchChunksPrep);
   } else if (CHUNKS[xyPlus] === undefined) {
-    loadInfluencedChunk(xyPlus, stitchChunks);
+    loadInfluencedChunk(xyPlus, stitchChunksPrep);
   } else {
     stitchChunks();
-  }
-}
-
-function loadRightGrid() {
-  var xPlus = getIncrementedChunkCoords(1, 0);
-  if (CHUNKS[xPlus] === null) {
-    loadInfluencedChunk(xPlus, loadDownRightGrid);
-  }
-}
-
-function loadDownRightGrid() {
-  var xyPlus = getIncrementedChunkCoords(1, 1);
-  if (CHUNKS[xyPlus] === null) {
-    loadInfluencedChunk(xyPlus, stitchChunks);
   }
 }
 
