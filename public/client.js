@@ -12,7 +12,17 @@ for (var i = 0; i < CHUNK_SIZE; i++) {
   }
 }
 
-setup();
+function login() {
+  $.post("login", {username: $("#username").val(),
+    password: $("#password").val()}, handleLogin);
+}
+
+function handleLogin(res) {
+  console.log(window.sessionStorage.accessToken);
+  window.sessionStorage.accessToken = res.token;
+  $.post('map.json', {"token": window.sessionStorage.accessToken}, setup);
+  $("#login_div").html("");
+}
 
 function setup() {
   loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col, renderMap);
@@ -21,7 +31,8 @@ function setup() {
 
 function loadChunk(row, col, callback) {
   if (CHUNKS[row][col] === null) {
-    $.get("map.json", function(res) {
+    $.post("map.json", {"token": window.sessionStorage.accessToken},
+    function(res) {
       CHUNKS[row][col] = res;
       callback(); //can use to render map
     });
@@ -87,7 +98,7 @@ function changeCurrentBlock(row, col) {
 
 function loadInfluencedChunk(row, col, callback) {
   var presetPotentialTiles = getPresetPotentialTiles(row, col);
-  $.post("influenced_map.json", presetPotentialTiles, function(res) {
+  $.post("influenced_map.json", {"token": window.sessionStorage.accessToken, "presetPotentialTiles": presetPotentialTiles}, function(res) {
     CHUNKS[row][col] = res;
     callback();
   });
@@ -104,7 +115,8 @@ function changeCurrentChunk(rowOrCol) {
 }
 
 function getPresetPotentialTiles(row, col) {
-  var presetPotentialTiles = {"list": []};
+  //var presetPotentialTiles = {"list": []};
+  var presetPotentialTiles = [];
 
   if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {
     var relevantRow = CHUNKS[row - 1][col][CHUNK_SIZE - 1];
@@ -149,13 +161,13 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
   for (var i = 0; i < tileArray.length; i++) {
     switch (tileArray[i]) {
       case 0:
-        presetPotentialTiles.list.push(eval(evalString) + " water");
+        presetPotentialTiles.push(eval(evalString) + " water");
         break;
       case 1:
-        presetPotentialTiles.list.push(eval(evalString) + " grass");
+        presetPotentialTiles.push(eval(evalString) + " grass");
         break;
       case 2:
-        presetPotentialTiles.list.push(eval(evalString) + " sand");
+        presetPotentialTiles.push(eval(evalString) + " sand");
         break;
       default:
         console.log("error: invalid tilecode " + tileArray[i] + "found");

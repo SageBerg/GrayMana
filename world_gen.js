@@ -3,14 +3,14 @@ function genMap(presetPotentialTiles) {
   var grid = build_grid(gridSize);
 
   console.log("#############");
-  console.log(presetPotentialTiles['list[]']);
+  console.log(presetPotentialTiles);
   console.log("#############");
 
   var filled = new Set();
   var potentialTerrains = {"water": new Set(), "grass": new Set(),
     "sand": new Set()};
   try {
-    loadPresetPotentialTiles(presetPotentialTiles['list[]'], potentialTerrains);
+    loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains);
   } catch (e) {
     console.log(e);
   }
