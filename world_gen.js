@@ -51,17 +51,15 @@ function setSpawns(potentialTiles, gridSize) {
 }
 
 function populateMap(potentials, filled, grid) {
-  var terrainNamesToCodes = {
-    'water': 0, 'grass': 1, 'sand': 2
-  };
+  var terrainNamesToCodes = {'water': 0, 'grass': 1, 'sand': 2};
   while (potentialsRemaining(potentials)) {
     for (var key in potentials) {
       if (potentials.hasOwnProperty(key)) {
         if (potentials[key].size > 0) {
           addTile(potentials[key], filled, grid, terrainNamesToCodes[key]);
         }
-      }
-    }
+      } //end if
+    } //end for
   } //end while
 }
 
@@ -130,9 +128,9 @@ function coordInc(row, col, rowMod, colMod) {
 
 function addPotential(modCoords, filled, gridSize, potentialTiles) {
   if (!filled.has(modCoords) && getRow(modCoords) >= 0 &&
-                                getRow(modCoords) < gridSize &&
-                                getCol(modCoords) >= 0 &&
-                                getCol(modCoords) < gridSize) {
+    getRow(modCoords) < gridSize &&
+    getCol(modCoords) >= 0 &&
+    getCol(modCoords) < gridSize) {
     potentialTiles.add(modCoords);
   }
 }
