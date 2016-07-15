@@ -22,6 +22,20 @@ describe('chooseTileCoords', function() {
   });
 });
 
+describe('worldGen.genMap', function() {
+  it('should ', function() {
+    assert.equal();
+  });
+});
+
+/* copy/paste unit test skeleton
+describe('', function() {
+  it('should ', function() {
+    assert.equal();
+  });
+});
+*/
+
 //put back in once I can figure out how to load node.js client code without $ being undefined in Mocha
 /*
 describe('genMapHTML', function() {
