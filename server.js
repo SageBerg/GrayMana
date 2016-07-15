@@ -28,8 +28,6 @@ function login(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  printWorldName(username);
-
   //TODO only allow unique user names (emails)
   var queryResult = psqlClient.query(
     'SELECT count(*) FROM users WHERE email = $1 AND password = $2',
@@ -48,21 +46,36 @@ function login(req, res) {
   });
 }
 
-function printWorldName(email) {
-  var queryResult = psqlClient.query('SELECT world_id FROM users WHERE email = $1', [email]);
-  queryResult.on('row', function(row) {
-    console.log(row);
-    var queryResult2 = psqlClient.query('SELECT name FROM worlds WHERE id = $1', [row.world_id]);
-    queryResult2.on('row', function(row2) {
-      console.log(row2);
-    });
-  });
-}
-
 function respondWithMap(req, res) {
   if (isAuth(req.body.token)) {
-    res.json(worldGen.genMap([]));
+
+    var grid = worldGen.genMap([])
+    var psqlGrid = parseJavaScriptMapToPostgresMap(grid);
+    var email = getEmailFromToken(req.body.token);
+
+    var queryResult = psqlClient.query('SELECT world_id FROM users WHERE email = $1', [email]);
+    queryResult.on('row', function(row) {
+      psqlClient.query(
+        'UPDATE worlds SET grid = $1 WHERE id = $2', [psqlGrid, row.world_id]);
+    });
+
+    res.json(grid);
   }
+}
+
+function parseJavaScriptMapToPostgresMap(grid) {
+  var postgresGrid = "\{";
+  for (var i = 0; i < grid.length; i++) {
+    postgresGrid += "{";
+    for (var j = 0; j < grid.length; j++) {
+      postgresGrid += "\"" + grid[i][j] + "\",";
+    }
+    postgresGrid = postgresGrid.slice(0,-1); //remove extra comma
+    postgresGrid += "},";
+  }
+  postgresGrid = postgresGrid.slice(0,-1); //remove that last comma
+  postgresGrid += "}";
+  return postgresGrid;
 }
 
 function respondWithInfluencedMap(req, res) {
@@ -80,9 +93,13 @@ function isAuth(token) {
 
 function respondWithNewToken(req, res) {
   if (isAuth(req.body.token)) {
-    var decodedToken = jwt.decode(req.body.token, {complete: true});
-    var username = decodedToken.payload.username;
+    var username = getEmailFromToken(req.body.token);
     var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET, {expiresIn: '10s'});
     res.json({"token": newToken});
   }
+}
+
+function getEmailFromToken(token) {
+  var decodedToken = jwt.decode(token, {complete: true});
+  return decodedToken.payload.username;
 }
