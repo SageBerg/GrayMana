@@ -36,8 +36,9 @@ function login(req, res) {
     [username, password]);
   queryResult.on('row', function(row) {
     if (row.count === '1') {
-      //token expires in 10 seconds
-      var token = jwt.sign({"username": username}, process.env.TOKEN_SECRET, {expiresIn: '10s'});
+      //token expires in 600 seconds
+      var token = jwt.sign({"username": username}, process.env.TOKEN_SECRET,
+        {expiresIn: '600s'});
       psqlClient.query(
         'UPDATE users SET token = $1 WHERE email = $2 AND password = $3',
         [token, username, password]);
@@ -82,7 +83,8 @@ function respondWithNewToken(req, res) {
   if (isAuth(req.body.token)) {
     var decodedToken = jwt.decode(req.body.token, {complete: true});
     var username = decodedToken.payload.username;
-    var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET, {expiresIn: '10s'});
+    var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET,
+      {expiresIn: '600s'});
     res.json({"token": newToken});
   }
 }
