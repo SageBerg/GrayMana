@@ -15,7 +15,7 @@ function handleLogin(res) {
 }
 
 function setup() {
-  loadChunk(getChunkCoords(), renderInitialMap);
+  loadInitialChunk(getChunkCoords(), renderInitialMap);
   bindKeys();
 }
 
@@ -27,9 +27,10 @@ function getIncrementedChunkCoords(xInc, yInc) {
   return (CURRENT_CHUNK.x + xInc) + " " + (CURRENT_CHUNK.y + yInc);
 }
 
-function loadChunk(chunkCoords, callback) {
+function loadInitialChunk(chunkCoords, callback) {
   if (CHUNKS[chunkCoords] === undefined) {
-    $.post("map.json", {"token": window.sessionStorage.accessToken},
+    $.post("map.json", {"token": window.sessionStorage.accessToken,
+      "chunkCoords": getChunkCoords()},
     function(res) {
       CHUNKS[chunkCoords] = res;
       callback(); //can use to render map
