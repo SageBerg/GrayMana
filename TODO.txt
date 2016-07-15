@@ -1,0 +1,19 @@
+Cleaning:
+  Clean up terminology (grid, map, chunk)
+  Stop trusting the client with character location and chunk influence
+  Move the CHUNK_SIZE to the server
+  Move all of conParam composition to environment variables
+  Add explanation of how to start the server with the correct env vars
+  Write validations for user input
+  Add exception handling to make app more robust
+  Test out React.js on client to speed up rendering
+  Write unit tests
+
+Features:
+  Saving world
+  No walking on water
+  Mana
+  Runes
+  Learn spell
+  Light spell
+  Day and night cycle
