@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.post('/login', login);
 app.post('/map.json', respondWithMap);
 app.post('/influenced_map.json', respondWithInfluencedMap);
+app.post('/refresh_token', respondWithNewToken);
 
 function login(req, res) {
   var username = req.body.username;
@@ -61,4 +62,14 @@ function isAuth(token) {
     return true;
   }
   return false;
+}
+
+function respondWithNewToken(req, res) {
+  if (isAuth(req.body.token)) {
+    var decodedToken = jwt.decode(req.body.token, {complete: true});
+    var username = decodedToken.payload.username;
+    console.log(username);
+    var newToken = jwt.sign({"username": username}, "secret", {expiresIn: '10s'});
+    res.json({"token": newToken});
+  }
 }

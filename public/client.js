@@ -18,10 +18,9 @@ function login() {
 }
 
 function handleLogin(res) {
-  console.log(window.sessionStorage.accessToken);
   window.sessionStorage.accessToken = res.token;
   $.post('map.json', {"token": window.sessionStorage.accessToken}, setup);
-  $("#login_div").html("");
+  $("#login_div").html(""); //remove login view
 }
 
 function setup() {
@@ -98,8 +97,13 @@ function changeCurrentBlock(row, col) {
 
 function loadInfluencedChunk(row, col, callback) {
   var presetPotentialTiles = getPresetPotentialTiles(row, col);
-  $.post("influenced_map.json", {"token": window.sessionStorage.accessToken, "presetPotentialTiles": presetPotentialTiles}, function(res) {
+  $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
+    "presetPotentialTiles": presetPotentialTiles}, function(res) {
     CHUNKS[row][col] = res;
+    $.post("refresh_token", {"token": window.sessionStorage.accessToken},
+      function(res) {
+        window.sessionStorage.accessToken = res.token;
+    });
     callback();
   });
 }
