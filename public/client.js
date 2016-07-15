@@ -89,8 +89,6 @@ function changeCurrentBlock(row, col) {
 }
 
 function loadInfluencedChunk(chunkCoords, callback) {
-  var row = parseInt(chunkCoords.split(" ")[1]);
-  var col = parseInt(chunkCoords.split(" ")[0]);
   var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
   $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
     "presetPotentialTiles": presetPotentialTiles}, function(res) {
@@ -126,22 +124,35 @@ function getPresetPotentialTiles(chunkCoords) {
   var y = parseInt(chunkCoords.split(" ")[1]);
 
   var upInfluencerChunk = x + " " + (y - 1);
-  var downInfluenceChunk = x + " " + (y + 1);
+  var downInfluencerChunk = x + " " + (y + 1);
   var rightInfluencerChunk = (x + 1) + " " + y;
   var leftInfluencerChunk = (x - 1) + " " + y;
 
+  upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
+  downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
+  rightPresetPotentialTiles(rightInfluencerChunk, presetPotentialTiles);
+  leftPresetPotentialTiles(leftInfluencerChunk, presetPotentialTiles);
+
+  return presetPotentialTiles;
+}
+
+function upPresetPotentialTiles (upInfluencerChunk, presetPotentialTiles) {
   if (CHUNKS[upInfluencerChunk] !== undefined) {
     var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
   }
+}
 
-  if (CHUNKS[downInfluenceChunk] !== undefined) {
-    var relevantRow = CHUNKS[downInfluenceChunk][0];
+function downPresetPotentialTiles (downInfluencerChunk, presetPotentialTiles) {
+  if (CHUNKS[downInfluencerChunk] !== undefined) {
+    var relevantRow = CHUNKS[downInfluencerChunk][0];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles,
       "(CHUNK_SIZE - 1).toString() + \" \" + i");
   }
+}
 
-
+function rightPresetPotentialTiles (rightInfluencerChunk,
+  presetPotentialTiles) {
   if (CHUNKS[rightInfluencerChunk] !== undefined) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
@@ -154,7 +165,9 @@ function getPresetPotentialTiles(chunkCoords) {
     addPresetPotentialTiles(relevantCol, presetPotentialTiles,
       "i + \" \" + (CHUNK_SIZE - 1).toString()");
   }
+}
 
+function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
   if (CHUNKS[leftInfluencerChunk] !== undefined) {
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
@@ -166,8 +179,6 @@ function getPresetPotentialTiles(chunkCoords) {
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
   }
-
-  return presetPotentialTiles;
 }
 
 function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
@@ -190,28 +201,18 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
 
 function genMapHTML(grid) {
   mapHTML = "";
-  var terrainCodesToNames = {
-    0: 'water', 1: 'grass', 2: 'sand'
-  };
-  var r = 0;
-  for (row of grid) {
-    var c = 0;
-    for (terrainCode of row) {
-      var terrain = terrainCodesToNames[terrainCode];
-      if (terrain !== 'undefined') {
-        if (r === Math.floor(CHUNK_SIZE / 2) &&
-            c === Math.floor(CHUNK_SIZE / 2)) { //draw player in center of map
-          mapHTML += "<div class='playerCharacter'></div>"
-        } else {
-          mapHTML += "<div class='" + terrain + "'></div>"
-        }
+  var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
+  var mid = Math.floor(CHUNK_SIZE / 2);
+  for (var row = 0; row < CHUNK_SIZE; row++) {
+    for (var col = 0; col < CHUNK_SIZE; col++) {
+      var terrain = terrainCodesToNames[grid[row][col]];
+      if (row === mid && col === mid) { //draw player in center of map
+        mapHTML += "<div class='playerCharacter'></div>"
       } else {
-        mapHTML += "<div class='tile'>n</div>"
-      }
-      c++;
-    }
-    r++;
-  }
+        mapHTML += "<div class='" + terrain + "'></div>"
+      } //end if player or terrain
+    } //end for col
+  } //end for row
   return mapHTML;
 }
 
@@ -242,20 +243,6 @@ function stitchChunks() {
   var downGrid = CHUNKS[getIncrementedChunkCoords(0, 1)];
   var rightGrid = CHUNKS[getIncrementedChunkCoords(1, 0)];
   var downRightGrid = CHUNKS[getIncrementedChunkCoords(1, 1)];
-
-  if (currentGrid === undefined) {
-    console.log("tried to render currentGrid too early");
-    return;
-  } else if (downGrid === undefined) {
-    console.log("tried to render downGrid too early");
-    return;
-  } else if (rightGrid === undefined) {
-    console.log("tried to render rightGrid too early");
-    return;
-  } else if (downRightGrid === undefined) {
-    console.log("tried to render downRightGrid too early");
-    return;
-  }
 
   for (var i = 0; i < CHUNK_SIZE; i++) {
     for (var j = 0; j < CHUNK_SIZE; j++) {
