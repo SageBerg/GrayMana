@@ -1,7 +1,7 @@
 var CHUNK_SIZE = 40;
-var CHUNKS = {};
-var CURRENT_CHUNK = {"x": 0, "y": 0};
-var CURRENT_BLOCK = {"row": 0, "col": 0};
+var CHUNKS = {}; //the client's representation of the game map
+var CURRENT_CHUNK = {"x": 0, "y": 0}; //the region of the map the player is on
+var CURRENT_BLOCK = {"row": 0, "col": 0}; //player's locaiton within region
 
 function login() {
   $.post("login", {username: $("#username").val(),
@@ -9,14 +9,13 @@ function login() {
 }
 
 function handleLogin(res) {
-  console.log(res.token);
   window.sessionStorage.accessToken = res.token;
   $.post('map.json', {"token": window.sessionStorage.accessToken}, setup);
-  $("#login_div").html(""); //remove login view
+  $("#login_div").html(""); //removes login view
 }
 
 function setup() {
-  loadChunk(getChunkCoords(), renderMap);
+  loadChunk(getChunkCoords(), renderInitialMap);
   bindKeys();
 }
 
@@ -38,7 +37,7 @@ function loadChunk(chunkCoords, callback) {
   }
 }
 
-function renderMap() {
+function renderInitialMap() {
   $("#map").css("width", CHUNK_SIZE * 10);
   $("#map").html(genMapHTML(CHUNKS[getChunkCoords()]));
 }
@@ -89,11 +88,12 @@ function move(rowInc, colInc) {
 function changeCurrentBlock(row, col) {
   CURRENT_BLOCK.row += row;
   CURRENT_BLOCK.col += col;
-  changeCurrentChunkY(row);
-  changeCurrentChunkX(col);
+  changeCurrentChunkY();
+  changeCurrentChunkX();
 }
 
 function loadInfluencedChunk(chunkCoords, callback) {
+  console.log("loading: " + chunkCoords);
   var presetPotentialTiles = [] //getPresetPotentialTiles(row, col);
   $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
     "presetPotentialTiles": presetPotentialTiles}, function(res) {
@@ -102,26 +102,27 @@ function loadInfluencedChunk(chunkCoords, callback) {
   });
 }
 
-function changeCurrentChunkY(row) {
-  if (CURRENT_BLOCK[row] < 0) {
+function changeCurrentChunkY() {
+  if (CURRENT_BLOCK.row < 0) {
     CURRENT_CHUNK.y -= 1;
-    CURRENT_BLOCK[row] = CHUNK_SIZE - 1;
-  } else if (CURRENT_BLOCK[row] > CHUNK_SIZE - 1) {
+    CURRENT_BLOCK.row = CHUNK_SIZE - 1;
+  } else if (CURRENT_BLOCK.row > CHUNK_SIZE - 1) {
     CURRENT_CHUNK.y += 1;
-    CURRENT_BLOCK[row] = 0;
+    CURRENT_BLOCK.row = 0;
   }
 }
 
-function changeCurrentChunkX(col) {
-  if (CURRENT_BLOCK[col] < 0) {
+function changeCurrentChunkX() {
+  if (CURRENT_BLOCK.col < 0) {
     CURRENT_CHUNK.x -= 1;
-    CURRENT_BLOCK[col] = CHUNK_SIZE - 1;
-  } else if (CURRENT_BLOCK[col] > CHUNK_SIZE - 1) {
+    CURRENT_BLOCK.col = CHUNK_SIZE - 1;
+  } else if (CURRENT_BLOCK.col > CHUNK_SIZE - 1) {
     CURRENT_CHUNK.x += 1;
-    CURRENT_BLOCK[col] = 0;
+    CURRENT_BLOCK.col = 0;
   }
 }
 
+/*
 function getPresetPotentialTiles(row, col) {
   var presetPotentialTiles = [];
 
@@ -181,6 +182,7 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
     } //end switch
   } //end for
 }
+*/
 
 function genMapHTML(grid) {
   mapHTML = "";
