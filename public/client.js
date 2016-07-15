@@ -1,16 +1,7 @@
 var CHUNK_SIZE = 40;
-var CURRENT_CHUNK = {"row": Math.floor(CHUNK_SIZE / 2),
-  "col": Math.floor(CHUNK_SIZE / 2)};
+var CHUNKS = {};
+var CURRENT_CHUNK = {"x": 0, "y": 0};
 var CURRENT_BLOCK = {"row": 0, "col": 0};
-var CHUNKS = [];
-for (var i = 0; i < CHUNK_SIZE; i++) {
-  var rowOfChunks = [];
-  CHUNKS.push(rowOfChunks);
-  for (var j = 0; j < CHUNK_SIZE; j++) {
-    gridOfBlocks = null;
-    CHUNKS[CHUNKS.length - 1].push(gridOfBlocks);
-  }
-}
 
 function login() {
   $.post("login", {username: $("#username").val(),
@@ -18,21 +9,30 @@ function login() {
 }
 
 function handleLogin(res) {
+  console.log(res.token);
   window.sessionStorage.accessToken = res.token;
   $.post('map.json', {"token": window.sessionStorage.accessToken}, setup);
   $("#login_div").html(""); //remove login view
 }
 
 function setup() {
-  loadChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col, renderMap);
+  loadChunk(getChunkCoords(), renderMap);
   bindKeys();
 }
 
-function loadChunk(row, col, callback) {
-  if (CHUNKS[row][col] === null) {
+function getChunkCoords() {
+  return CURRENT_CHUNK.x + " " + CURRENT_CHUNK.y;
+}
+
+function getIncrementedChunkCoords(xInc, yInc) {
+  return (CURRENT_CHUNK.x + xInc) + " " + (CURRENT_CHUNK.y + yInc);
+}
+
+function loadChunk(chunkCoords, callback) {
+  if (CHUNKS[chunkCoords] === undefined) {
     $.post("map.json", {"token": window.sessionStorage.accessToken},
     function(res) {
-      CHUNKS[row][col] = res;
+      CHUNKS[chunkCoords] = res;
       callback(); //can use to render map
     });
   }
@@ -40,7 +40,7 @@ function loadChunk(row, col, callback) {
 
 function renderMap() {
   $("#map").css("width", CHUNK_SIZE * 10);
-  $("#map").html(genMapHTML(CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col]));
+  $("#map").html(genMapHTML(CHUNKS[getChunkCoords()]));
 }
 
 function bindKeys() {
@@ -70,51 +70,55 @@ function bindKeys() {
 }
 
 function move(rowInc, colInc) {
-  var chunkRow = CURRENT_CHUNK.row + rowInc;
-  var chunkCol = CURRENT_CHUNK.col + colInc;
-  if (chunkBoundsCheck(chunkRow, chunkCol)) {
-    changeCurrentBlock(rowInc, colInc);
-    if (CHUNKS[chunkRow][chunkCol] === null) {
-      loadInfluencedChunk(chunkRow, chunkCol, stitchChunksPrep);
-    } else {
-      stitchChunksPrep();
-    }
-  } else {
-    console.log("move not permitted");
-  } //end bounds check if
-}
+  //while the players is active keep the token refreshed
+  $.post("refresh_token", {"token": window.sessionStorage.accessToken},
+    function(res) {
+      window.sessionStorage.accessToken = res.token;
+  });
 
-function chunkBoundsCheck(row, col) {
-  return row >= 0 && row < CHUNK_SIZE - 1 && col >= 0 && col < CHUNK_SIZE - 1;
+  var chunkY = CURRENT_CHUNK.y + rowInc;
+  var chunkX = CURRENT_CHUNK.x + colInc;
+  changeCurrentBlock(rowInc, colInc);
+  if (CHUNKS[chunkX + " " + chunkY] === undefined) {
+    loadInfluencedChunk(chunkX + " " + chunkY, stitchChunksPrep);
+  } else {
+    stitchChunksPrep();
+  }
 }
 
 function changeCurrentBlock(row, col) {
   CURRENT_BLOCK.row += row;
   CURRENT_BLOCK.col += col;
-  changeCurrentChunk("row");
-  changeCurrentChunk("col");
+  changeCurrentChunkY(row);
+  changeCurrentChunkX(col);
 }
 
-function loadInfluencedChunk(row, col, callback) {
-  var presetPotentialTiles = getPresetPotentialTiles(row, col);
+function loadInfluencedChunk(chunkCoords, callback) {
+  var presetPotentialTiles = [] //getPresetPotentialTiles(row, col);
   $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
     "presetPotentialTiles": presetPotentialTiles}, function(res) {
-    CHUNKS[row][col] = res;
-    $.post("refresh_token", {"token": window.sessionStorage.accessToken},
-      function(res) {
-        window.sessionStorage.accessToken = res.token;
-    });
+    CHUNKS[chunkCoords] = res;
     callback();
   });
 }
 
-function changeCurrentChunk(rowOrCol) {
-  if (CURRENT_BLOCK[rowOrCol] < 0) {
-    CURRENT_CHUNK[rowOrCol] -= 1;
-    CURRENT_BLOCK[rowOrCol] = CHUNK_SIZE - 1;
-  } else if (CURRENT_BLOCK[rowOrCol] > CHUNK_SIZE - 1) {
-    CURRENT_CHUNK[rowOrCol] += 1;
-    CURRENT_BLOCK[rowOrCol] = 0;
+function changeCurrentChunkY(row) {
+  if (CURRENT_BLOCK[row] < 0) {
+    CURRENT_CHUNK.y -= 1;
+    CURRENT_BLOCK[row] = CHUNK_SIZE - 1;
+  } else if (CURRENT_BLOCK[row] > CHUNK_SIZE - 1) {
+    CURRENT_CHUNK.y += 1;
+    CURRENT_BLOCK[row] = 0;
+  }
+}
+
+function changeCurrentChunkX(col) {
+  if (CURRENT_BLOCK[col] < 0) {
+    CURRENT_CHUNK.x -= 1;
+    CURRENT_BLOCK[col] = CHUNK_SIZE - 1;
+  } else if (CURRENT_BLOCK[col] > CHUNK_SIZE - 1) {
+    CURRENT_CHUNK.x += 1;
+    CURRENT_BLOCK[col] = 0;
   }
 }
 
@@ -206,26 +210,32 @@ function genMapHTML(grid) {
 }
 
 function stitchChunksPrep() {
-  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col] === null) {
-    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col, loadRightGrid);
-  } else if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null) {
-    loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1, loadDownRightGrid);
-  } else if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
-    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1, stitchChunks);
+  var xPlus = getIncrementedChunkCoords(1, 0);
+  var yPlus = getIncrementedChunkCoords(0, 1);
+  var xyPlus = getIncrementedChunkCoords(1, 1);
+
+  if (CHUNKS[yPlus] === undefined) {
+    loadInfluencedChunk(yPlus, loadRightGrid);
+  } else if (CHUNKS[xPlus] === undefined) {
+    loadInfluencedChunk(xPlus, loadDownRightGrid);
+  } else if (CHUNKS[xyPlus] === undefined) {
+    loadInfluencedChunk(xyPlus, stitchChunks);
   } else {
     stitchChunks();
   }
 }
 
 function loadRightGrid() {
-  if (CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1] === null) {
-    loadInfluencedChunk(CURRENT_CHUNK.row, CURRENT_CHUNK.col + 1, loadDownRightGrid);
+  var xPlus = getIncrementedChunkCoords(1, 0);
+  if (CHUNKS[xPlus] === null) {
+    loadInfluencedChunk(xPlus, loadDownRightGrid);
   }
 }
 
 function loadDownRightGrid() {
-  if (CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1] === null) {
-    loadInfluencedChunk(CURRENT_CHUNK.row + 1, CURRENT_CHUNK.col + 1, stitchChunks);
+  var xyPlus = getIncrementedChunkCoords(1, 1);
+  if (CHUNKS[xyPlus] === null) {
+    loadInfluencedChunk(xyPlus, stitchChunks);
   }
 }
 
@@ -233,21 +243,21 @@ function stitchChunks() {
   var grid = buildBlankGrid();
   var row = CURRENT_BLOCK.row;
   var col = CURRENT_BLOCK.col;
-  var currentGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col];
-  var downGrid = CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col];
-  var rightGrid = CHUNKS[CURRENT_CHUNK.row][CURRENT_CHUNK.col + 1];
-  var downRightGrid = CHUNKS[CURRENT_CHUNK.row + 1][CURRENT_CHUNK.col + 1];
+  var currentGrid = CHUNKS[getChunkCoords()];
+  var downGrid = CHUNKS[getIncrementedChunkCoords(0, 1)];
+  var rightGrid = CHUNKS[getIncrementedChunkCoords(1, 0)];
+  var downRightGrid = CHUNKS[getIncrementedChunkCoords(1, 1)];
 
-  if (currentGrid === null) {
+  if (currentGrid === undefined) {
     console.log("tried to render currentGrid too early");
     return;
-  } else if (downGrid === null) {
+  } else if (downGrid === undefined) {
     console.log("tried to render downGrid too early");
     return;
-  } else if (rightGrid === null) {
+  } else if (rightGrid === undefined) {
     console.log("tried to render rightGrid too early");
     return;
-  } else if (downRightGrid === null) {
+  } else if (downRightGrid === undefined) {
     console.log("tried to render downRightGrid too early");
     return;
   }
