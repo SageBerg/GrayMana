@@ -2,10 +2,6 @@ function genMap(presetPotentialTiles) {
   gridSize = 40;
   var grid = build_grid(gridSize);
 
-  console.log("#############");
-  console.log(presetPotentialTiles);
-  console.log("#############");
-
   var filled = new Set();
   var potentialTerrains = {"water": new Set(), "grass": new Set(),
     "sand": new Set()};
@@ -35,7 +31,6 @@ function build_grid(gridSize) {
 }
 
 function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
-  console.log(potentialTerrains["water"]);
   for (var i = 0; i < presetPotentialTiles.length; i++) {
     var parsedPresetPotentialTiles = presetPotentialTiles[i].split(" ");
     var row = parsedPresetPotentialTiles[0];
@@ -43,7 +38,6 @@ function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
     var terrain = parsedPresetPotentialTiles[2];
     potentialTerrains[terrain].add(row + " " + col);
   }
-  console.log(potentialTerrains["water"]);
 }
 
 //TODO replace this hardcoding with user-supplied parameters

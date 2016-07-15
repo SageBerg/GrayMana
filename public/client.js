@@ -119,7 +119,6 @@ function changeCurrentChunk(rowOrCol) {
 }
 
 function getPresetPotentialTiles(row, col) {
-  //var presetPotentialTiles = {"list": []};
   var presetPotentialTiles = [];
 
   if (row - 1 >= 0 && CHUNKS[row - 1][col] !== null) {

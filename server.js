@@ -27,6 +27,9 @@ app.post('/refresh_token', respondWithNewToken);
 function login(req, res) {
   var username = req.body.username;
   var password = req.body.password;
+
+  printWorldName(username);
+
   //TODO only allow unique user names (emails)
   var queryResult = psqlClient.query(
     'SELECT count(*) FROM users WHERE email = $1 AND password = $2',
@@ -34,7 +37,7 @@ function login(req, res) {
   queryResult.on('row', function(row) {
     if (row.count === '1') {
       //token expires in 10 seconds
-      var token = jwt.sign({"username": username}, "secret", {expiresIn: '10s'});
+      var token = jwt.sign({"username": username}, process.env.TOKEN_SECRET, {expiresIn: '10s'});
       psqlClient.query(
         'UPDATE users SET token = $1 WHERE email = $2 AND password = $3',
         [token, username, password]);
@@ -42,6 +45,17 @@ function login(req, res) {
     } else {
       res.send();
     }
+  });
+}
+
+function printWorldName(email) {
+  var queryResult = psqlClient.query('SELECT world_id FROM users WHERE email = $1', [email]);
+  queryResult.on('row', function(row) {
+    console.log(row);
+    var queryResult2 = psqlClient.query('SELECT name FROM worlds WHERE id = $1', [row.world_id]);
+    queryResult2.on('row', function(row2) {
+      console.log(row2);
+    });
   });
 }
 
@@ -58,7 +72,7 @@ function respondWithInfluencedMap(req, res) {
 }
 
 function isAuth(token) {
-  if (jwt.verify(token, "secret")) {
+  if (jwt.verify(token, process.env.TOKEN_SECRET)) {
     return true;
   }
   return false;
@@ -68,8 +82,7 @@ function respondWithNewToken(req, res) {
   if (isAuth(req.body.token)) {
     var decodedToken = jwt.decode(req.body.token, {complete: true});
     var username = decodedToken.payload.username;
-    console.log(username);
-    var newToken = jwt.sign({"username": username}, "secret", {expiresIn: '10s'});
+    var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET, {expiresIn: '10s'});
     res.json({"token": newToken});
   }
 }
