@@ -85,6 +85,15 @@ function respondWithNewToken(req, res) {
   }
 }
 
+function respondWithNewToken(req, res) {
+  if (isAuth(req.body.token)) {
+    var username = getEmailFromToken(req.body.token);
+    var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET,
+      {expiresIn: '10s'});
+    res.json({"token": newToken});
+  }
+}
+
 //define functions
 function isAuth(token) {
   if (jwt.verify(token, process.env.TOKEN_SECRET)) {
@@ -93,10 +102,28 @@ function isAuth(token) {
   return false;
 }
 
-function gameLoop() {
-  while (true) {
-    //save the game state in Postgres
-    //update the time
-    //boot inactive players?
+function getEmailFromToken(token) {
+  var decodedToken = jwt.decode(token, {complete: true});
+  return decodedToken.payload.username;
+}
+
+function parseJavaScriptMapToPostgresMap(grid) {
+  var postgresGrid = "\{";
+  for (var i = 0; i < grid.length; i++) {
+    postgresGrid += "{";
+    for (var j = 0; j < grid.length; j++) {
+      postgresGrid += "\"" + grid[i][j] + "\",";
+    }
+    postgresGrid = postgresGrid.slice(0,-1); //remove extra comma
+    postgresGrid += "},";
   }
+  postgresGrid = postgresGrid.slice(0,-1); //remove that last comma
+  postgresGrid += "}";
+  return postgresGrid;
+}
+
+function saveChunkToDB() {
+  var grid = worldGen.genMap([])
+  var psqlGrid = parseJavaScriptMapToPostgresMap(grid);
+  psqlClient.query('UPDATE worlds SET grid = $1 WHERE id = $2', [psqlGrid, 1]);
 }
