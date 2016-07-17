@@ -8,6 +8,7 @@ Cleaning:
   Add exception handling to make app more robust
   Test out React.js on client to speed up rendering
   Write unit tests
+  Clean up usage of double and single quotes
 
 Features:
   Saving world
