@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3002;
 const SESSION_LENGTH = '600s'; //argument in seconds for jwt constructor
 
 //Maintain the game state in memory for speed
+var CHUNK = null;
 var CHUNKS = {}; //the server's representation of the map
 var PLAYERS = {}; //maps accounts to character objects
 var TIME = {};
@@ -60,7 +61,7 @@ function login(req, res) {
 function respondWithMap(req, res) {
   if (isAuth(req.body.token)) {
     if (CHUNKS[req.body.chunkCoords] !== undefined) {
-      res.json(CHUNKS(req.body.chunkCoords));
+      res.json(CHUNKS[req.body.chunkCoords]);
     } else {
       var grid = worldGen.genMap([]);
       CHUNKS[req.body.chunkCoords] === grid;
@@ -127,3 +128,13 @@ function saveChunkToDB() {
   var psqlGrid = parseJavaScriptMapToPostgresMap(grid);
   psqlClient.query('UPDATE worlds SET grid = $1 WHERE id = $2', [psqlGrid, 1]);
 }
+
+function loadAllChunksFromDB() {
+  var psqlResponse = psqlClient.query(
+    'SELECT grid, coords FROM worlds WHERE id = $1', [1]);
+  psqlResponse.on('row', function(row) {
+    CHUNKS[row['coords']] = row['grid'];
+  });
+}
+
+loadAllChunksFromDB();
