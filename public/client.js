@@ -1,3 +1,4 @@
+//client side game state
 var CHUNK_SIZE = 40;
 var CHUNKS = {}; //the client's representation of the game map
 var CURRENT_CHUNK = {"x": 0, "y": 0}; //the region of the map the player is on
@@ -9,13 +10,14 @@ function login() {
 }
 
 function handleLogin(res) {
+  CHUNKS = {}; //clear out any cached data
   window.sessionStorage.accessToken = res.token;
-  $.post('map.json', {"token": window.sessionStorage.accessToken}, setup);
+  setup();
   $("#login_div").html(""); //removes login view
 }
 
 function setup() {
-  loadInitialChunk(getChunkCoords(), renderInitialMap);
+  loadChunk(getChunkCoords(), renderInitialMap);
   bindKeys();
 }
 
@@ -27,10 +29,11 @@ function getIncrementedChunkCoords(xInc, yInc) {
   return (CURRENT_CHUNK.x + xInc) + " " + (CURRENT_CHUNK.y + yInc);
 }
 
-function loadInitialChunk(chunkCoords, callback) {
+function loadChunk(chunkCoords, callback) {
+  console.log(chunkCoords);
   if (CHUNKS[chunkCoords] === undefined) {
     $.post("map.json", {"token": window.sessionStorage.accessToken,
-      "chunkCoords": getChunkCoords()},
+      "chunkCoords": chunkCoords},
     function(res) {
       CHUNKS[chunkCoords] = res;
       callback(); //can use to render map
@@ -70,11 +73,7 @@ function bindKeys() {
 }
 
 function move(rowInc, colInc) {
-  //while the players is active keep the token refreshed
-  $.post("refresh_token", {"token": window.sessionStorage.accessToken},
-    function(res) {
-      window.sessionStorage.accessToken = res.token;
-  });
+  refreshToken(); //while the players is active keep the token refreshed
 
   var chunkY = CURRENT_CHUNK.y + rowInc;
   var chunkX = CURRENT_CHUNK.x + colInc;
@@ -82,20 +81,18 @@ function move(rowInc, colInc) {
   stitchChunksPrep();
 }
 
+function refreshToken() {
+  $.post("refresh_token", {"token": window.sessionStorage.accessToken},
+    function(res) {
+      window.sessionStorage.accessToken = res.token;
+  });
+}
+
 function changeCurrentBlock(row, col) {
   CURRENT_BLOCK.row += row;
   CURRENT_BLOCK.col += col;
   changeCurrentChunkY();
   changeCurrentChunkX();
-}
-
-function loadInfluencedChunk(chunkCoords, callback) {
-  var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
-  $.post("influenced_map.json", {"token": window.sessionStorage.accessToken,
-    "presetPotentialTiles": presetPotentialTiles}, function(res) {
-    CHUNKS[chunkCoords] = res;
-    callback();
-  });
 }
 
 function changeCurrentChunkY() {
@@ -116,88 +113,6 @@ function changeCurrentChunkX() {
     CURRENT_CHUNK.x += 1;
     CURRENT_BLOCK.col = 0;
   }
-}
-
-function getPresetPotentialTiles(chunkCoords) {
-  var presetPotentialTiles = [];
-
-  var x = parseInt(chunkCoords.split(" ")[0]);
-  var y = parseInt(chunkCoords.split(" ")[1]);
-
-  var upInfluencerChunk = x + " " + (y - 1);
-  var downInfluencerChunk = x + " " + (y + 1);
-  var rightInfluencerChunk = (x + 1) + " " + y;
-  var leftInfluencerChunk = (x - 1) + " " + y;
-
-  upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
-  downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
-  rightPresetPotentialTiles(rightInfluencerChunk, presetPotentialTiles);
-  leftPresetPotentialTiles(leftInfluencerChunk, presetPotentialTiles);
-
-  return presetPotentialTiles;
-}
-
-function upPresetPotentialTiles (upInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[upInfluencerChunk] !== undefined) {
-    var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
-    addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
-  }
-}
-
-function downPresetPotentialTiles (downInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[downInfluencerChunk] !== undefined) {
-    var relevantRow = CHUNKS[downInfluencerChunk][0];
-    addPresetPotentialTiles(relevantRow, presetPotentialTiles,
-      "(CHUNK_SIZE - 1).toString() + \" \" + i");
-  }
-}
-
-function rightPresetPotentialTiles (rightInfluencerChunk,
-  presetPotentialTiles) {
-  if (CHUNKS[rightInfluencerChunk] !== undefined) {
-    var relevantCol = [];
-    for (var i = 0; i < CHUNK_SIZE; i++) {
-      try {
-        relevantCol.push(CHUNKS[rightInfluencerChunk][i][0]);
-      } catch(exception) {
-        console.log(exception);
-      }
-    }
-    addPresetPotentialTiles(relevantCol, presetPotentialTiles,
-      "i + \" \" + (CHUNK_SIZE - 1).toString()");
-  }
-}
-
-function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[leftInfluencerChunk] !== undefined) {
-    var relevantCol = [];
-    for (var i = 0; i < CHUNK_SIZE; i++) {
-      try {
-        relevantCol.push(CHUNKS[leftInfluencerChunk][i][CHUNK_SIZE - 1]);
-      } catch(exception) {
-        console.log(exception);
-      }
-    }
-    addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
-  }
-}
-
-function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
-  for (var i = 0; i < tileArray.length; i++) {
-    switch (tileArray[i]) {
-      case 0:
-        presetPotentialTiles.push(eval(evalString) + " water");
-        break;
-      case 1:
-        presetPotentialTiles.push(eval(evalString) + " grass");
-        break;
-      case 2:
-        presetPotentialTiles.push(eval(evalString) + " sand");
-        break;
-      default:
-        console.log("error: invalid tilecode " + tileArray[i] + "found");
-    } //end switch
-  } //end for
 }
 
 function genMapHTML(grid) {
@@ -224,13 +139,13 @@ function stitchChunksPrep() {
   var xyPlus = getIncrementedChunkCoords(1, 1);
 
   if (CHUNKS[current] === undefined) {
-    loadInfluencedChunk(current, stitchChunksPrep);
+    loadChunk(current, stitchChunksPrep);
   } else if (CHUNKS[yPlus] === undefined) {
-    loadInfluencedChunk(yPlus, stitchChunksPrep);
+    loadChunk(yPlus, stitchChunksPrep);
   } else if (CHUNKS[xPlus] === undefined) {
-    loadInfluencedChunk(xPlus, stitchChunksPrep);
+    loadChunk(xPlus, stitchChunksPrep);
   } else if (CHUNKS[xyPlus] === undefined) {
-    loadInfluencedChunk(xyPlus, stitchChunksPrep);
+    loadChunk(xyPlus, stitchChunksPrep);
   } else {
     stitchChunks();
   }
