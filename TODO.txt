@@ -9,6 +9,7 @@ Cleaning:
   Test out React.js on client to speed up rendering
   Write unit tests
   Clean up usage of double and single quotes
+  Look into preventing tokens from being stolen like cookies
 
 Features:
   Saving world
