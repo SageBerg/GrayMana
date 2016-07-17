@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const postgres = require('pg');
 const jwt = require('jsonwebtoken');
 
-//const worldGen = require('./world_gen.js');
-
 const PORT = process.env.PORT || 3002;
 const SESSION_LENGTH = '600s'; //argument in seconds for jwt constructor
 
@@ -64,7 +62,7 @@ function respondWithMap(req, res) {
     if (CHUNKS[req.body.chunkCoords] !== undefined) {
       res.json(CHUNKS[req.body.chunkCoords]);
     } else {
-      console.log(req.body.chunkCoords, "saving into Postgres");
+      console.log(req.body.chunkCoords, "saving into database");
       var grid = genMap(req.body.chunkCoords);
       CHUNKS[req.body.chunkCoords] = grid;
       res.json(grid);
@@ -121,7 +119,6 @@ function loadAllChunksFromDB() {
   var psqlResponse = psqlClient.query('SELECT grid, coords FROM maps');
   psqlResponse.on('row', function(row) {
     CHUNKS[row["coords"]] = row["grid"];
-    console.log('loaded chunk', row.coords);
   });
 }
 
@@ -132,7 +129,6 @@ loadAllChunksFromDB();
 //define world generation functions
 function genMap(chunkCoords) {
   var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
-  console.log(presetPotentialTiles.length, 'presetPotentialTiles');
   var gridSize = 40;
   var grid = build_grid(gridSize);
 
@@ -321,9 +317,7 @@ function rightPresetPotentialTiles (rightInfluencerChunk,
 }
 
 function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
-  console.log(leftInfluencerChunk, CHUNKS);
   if (CHUNKS[leftInfluencerChunk] !== undefined) {
-    console.log("leftInfluencerChunk is defined");
     var relevantCol = [];
     for (var i = 0; i < CHUNK_SIZE; i++) {
       try {
