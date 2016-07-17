@@ -15,8 +15,8 @@ var PLAYERS = {}; //maps accounts to character objects
 var TIME = {};
 
 //set up the database connection
-var conParam = "postgres://sage:" + process.env.PSQLPASSWORD +
-  "@localhost:5432/sage";
+var conParam = 'postgres://sage:' + process.env.PSQLPASSWORD +
+  '@localhost:5432/sage';
 var psqlClient = new postgres.Client(conParam);
 psqlClient.connect();
 
@@ -44,12 +44,12 @@ function loginHandler(req, res) {
     [username, password]);
   queryResult.on('row', function(row) {
     if (row.count === '1') {
-      var token = jwt.sign({"username": username}, process.env.TOKEN_SECRET,
+      var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
         {expiresIn: SESSION_LENGTH});
       psqlClient.query(
         'UPDATE users SET token = $1 WHERE email = $2 AND password = $3',
         [token, username, password]);
-      res.json({"token": token});
+      res.json({'token': token});
     } else {
       res.send();
     }
@@ -62,7 +62,7 @@ function respondWithMap(req, res) {
     if (CHUNKS[req.body.chunkCoords] !== undefined) {
       res.json(CHUNKS[req.body.chunkCoords]);
     } else {
-      console.log(req.body.chunkCoords, "saving into database");
+      console.log(req.body.chunkCoords, 'saving into database');
       var grid = genMap(req.body.chunkCoords);
       CHUNKS[req.body.chunkCoords] = grid;
       res.json(grid);
@@ -75,9 +75,9 @@ function respondWithNewToken(req, res) {
   if (isAuth(req.body.token)) {
     var decodedToken = jwt.decode(req.body.token, {complete: true});
     var username = decodedToken.payload.username;
-    var newToken = jwt.sign({"username": username}, process.env.TOKEN_SECRET,
+    var newToken = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
       {expiresIn: SESSION_LENGTH});
-    res.json({"token": newToken});
+    res.json({'token': newToken});
   }
 }
 
@@ -95,17 +95,17 @@ function getEmailFromToken(token) {
 }
 
 function parseJavaScriptMapToPostgresMap(grid) {
-  var postgresGrid = "\{";
+  var postgresGrid = '\{';
   for (var i = 0; i < grid.length; i++) {
-    postgresGrid += "{";
+    postgresGrid += '{';
     for (var j = 0; j < grid.length; j++) {
-      postgresGrid += "\"" + grid[i][j] + "\",";
+      postgresGrid += '\"' + grid[i][j] + '\",';
     }
     postgresGrid = postgresGrid.slice(0,-1); //remove extra comma
-    postgresGrid += "},";
+    postgresGrid += '},';
   }
   postgresGrid = postgresGrid.slice(0,-1); //remove that last comma
-  postgresGrid += "}";
+  postgresGrid += '}';
   return postgresGrid;
 }
 
@@ -118,7 +118,7 @@ function saveChunkToDB(chunkCoords, grid) {
 function loadAllChunksFromDB() {
   var psqlResponse = psqlClient.query('SELECT grid, coords FROM maps');
   psqlResponse.on('row', function(row) {
-    CHUNKS[row["coords"]] = row["grid"];
+    CHUNKS[row['coords']] = row['grid'];
   });
 }
 
@@ -133,8 +133,8 @@ function genMap(chunkCoords) {
   var grid = build_grid(gridSize);
 
   var filled = new Set();
-  var potentialTerrains = {"water": new Set(), "grass": new Set(),
-    "sand": new Set()};
+  var potentialTerrains = {'water': new Set(), 'grass': new Set(),
+    'sand': new Set()};
   try {
     loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains);
   } catch (e) {
@@ -163,11 +163,11 @@ function build_grid(gridSize) {
 
 function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
   for (var i = 0; i < presetPotentialTiles.length; i++) {
-    var parsedPresetPotentialTiles = presetPotentialTiles[i].split(" ");
+    var parsedPresetPotentialTiles = presetPotentialTiles[i].split(' ');
     var row = parsedPresetPotentialTiles[0];
     var col = parsedPresetPotentialTiles[1];
     var terrain = parsedPresetPotentialTiles[2];
-    potentialTerrains[terrain].add(row + " " + col);
+    potentialTerrains[terrain].add(row + ' ' + col);
   }
 }
 
@@ -175,7 +175,7 @@ function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
 function setSpawns(potentialTiles, gridSize) {
   var spawnCount = randInt(10) + 1;
   for (var i = 0; i < spawnCount; i++) {
-    var spawn = randInt(gridSize - 1).toString() + " " +
+    var spawn = randInt(gridSize - 1).toString() + ' ' +
       randInt(gridSize - 1).toString();
     potentialTiles.add(spawn);
   }
@@ -235,11 +235,11 @@ function addTileNumberToGrid(grid, tileNumber, tileCoords) {
 }
 
 function getRow(coords) {
-  return parseInt(coords.split(" ")[0])
+  return parseInt(coords.split(' ')[0])
 }
 
 function getCol(coords) {
-  return parseInt(coords.split(" ")[1])
+  return parseInt(coords.split(' ')[1])
 }
 
 function addPotentials(gridSize, filled, tileCoords, potentialTiles) {
@@ -254,7 +254,7 @@ function addPotentials(gridSize, filled, tileCoords, potentialTiles) {
 }
 
 function coordInc(row, col, rowMod, colMod) {
-  return (row + rowMod).toString() + " " + (col + colMod).toString();
+  return (row + rowMod).toString() + ' ' + (col + colMod).toString();
 }
 
 function addPotential(modCoords, filled, gridSize, potentialTiles) {
@@ -269,13 +269,13 @@ function addPotential(modCoords, filled, gridSize, potentialTiles) {
 function getPresetPotentialTiles(chunkCoords) {
   var presetPotentialTiles = [];
 
-  var x = parseInt(chunkCoords.split(" ")[0]);
-  var y = parseInt(chunkCoords.split(" ")[1]);
+  var x = parseInt(chunkCoords.split(' ')[0]);
+  var y = parseInt(chunkCoords.split(' ')[1]);
 
-  var upInfluencerChunk = x + " " + (y - 1);
-  var downInfluencerChunk = x + " " + (y + 1);
-  var rightInfluencerChunk = (x + 1) + " " + y;
-  var leftInfluencerChunk = (x - 1) + " " + y;
+  var upInfluencerChunk = x + ' ' + (y - 1);
+  var downInfluencerChunk = x + ' ' + (y + 1);
+  var rightInfluencerChunk = (x + 1) + ' ' + y;
+  var leftInfluencerChunk = (x - 1) + ' ' + y;
 
   upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
   downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
@@ -288,7 +288,7 @@ function getPresetPotentialTiles(chunkCoords) {
 function upPresetPotentialTiles (upInfluencerChunk, presetPotentialTiles) {
   if (CHUNKS[upInfluencerChunk] !== undefined) {
     var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
-    addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
+    addPresetPotentialTiles(relevantRow, presetPotentialTiles, '\"0 \" + i');
   }
 }
 
@@ -296,7 +296,7 @@ function downPresetPotentialTiles (downInfluencerChunk, presetPotentialTiles) {
   if (CHUNKS[downInfluencerChunk] !== undefined) {
     var relevantRow = CHUNKS[downInfluencerChunk][0];
     addPresetPotentialTiles(relevantRow, presetPotentialTiles,
-      "(CHUNK_SIZE - 1).toString() + \" \" + i");
+      '(CHUNK_SIZE - 1).toString() + \" \" + i');
   }
 }
 
@@ -312,7 +312,7 @@ function rightPresetPotentialTiles (rightInfluencerChunk,
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles,
-      "i + \" \" + (CHUNK_SIZE - 1).toString()");
+      'i + \" \" + (CHUNK_SIZE - 1).toString()');
   }
 }
 
@@ -326,7 +326,7 @@ function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
         console.log(exception);
       }
     }
-    addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
+    addPresetPotentialTiles(relevantCol, presetPotentialTiles, 'i + \" 0\"');
   }
 }
 
@@ -334,16 +334,16 @@ function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
   for (var i = 0; i < tileArray.length; i++) {
     switch (tileArray[i]) {
       case 0:
-        presetPotentialTiles.push(eval(evalString) + " water");
+        presetPotentialTiles.push(eval(evalString) + ' water');
         break;
       case 1:
-        presetPotentialTiles.push(eval(evalString) + " grass");
+        presetPotentialTiles.push(eval(evalString) + ' grass');
         break;
       case 2:
-        presetPotentialTiles.push(eval(evalString) + " sand");
+        presetPotentialTiles.push(eval(evalString) + ' sand');
         break;
       default:
-        console.log("error: invalid tilecode " + tileArray[i] + "found");
+        console.log('invalid tilecode ' + tileArray[i] + 'found');
     } //end switch
   } //end for
 }

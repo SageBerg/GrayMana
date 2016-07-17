@@ -1,19 +1,19 @@
 //client side game state
 var CHUNK_SIZE = 40;
 var CHUNKS = {}; //the client's representation of the game map
-var CURRENT_CHUNK = {"x": 0, "y": 0}; //the region of the map the player is on
-var CURRENT_BLOCK = {"row": 0, "col": 0}; //player's locaiton within region
+var CURRENT_CHUNK = {'x': 0, 'y': 0}; //the region of the map the player is on
+var CURRENT_BLOCK = {'row': 0, 'col': 0}; //player's locaiton within region
 
 function login() {
-  $.post("login", {username: $("#username").val(),
-    password: $("#password").val()}, handleLogin);
+  $.post('login', {username: $('#username').val(),
+    password: $('#password').val()}, handleLogin);
 }
 
 function handleLogin(res) {
   CHUNKS = {}; //clear out any cached data
   window.sessionStorage.accessToken = res.token;
   setup();
-  $("#login_div").html(""); //removes login view
+  $('#login_div').html(''); //removes login view
 }
 
 function setup() {
@@ -22,18 +22,17 @@ function setup() {
 }
 
 function getChunkCoords() {
-  return CURRENT_CHUNK.x + " " + CURRENT_CHUNK.y;
+  return CURRENT_CHUNK.x + ' ' + CURRENT_CHUNK.y;
 }
 
 function getIncrementedChunkCoords(xInc, yInc) {
-  return (CURRENT_CHUNK.x + xInc) + " " + (CURRENT_CHUNK.y + yInc);
+  return (CURRENT_CHUNK.x + xInc) + ' ' + (CURRENT_CHUNK.y + yInc);
 }
 
 function loadChunk(chunkCoords, callback) {
-  console.log(chunkCoords);
   if (CHUNKS[chunkCoords] === undefined) {
-    $.post("map.json", {"token": window.sessionStorage.accessToken,
-      "chunkCoords": chunkCoords},
+    $.post('map.json', {'token': window.sessionStorage.accessToken,
+      'chunkCoords': chunkCoords},
     function(res) {
       CHUNKS[chunkCoords] = res;
       callback(); //can use to render map
@@ -42,8 +41,8 @@ function loadChunk(chunkCoords, callback) {
 }
 
 function renderInitialMap() {
-  $("#map").css("width", CHUNK_SIZE * 10);
-  $("#map").html(genMapHTML(CHUNKS[getChunkCoords()]));
+  $('#map').css('width', CHUNK_SIZE * 10);
+  $('#map').html(genMapHTML(CHUNKS[getChunkCoords()]));
 }
 
 function bindKeys() {
@@ -82,7 +81,7 @@ function move(rowInc, colInc) {
 }
 
 function refreshToken() {
-  $.post("refresh_token", {"token": window.sessionStorage.accessToken},
+  $.post('refresh_token', {'token': window.sessionStorage.accessToken},
     function(res) {
       window.sessionStorage.accessToken = res.token;
   });
@@ -116,16 +115,16 @@ function changeCurrentChunkX() {
 }
 
 function genMapHTML(grid) {
-  mapHTML = "";
+  mapHTML = '';
   var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
   var mid = Math.floor(CHUNK_SIZE / 2);
   for (var row = 0; row < CHUNK_SIZE; row++) {
     for (var col = 0; col < CHUNK_SIZE; col++) {
       var terrain = terrainCodesToNames[grid[row][col]];
       if (row === mid && col === mid) { //draw player in center of map
-        mapHTML += "<div class='playerCharacter'></div>"
+        mapHTML += '<div class=\"playerCharacter\"></div>';
       } else {
-        mapHTML += "<div class='" + terrain + "'></div>"
+        mapHTML += '<div class=' + terrain + '></div>';
       } //end if player or terrain
     } //end for col
   } //end for row
@@ -176,7 +175,7 @@ function stitchChunks() {
       }
     } //end for i loop
   } //end for j loop
-  $("#map").html(genMapHTML(grid));
+  $('#map').html(genMapHTML(grid));
 }
 
 function buildBlankGrid() {
