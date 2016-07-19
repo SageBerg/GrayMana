@@ -1,5 +1,79 @@
+
+$mana_bar_size: 77px;
+$rune_size: 30px;
+$spell_logo_size: 77px;
+
+$red: #F4CCCC;
+$orange: #FCE5CD;
+$yellow: #FEF1CB;
+$green: #D9EAD3;
+$blue: #C9DAF8;
+$indigo: #9FC5E8;
+$violet: #D9D2E9;
+$black: #434343;
+$gray: #B6B6B6;
+$white: #F3F3F3;
+
 body {
   margin: 0px;
+}
+
+h3 {
+  margin-left: 20px;
+}
+
+.red {
+  background-color: $red;
+}
+
+.orange {
+  background-color: $orange;
+}
+
+.yellow {
+  background-color: $yellow;
+}
+
+.green {
+  background-color: $green;
+}
+
+.blue {
+  background-color: $blue;
+}
+
+.indigo {
+  background-color: $indigo;
+}
+
+.violet {
+  background-color: $violet;
+}
+
+.black {
+  background-color: $black;
+  color: $white;
+}
+
+.gray {
+  background-color: $gray;
+}
+
+.white {
+  background-color: $white;
+}
+
+.bordered {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  display: inline-block;
+}
+
+.chest {
+  background-color: gray;
+  height: 6px;
+  width: 6px;
 }
 
 .grass {
@@ -7,14 +81,51 @@ body {
   background-color: #0e2;
 }
 
+.hud_section {
+  @extend .bordered;
+  float: left;
+  height: 160px;
+  margin: 10px;
+  width: 45%;
+}
+
+.mana_bar {
+  @extend .bordered;
+  border-radius: $mana_bar_size / 2;
+  border-color: gray;
+  height: $mana_bar_size;
+  text-align: center;
+  width: $mana_bar_size;
+}
+
 .playerCharacter {
   @extend .tile;
   background-color: chocolate;
 }
 
+.rune {
+  background-color: gray;
+  border-radius: $rune_size / 4;
+  color: white;
+  display: inline-block;
+  height: $rune_size;
+  margin-bottom: 2px;
+  text-align: center;
+  width: $rune_size;
+}
+
 .sand {
   @extend .tile;
   background-color: #fd4;
+}
+
+.spell_logo {
+  @extend .bordered;
+  border-radius: $spell_logo_size / 4;
+  display: inline-block;
+  height: $spell_logo_size;
+  text-align: center;
+  width: $spell_logo_size;
 }
 
 .tile {
@@ -28,6 +139,77 @@ body {
   background-color: #6af;
 }
 
+#damage_bar {
+  @extend .bordered;
+  border-radius: 5px;
+  height: 20px;
+  margin: 10px;
+  width: 800px;
+}
+
+#login_div {
+  margin: 10px;
+}
+
+#mana_bar_1_red {
+  @extend .mana_bar;
+  background-color: $red;
+}
+
+#mana_bar_2_orange {
+  @extend .mana_bar;
+  background-color: $orange;
+}
+
+#mana_bar_3_yellow {
+  @extend .mana_bar;
+  background-color: $yellow;
+}
+
+#mana_bar_4_green {
+  @extend .mana_bar;
+  background-color: $green;
+}
+
+#mana_bar_5_blue {
+  @extend .mana_bar;
+  background-color: $blue;
+}
+
+#mana_bar_6_indigo {
+  @extend .mana_bar;
+  background-color: $indigo;
+}
+
+#mana_bar_7_violet {
+  @extend .mana_bar;
+  background-color: $violet;
+}
+
+#mana_bar_8_black {
+  @extend .mana_bar;
+  background-color: $black;
+  color: $white;
+}
+
+#mana_bar_9_gray {
+  @extend .mana_bar;
+  background-color: $gray;
+}
+
+#mana_bar_10_white {
+  @extend .mana_bar;
+  background-color: $white;
+}
+
 #map {
+  margin: 10px;
   width: 1000px;
+}
+
+#rune_section {
+  @extend .bordered;
+  padding: 2px;
+  //height: 150px;
+  width: ($rune_size * 9) + (8 * 4);
 }

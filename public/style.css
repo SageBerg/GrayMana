@@ -1,14 +1,89 @@
 body {
   margin: 0px; }
 
+h3 {
+  margin-left: 20px; }
+
+.red {
+  background-color: #F4CCCC; }
+
+.orange {
+  background-color: #FCE5CD; }
+
+.yellow {
+  background-color: #FEF1CB; }
+
+.green {
+  background-color: #D9EAD3; }
+
+.blue {
+  background-color: #C9DAF8; }
+
+.indigo {
+  background-color: #9FC5E8; }
+
+.violet {
+  background-color: #D9D2E9; }
+
+.black {
+  background-color: #434343;
+  color: #F3F3F3; }
+
+.gray {
+  background-color: #B6B6B6; }
+
+.white {
+  background-color: #F3F3F3; }
+
+.bordered, .hud_section, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, .spell_logo, #damage_bar, #rune_section {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  display: inline-block; }
+
+.chest {
+  background-color: gray;
+  height: 6px;
+  width: 6px; }
+
 .grass {
   background-color: #0e2; }
+
+.hud_section {
+  float: left;
+  height: 160px;
+  margin: 10px;
+  width: 45%; }
+
+.mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white {
+  border-radius: 38.5px;
+  border-color: gray;
+  height: 77px;
+  text-align: center;
+  width: 77px; }
 
 .playerCharacter {
   background-color: chocolate; }
 
+.rune {
+  background-color: gray;
+  border-radius: 7.5px;
+  color: white;
+  display: inline-block;
+  height: 30px;
+  margin-bottom: 2px;
+  text-align: center;
+  width: 30px; }
+
 .sand {
   background-color: #fd4; }
+
+.spell_logo {
+  border-radius: 19.25px;
+  display: inline-block;
+  height: 77px;
+  text-align: center;
+  width: 77px; }
 
 .tile, .grass, .playerCharacter, .sand, .water {
   display: inline-block;
@@ -18,7 +93,52 @@ body {
 .water {
   background-color: #6af; }
 
+#damage_bar {
+  border-radius: 5px;
+  height: 20px;
+  margin: 10px;
+  width: 800px; }
+
+#login_div {
+  margin: 10px; }
+
+#mana_bar_1_red {
+  background-color: #F4CCCC; }
+
+#mana_bar_2_orange {
+  background-color: #FCE5CD; }
+
+#mana_bar_3_yellow {
+  background-color: #FEF1CB; }
+
+#mana_bar_4_green {
+  background-color: #D9EAD3; }
+
+#mana_bar_5_blue {
+  background-color: #C9DAF8; }
+
+#mana_bar_6_indigo {
+  background-color: #9FC5E8; }
+
+#mana_bar_7_violet {
+  background-color: #D9D2E9; }
+
+#mana_bar_8_black {
+  background-color: #434343;
+  color: #F3F3F3; }
+
+#mana_bar_9_gray {
+  background-color: #B6B6B6; }
+
+#mana_bar_10_white {
+  background-color: #F3F3F3; }
+
 #map {
+  margin: 10px;
   width: 1000px; }
+
+#rune_section {
+  padding: 2px;
+  width: 302px; }
 
 /*# sourceMappingURL=style.css.map */
