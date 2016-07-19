@@ -1,21 +1,26 @@
 Cleaning:
   Clean up terminology (grid, map, chunk)
-  Stop trusting the client with character location and chunk influence
-  Move the CHUNK_SIZE to the server
+  Stop trusting the client with character location
+    Make sever verify that it's not skipping moves
+  Move the CHUNK_SIZE to the server and make client request it
   Move all of conParam composition to environment variables
   Add explanation of how to start the server with the correct env vars
   Write validations for user input
   Add exception handling to make app more robust
   Test out React.js on client to speed up rendering
   Write unit tests
-  Clean up usage of double and single quotes
+  Write integration tests
   Look into preventing tokens from being stolen like cookies
 
 Features:
-  Saving world
+  Saving character
   No walking on water
   Mana
   Runes
   Learn spell
   Light spell
   Day and night cycle
+
+  Register user
+  Delete user
+  Logout
