@@ -1,15 +1,15 @@
 import random
 
-all_spells = "CleanLevitateHeatMana ChestSpeedHealBefriendBurstStorageDetoxGavityHeat WallCloneFlightSleepFound FactionShieldDetect MagicPermanencyDispel MagicPessureSummon FoodTeleportStunInduct to FactionTheshold ShieldLightMana PoolNo Magic ZoneToughenPropelResurrectSanctuarySentinelAlertTriggerMessageProfile PersonMap"
-spells = ["Clean", "Levitate", "Heat", "Mana Chest", "Speed", "Heal",
+all_spells = "AlertScryAdvertiseCoordinatesHeat MinionCleanLevitateHeatMana ChestQuicknessHealBefriendBurstStorageDetoxGavityHeat WallCloneFlightSleepFound FactionShieldDetect MagicPermanencyDispel MagicPessureSummon FoodTeleportStunInduct to FactionTheshold ShieldLightMana PoolNo Magic ZoneToughenPortalResurrectWeatherSentinelBuildTriggerMessageProfile PersonMap"
+spells = ["Clean", "Levitate", "Heat", "Mana Chest", "Quickness", "Heal",
           "Befriend", "Burst", "Storage", "Detox", "Gavity",
           "Heat Wall", "Clone", "Flight", "Sleep", "Found Faction", "Shield",
           "Detect Magic", "Permanency", "Dispel Magic", "Pessure",
           "Summon Food", "Teleport", "Stun", "Induct to Faction",
           "Theshold Shield", "Light", "Mana Pool", "No Magic Zone", "Toughen",
-          "Propel", "Resurrect", "Sanctuary", "Sentinel", "Alert", "Trigger",
-          "Message", "Profile Person", "Map"]
-
+          "Portal", "Resurrect", "Weather", "Sentinel", "Build", "Trigger",
+          "Message", "Profile Person", "Map", "Heat Minion", "Alert", "Scry",
+          "Advertise", "Coordinates"]
 
 def get_rune_drop():
     rune_drop = list()
