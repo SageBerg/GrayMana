@@ -2,7 +2,33 @@
 var CHUNK_SIZE = 40;
 var CHUNKS = {}; //the client's representation of the game map
 var CURRENT_CHUNK = {'x': 0, 'y': 0}; //the region of the map the player is on
+var MID = Math.floor(CHUNK_SIZE / 2);
 var CURRENT_BLOCK = {'row': 0, 'col': 0}; //player's locaiton within region
+var SELECTED_SPELL_SLOT = 1;
+
+document.addEventListener('wheel', wheelHandler);
+
+function wheelHandler(e) {
+  e.preventDefault();
+  var prev_spell_slot = document.getElementById('spell_slot_' + SELECTED_SPELL_SLOT);
+  prev_spell_slot.removeAttribute('class', 'selected_spell_slot');
+  prev_spell_slot.setAttribute('class', 'spell_logo');
+  var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+  if (delta === 1) {
+     SELECTED_SPELL_SLOT -= 1;
+     if (SELECTED_SPELL_SLOT < 1) {
+       SELECTED_SPELL_SLOT = 10;
+     }
+  } else {
+    SELECTED_SPELL_SLOT += 1;
+    if (SELECTED_SPELL_SLOT > 10) {
+      SELECTED_SPELL_SLOT = 1;
+    }
+  }
+  var current_spell_slot = document.getElementById("spell_slot_" + SELECTED_SPELL_SLOT);
+  current_spell_slot.setAttribute('class', 'selected_spell_slot spell_logo');
+}
+
 
 function login() {
   $.post('login', {username: $('#username').val(),
@@ -76,8 +102,28 @@ function move(rowInc, colInc) {
 
   var chunkY = CURRENT_CHUNK.y + rowInc;
   var chunkX = CURRENT_CHUNK.x + colInc;
-  changeCurrentBlock(rowInc, colInc);
-  stitchChunksPrep();
+  var reqChunkCoords = getRequestedChunkCoords();
+
+  var reqRow = (CURRENT_BLOCK.row + rowInc) % CHUNK_SIZE;
+  var reqCol = (CURRENT_BLOCK.col + colInc) % CHUNK_SIZE;
+
+  if (reqRow < 0) {
+    reqRow += CHUNK_SIZE;
+  }
+  if (reqCol < 0) {
+    reqCol += CHUNK_SIZE;
+  }
+
+  $.post('move', {chunkCoords: reqChunkCoords, row: reqRow,
+    col: reqCol, token: window.sessionStorage.accessToken},
+    function(res) {
+    if (res) {
+      changeCurrentBlock(rowInc, colInc);
+      stitchChunksPrep();
+    } else {
+      console.log('move not permitted');
+    } //end if move allowed
+  }); //end post
 }
 
 function refreshToken() {
@@ -85,6 +131,20 @@ function refreshToken() {
     function(res) {
       window.sessionStorage.accessToken = res.token;
   });
+}
+
+function getRequestedChunkCoords(rowInc, colInc) {
+  if (CURRENT_BLOCK.row + rowInc < 0) {
+    return getIncrementedChunkCoords(colInc, rowInc);
+  } else if (CURRENT_BLOCK.row + rowInc >= CHUNK_SIZE) {
+    return getIncrementedChunkCoords(colInc, rowInc);
+  } else if (CURRENT_BLOCK.col + colInc < 0) {
+    return getIncrementedChunkCoords(colInc, rowInc);
+  } else if (CURRENT_BLOCK.col + colInc >= CHUNK_SIZE) {
+    return getIncrementedChunkCoords(colInc, rowInc);
+  } else {
+    return getChunkCoords();
+  }
 }
 
 function changeCurrentBlock(row, col) {
@@ -117,11 +177,10 @@ function changeCurrentChunkX() {
 function genMapHTML(grid) {
   mapHTML = '';
   var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
-  var mid = Math.floor(CHUNK_SIZE / 2);
   for (var row = 0; row < CHUNK_SIZE; row++) {
     for (var col = 0; col < CHUNK_SIZE; col++) {
       var terrain = terrainCodesToNames[grid[row][col]];
-      if (row === mid && col === mid) { //draw player in center of map
+      if (row === MID && col === MID) { //draw player in center of map
         mapHTML += '<div class=\"playerCharacter\"></div>';
       } else {
         mapHTML += '<div class=' + terrain + '></div>';

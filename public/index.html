@@ -4,8 +4,12 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+
+    <button class="metabutton">Logout</button> <!-- hotkey esc, x -->
+    <button class="metabutton">Options</button> <!-- hotkey o -->
+
     <div id="login_div">
-      <h1>Gray Mana User Login</h1>
+      <h1>Gray Mana</h1>
       <h2>Username:</h2>
       <input id="username" value="sage@example.com"></input>
       <h2>Password:</h2>
@@ -13,8 +17,6 @@
       <button onclick="login()">Submit</button>
     </div>
     <div id="map"></div>
-
-
 
     <div class="hud_section">
       <h3>Mana</h3>
@@ -32,16 +34,38 @@
 
     <div class="hud_section">
       <h3>Spells</h3>
-      <div class="spell_logo blue">Speed</div>
-      <div class="spell_logo white">Burst</div>
-      <div class="spell_logo blue">Teleport</div>
-      <div class="spell_logo indigo">Heal</div>
-      <div class="spell_logo white">Shield</div>
-      <div class="spell_logo gray">Light</div>
-      <div class="spell_logo violet">Sanctuary</div>
-      <div class="spell_logo black">Storage</div>
-      <div class="spell_logo gray">Map</div>
-      <div class="spell_logo violet">Message</div>
+
+      <div class="selected_spell_slot spell_slot" id="spell_slot_1">
+        <div class="spell_logo blue">Quickness</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_2">
+        <div class="spell_logo white" >Burst</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_3">
+        <div class="spell_logo blue">Teleport</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_4">
+        <div class="spell_logo indigo">Heal</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_5">
+        <div class="spell_logo white">Shield</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_6">
+        <div class="spell_logo gray">Light</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_7">
+        <div class="spell_logo red">Clean</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_8">
+        <div class="spell_logo black">Storage</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_9">
+        <div class="spell_logo gray">Map</div>
+      </div>
+      <div class="spell_slot" id="spell_slot_10">
+        <div class="spell_logo violet">Message</div>
+      </div>
+
     </div>
 
     <div class="hud_section">
@@ -51,18 +75,38 @@
 
     <div class="hud_section">
       <h3>Actions</h3>
-      <button>Manatate</button>
-      <button>Sleep</buttoon>
 
-      <button>Learn Spells</button>
-      <button>Prepare Spells</button>
+      <div class="button_group">
+        <button class="action_button">Manatate</button> <!-- hotkey m -->
+      </div>
 
-      <button>Inventory</button>
-      <button>Speak</button>
+      <div class="button_group">
+        <button class="action_button" disabled="disabled">Eat</buttoon> <!-- hotkey e -->
+        <button class="action_button">Sleep</buttoon> <!-- hotkey z -->
+      </div>
+
+      <div class="button_group">
+        <button class="action_button" disabled="disabled">Cast Spell</button> <!-- hotkey r -->
+        <button class="action_button" disabled="disabled">Prepare Spells</button> <!-- hotkey p -->
+        <button class="action_button">Learn Spells</button> <!-- hotkey l -->
+      </div>
+
+      <div class="button_group">
+        <button class="action_button">Interact</button> <!-- hotkey q -->
+        <button class="action_button">Talk</button> <!-- hotkey t -->
+        <!-- <button class="action_button">Bow</button> <!-- hotkey b -->
+        <button class="action_button" disabled="disabled">Faction</button> <!-- hotkey f -->
+      </div>
+
+      <div class="button_group">
+        <button class="action_button" disabled="disabled">Inventory</button> <!-- hotkey i -->
+        <button class="action_button" disabled="disabled">Achievements</button> <!-- hotkey c -->
+      </div>
+
     </div>
 
     <div class="hud_section">
-      <h3>Runes</h3>
+      <h3>Learn Spells</h3>
       <div id="rune_section">
           <div class="rune" id="rune_a">a</div>
           <div class="rune" id="rune_a">b</div>

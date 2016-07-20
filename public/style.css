@@ -4,42 +4,29 @@ body {
 h3 {
   margin-left: 20px; }
 
-.red {
-  background-color: #F4CCCC; }
+button {
+  width: 120px; }
 
-.orange {
-  background-color: #FCE5CD; }
-
-.yellow {
-  background-color: #FEF1CB; }
-
-.green {
-  background-color: #D9EAD3; }
-
-.blue {
-  background-color: #C9DAF8; }
-
-.indigo {
-  background-color: #9FC5E8; }
-
-.violet {
-  background-color: #D9D2E9; }
+.action_button {
+  display: list-item;
+  margin: 5px; }
 
 .black {
   background-color: #434343;
   color: #F3F3F3; }
 
-.gray {
-  background-color: #B6B6B6; }
+.blue {
+  background-color: #C9DAF8; }
 
-.white {
-  background-color: #F3F3F3; }
-
-.bordered, .hud_section, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, .spell_logo, #damage_bar, #rune_section {
+.bordered, .hud_section, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, #damage_bar, #rune_section {
   border-style: solid;
   border-width: 1px;
   border-color: black;
   display: inline-block; }
+
+.button_group {
+  display: inline-block;
+  margin: 5px; }
 
 .chest {
   background-color: gray;
@@ -49,11 +36,20 @@ h3 {
 .grass {
   background-color: #0e2; }
 
+.gray {
+  background-color: #B6B6B6; }
+
+.green {
+  background-color: #D9EAD3; }
+
 .hud_section {
   float: left;
   height: 160px;
   margin: 10px;
-  width: 45%; }
+  width: 46%; }
+
+.indigo {
+  background-color: #9FC5E8; }
 
 .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white {
   border-radius: 38.5px;
@@ -62,8 +58,18 @@ h3 {
   text-align: center;
   width: 77px; }
 
+.metabutton {
+  float: right;
+  margin: 10px; }
+
+.orange {
+  background-color: #FCE5CD; }
+
 .playerCharacter {
   background-color: chocolate; }
+
+.red {
+  background-color: #F4CCCC; }
 
 .rune {
   background-color: gray;
@@ -78,20 +84,36 @@ h3 {
 .sand {
   background-color: #fd4; }
 
+.selected_spell_slot {
+  border-color: gold;
+  border-style: solid;
+  border-width: 5px; }
+
 .spell_logo {
-  border-radius: 19.25px;
   display: inline-block;
   height: 77px;
   text-align: center;
   width: 77px; }
+
+.spell_slot {
+  display: inline-block; }
 
 .tile, .grass, .playerCharacter, .sand, .water {
   display: inline-block;
   height: 10px;
   width: 10px; }
 
+.violet {
+  background-color: #D9D2E9; }
+
 .water {
   background-color: #6af; }
+
+.white {
+  background-color: #F3F3F3; }
+
+.yellow {
+  background-color: #FEF1CB; }
 
 #damage_bar {
   border-radius: 5px;
