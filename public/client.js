@@ -4,7 +4,7 @@ var CHUNKS = {}; //the client's representation of the game map
 var CURRENT_CHUNK = {'x': 0, 'y': 0}; //the region of the map the player is on
 var MID = Math.floor(CHUNK_SIZE / 2);
 var CURRENT_BLOCK = {'row': 0, 'col': 0}; //player's locaiton within region
-var SELECTED_SPELL_SLOT = 1;
+var SELECTED_SPELL_SLOT = 10;
 
 document.addEventListener('wheel', wheelHandler);
 
