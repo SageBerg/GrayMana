@@ -1,4 +1,5 @@
-function genMap(presetPotentialTiles) {
+function genMap(chunkCoords) {
+  var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
   gridSize = 40;
   var grid = build_grid(gridSize);
 
@@ -133,6 +134,88 @@ function addPotential(modCoords, filled, gridSize, potentialTiles) {
     getCol(modCoords) < gridSize) {
     potentialTiles.add(modCoords);
   }
+}
+
+function getPresetPotentialTiles(chunkCoords) {
+  var presetPotentialTiles = [];
+
+  var x = parseInt(chunkCoords.split(" ")[0]);
+  var y = parseInt(chunkCoords.split(" ")[1]);
+
+  var upInfluencerChunk = x + " " + (y - 1);
+  var downInfluencerChunk = x + " " + (y + 1);
+  var rightInfluencerChunk = (x + 1) + " " + y;
+  var leftInfluencerChunk = (x - 1) + " " + y;
+
+  upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
+  downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
+  rightPresetPotentialTiles(rightInfluencerChunk, presetPotentialTiles);
+  leftPresetPotentialTiles(leftInfluencerChunk, presetPotentialTiles);
+
+  return presetPotentialTiles;
+}
+
+function upPresetPotentialTiles (upInfluencerChunk, presetPotentialTiles) {
+  if (CHUNKS[upInfluencerChunk] !== undefined) {
+    var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
+    addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
+  }
+}
+
+function downPresetPotentialTiles (downInfluencerChunk, presetPotentialTiles) {
+  if (CHUNKS[downInfluencerChunk] !== undefined) {
+    var relevantRow = CHUNKS[downInfluencerChunk][0];
+    addPresetPotentialTiles(relevantRow, presetPotentialTiles,
+      "(CHUNK_SIZE - 1).toString() + \" \" + i");
+  }
+}
+
+function rightPresetPotentialTiles (rightInfluencerChunk,
+  presetPotentialTiles) {
+  if (CHUNKS[rightInfluencerChunk] !== undefined) {
+    var relevantCol = [];
+    for (var i = 0; i < CHUNK_SIZE; i++) {
+      try {
+        relevantCol.push(CHUNKS[rightInfluencerChunk][i][0]);
+      } catch(exception) {
+        console.log(exception);
+      }
+    }
+    addPresetPotentialTiles(relevantCol, presetPotentialTiles,
+      "i + \" \" + (CHUNK_SIZE - 1).toString()");
+  }
+}
+
+function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
+  if (CHUNKS[leftInfluencerChunk] !== undefined) {
+    var relevantCol = [];
+    for (var i = 0; i < CHUNK_SIZE; i++) {
+      try {
+        relevantCol.push(CHUNKS[leftInfluencerChunk][i][CHUNK_SIZE - 1]);
+      } catch(exception) {
+        console.log(exception);
+      }
+    }
+    addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
+  }
+}
+
+function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
+  for (var i = 0; i < tileArray.length; i++) {
+    switch (tileArray[i]) {
+      case 0:
+        presetPotentialTiles.push(eval(evalString) + " water");
+        break;
+      case 1:
+        presetPotentialTiles.push(eval(evalString) + " grass");
+        break;
+      case 2:
+        presetPotentialTiles.push(eval(evalString) + " sand");
+        break;
+      default:
+        console.log("error: invalid tilecode " + tileArray[i] + "found");
+    } //end switch
+  } //end for
 }
 
 exports.addTileNumberToGrid = addTileNumberToGrid;
