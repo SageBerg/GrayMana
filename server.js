@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3002;
 const SESSION_LENGTH = '600s'; //argument in seconds for jwt constructor
 
 //Maintain the game state in memory for speed
-var CHUNK = null;
 const CHUNK_SIZE = 40;
 var CHUNKS = {}; //the server's representation of the map
 var PLAYERS = {}; //maps accounts to character objects
@@ -31,6 +30,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //set up routes
 app.post('/login', loginHandler);
 app.post('/map.json', respondWithMap);
+app.post('/move', respondWithMove);
 app.post('/refresh_token', respondWithNewToken);
 
 //define handlers
@@ -38,7 +38,6 @@ function loginHandler(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  //TODO only allow unique user names (emails)
   var queryResult = psqlClient.query(
     'SELECT count(*) FROM users WHERE email = $1 AND password = $2',
     [username, password]);
@@ -46,9 +45,7 @@ function loginHandler(req, res) {
     if (row.count === '1') {
       var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
         {expiresIn: SESSION_LENGTH});
-      psqlClient.query(
-        'UPDATE users SET token = $1 WHERE email = $2 AND password = $3',
-        [token, username, password]);
+      PLAYERS[username] = {chunkCoords: "0 0", currentBlock: {row: 0, col: 0}};
       res.json({'token': token});
     } else {
       res.send();
@@ -58,16 +55,30 @@ function loginHandler(req, res) {
 
 function respondWithMap(req, res) {
   if (isAuth(req.body.token)) {
-
     if (CHUNKS[req.body.chunkCoords] !== undefined) {
       res.json(CHUNKS[req.body.chunkCoords]);
     } else {
-      console.log(req.body.chunkCoords, 'saving into database');
       var grid = genMap(req.body.chunkCoords);
       CHUNKS[req.body.chunkCoords] = grid;
       res.json(grid);
     }
+  } //end isAuth
+}
 
+function respondWithMove(req, res) {
+  if (isAuth(req.body.token)) {
+    var player = getEmailFromToken(req.body.token);
+    var requestedChunkCoords = req.body.chunkCoords;
+    var requestedRow = req.body.row;
+    var requestedCol = req.body.col;
+    if (true) { //CHUNKS[requestedChunkCoords][requestedRow][requestedCol] !== 0) {
+      //PLAYERS[player].chunkCoords = requestedChunkCoords;
+      //PLAYERS[player].currentBlock.row = requestedRow;
+      //PLAYERS[player].currentBlock.col = requestedCol;
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   } //end isAuth
 }
 
