@@ -21,3 +21,16 @@ function getRequestedChunkCoords(rowInc, colInc) {
     return getChunkCoords();
   }
 }
+
+function incMana() {
+  RED_MANA += 1;
+  ORANGE_MANA += 1;
+  YELLOW_MANA += 1;
+  GREEN_MANA += 1;
+  BLUE_MANA += 1;
+  INDIGO_MANA += 1;
+  VIOLET_MANA += 1;
+  BLACK_MANA += 1;
+  GRAY_MANA += 1;
+  WHITE_MANA += 1;
+}
