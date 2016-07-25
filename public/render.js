@@ -1,3 +1,41 @@
+function renderLearnSpellList() {
+  var spellMarkup = '';
+  SPELL_LIST.sort();
+  for (var i = 0; i < SPELL_LIST.length; i++) {
+    spellMarkup += '<div>';
+    spellMarkup += '<p class=\'learn-it\'>' + SPELL_LIST[i] + '</p>';
+    spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
+    spellMarkup += '</div>';
+  }
+  $('#spell_learn_list').html(spellMarkup);
+}
+
+function renderRunes() {
+  var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  var runeMarkup = '';
+  for (var i = 0; i < alphabet.length; i++) {
+    var letter = alphabet[i];
+    runeMarkup += '<div class=\'rune\' id=\'rune_' + letter + '\'>' + letter +
+      ' ' + RUNES[letter] + '</div>';
+  }
+  runeMarkup += '<div class=\'rune\' id=\'rune_\'>\' \' ' + RUNES[' '] +
+    '</div>';
+  $('#runes').html(runeMarkup);
+}
+
+function renderMana() {
+  $('#mana_bar_1_red').html(RED_MANA);
+  $('#mana_bar_2_orange').html(ORANGE_MANA);
+  $('#mana_bar_3_yellow').html(YELLOW_MANA);
+  $('#mana_bar_4_green').html(BLUE_MANA);
+  $('#mana_bar_5_blue').html(GREEN_MANA);
+  $('#mana_bar_6_indigo').html(INDIGO_MANA);
+  $('#mana_bar_7_violet').html(VIOLET_MANA);
+  $('#mana_bar_8_black').html(BLACK_MANA);
+  $('#mana_bar_9_gray').html(GRAY_MANA);
+  $('#mana_bar_10_white').html(WHITE_MANA);
+}
+
 function renderInitialMap() {
   $('#map').css('width', CHUNK_SIZE * 10);
   $('#map').html(genMapHTML(CHUNKS[getChunkCoords()]));

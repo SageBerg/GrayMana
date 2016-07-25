@@ -75,11 +75,17 @@ button {
   float: left;
   height: 160px;
   margin: 10px;
+  overflow-y:auto;
   width: 46%;
 }
 
 .indigo {
   background-color: $indigo;
+}
+
+.learn-it {
+  display: inline-block;
+  margin-left: 20px;
 }
 
 .mana_bar {
