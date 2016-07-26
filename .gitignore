@@ -43,6 +43,5 @@ brainstorm
 *.map
 *.sass-cache
 
-# Launch script
-run.sh
-run_tests.sh
+# shell scripts (some have sensitive data in them)
+*.sh
