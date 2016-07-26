@@ -79,6 +79,11 @@ button {
   width: 46%;
 }
 
+.hud_section_learn_spells {
+  @extend .hud_section;
+  height: 85%;
+}
+
 .indigo {
   background-color: $indigo;
 }

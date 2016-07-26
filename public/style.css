@@ -18,7 +18,7 @@ button {
 .blue {
   background-color: #C9DAF8; }
 
-.bordered, .hud_section, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, #damage_bar, #rune_section {
+.bordered, .hud_section, .hud_section_learn_spells, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, #damage_bar, #rune_section {
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -42,12 +42,15 @@ button {
 .green {
   background-color: #D9EAD3; }
 
-.hud_section {
+.hud_section, .hud_section_learn_spells {
   float: left;
   height: 160px;
   margin: 10px;
   overflow-y: auto;
   width: 46%; }
+
+.hud_section_learn_spells {
+  height: 85%; }
 
 .indigo {
   background-color: #9FC5E8; }
