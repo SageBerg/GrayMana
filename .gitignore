@@ -42,3 +42,6 @@ brainstorm
 # Sass
 *.map
 *.sass-cache
+
+# Launch script
+run.sh
