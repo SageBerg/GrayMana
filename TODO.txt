@@ -3,6 +3,8 @@ Bugs:
 
 Docs:
   Add tutorial for setting up Postgres to work with Gray Mana
+  Walk through instructions on another computer
+  Walk through instructions with another person on another computer
 
 Features:
   Saving character
