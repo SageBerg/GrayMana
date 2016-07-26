@@ -22,11 +22,11 @@ The game itself will probably be built with Unity.
 \*It's mostly me working on Gray Mana, but I'd like to thank my friends and family for all the feedback and ideas.
 
 ## How to run Gray Mana (work in progress)
-1. Clone this git repository
+1. `$ git clone https://github.com/SageBerg/GrayMana.git`
 2. `$ cd GrayMana`
-3. Install PostgreSQL (I'm running version 9.3.13)
-4. Set up the necessary tables (sorry, instructions coming later)
+3. Install PostgreSQL (I'm running version 9.3.13).
+4. Set up the necessary tables (sorry, instructions coming later).
 5. `$ npm install`
 6. `$ npm install -g nodemon`
 7. `$ sudo PORT=3002 PSQLPASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> nodemon server.js`
-8. In your browser, navigate to http://localhost:3002.
+8. In your browser, navigate to [http://localhost:3002](http://localhost:3002).
