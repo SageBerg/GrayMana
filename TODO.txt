@@ -2,7 +2,7 @@ Bugs:
   Add more exception handling to make application more robust
 
 Docs:
-  Add explanation of how to start the server with the correct env vars
+  Add tutorial for setting up Postgres to work with Gray Mana
 
 Features:
   Saving character
