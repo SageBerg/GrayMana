@@ -1,16 +1,8 @@
-Cleaning:
-  Clean up terminology (grid, map, chunk)
-  Stop trusting the client with character location
-    Make sever verify that it's not skipping moves
-  Move the CHUNK_SIZE to the server and make client request it
-  Move all of conParam composition to environment variables
+Bugs:
+  Add more exception handling to make application more robust
+
+Docs:
   Add explanation of how to start the server with the correct env vars
-  Write validations for user input
-  Add exception handling to make app more robust
-  Test out React.js on client to speed up rendering
-  Write unit tests
-  Write integration tests
-  Prevent tokens from being stolen like cookies
 
 Features:
   Saving character
@@ -20,7 +12,29 @@ Features:
   Learn spell
   Light spell
   Day and night cycle
-
   Register user
   Delete user
   Logout
+
+Organization:
+  Get the spell data in one place, preferably Postgres
+  Move the CHUNK_SIZE to the server and make client request it
+
+Performance:
+  Test out React.js on client to speed up rendering
+
+Security:
+  Prevent tokens from being stolen like cookies
+  Write validations for user input
+  Stop trusting the client with character location
+    Make sever verify that it's not skipping moves
+  Move all of conParam composition to environment variables
+  Check authorization for move requests
+
+Style:
+  Clean up terminology (grid, map, chunk)
+  Change to dash style HTML id and class names
+
+Testing:
+  Increase unit test coverage
+  Write integration tests
