@@ -1,5 +1,3 @@
-
-
 function getChunkCoords() {
   return CURRENT_CHUNK.x + ' ' + CURRENT_CHUNK.y;
 }

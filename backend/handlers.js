@@ -15,7 +15,6 @@ Handlers.prototype.loginHandler = function(req, res) {
     if (row.count === '1') {
       var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
         {expiresIn: SESSION_LENGTH});
-      //PLAYERS[username] = {chunkCoords: "0 0", currentBlock: {row: 0, col: 0}};
       res.json({'token': token});
     } else {
       res.send();

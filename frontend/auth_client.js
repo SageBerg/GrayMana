@@ -1,5 +1,5 @@
 function login() {
-  $.post('login', {username: $('#username').val(),
+  $.post('login.json', {username: $('#username').val(),
     password: $('#password').val()}, handleLogin);
 }
 
@@ -11,7 +11,7 @@ function handleLogin(res) {
 }
 
 function refreshToken() {
-  $.post('refresh_token', {'token': window.sessionStorage.accessToken},
+  $.post('refresh_token.json', {'token': window.sessionStorage.accessToken},
     function(res) {
       window.sessionStorage.accessToken = res.token;
   });
