@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const SESSION_LENGTH = '600s'; //argument in seconds for jwt constructor
-
 var Handlers = function(state) {
+  this.sessionLength = '600s'; //argument in seconds for jwt constructor
   this.state = state;
 }
 
-Handlers.prototype.loginHandler = function(req, res) {
+Handlers.prototype.respondWithLogin = function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
@@ -14,7 +13,7 @@ Handlers.prototype.loginHandler = function(req, res) {
   queryResult.on('row', function(row) {
     if (row.count === '1') {
       var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
-        {expiresIn: SESSION_LENGTH});
+        {expiresIn: this.sessionLength});
       res.json({'token': token});
     } else {
       res.send();
@@ -36,10 +35,13 @@ Handlers.prototype.respondWithMap = function(req, res) {
 
 Handlers.prototype.respondWithMove = function(req, res) {
   if (this.state.auth.isAuth(req.body.token)) {
+
+    //these variables will be used to edit the server's state
     var player = this.state.auth.getEmailFromToken(req.body.token);
     var requestedChunkCoords = req.body.chunkCoords;
     var requestedRow = req.body.row;
     var requestedCol = req.body.col;
+
     res.send(true);
   } //end isAuth
 }
@@ -49,7 +51,7 @@ Handlers.prototype.respondWithNewToken = function(req, res) {
     var decodedToken = jwt.decode(req.body.token, {complete: true});
     var username = decodedToken.payload.username;
     var newToken = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
-      {expiresIn: SESSION_LENGTH});
+      {expiresIn: this.sessionLength});
     res.json({'token': newToken});
   }
 }

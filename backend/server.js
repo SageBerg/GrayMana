@@ -23,7 +23,7 @@ Promise.all(
 );
 
 //set up routes
-app.post('/login.json', handlers.loginHandler);
+app.post('/login.json', handlers.respondWithLogin);
 app.post('/map.json', handlers.respondWithMap);
 app.post('/move', handlers.respondWithMove);
 app.post('/refresh_token.json', handlers.respondWithNewToken);
