@@ -1,26 +1,33 @@
-function genMap(chunkCoords) {
-  var presetPotentialTiles = getPresetPotentialTiles(chunkCoords);
-  gridSize = 40;
-  var grid = build_grid(gridSize);
+var WorldGen = function(chunkSize, chunks, database) {
+  this.chunkSize = chunkSize
+  this.chunks = chunks;
+  this.database = database;
+};
+
+WorldGen.prototype.genMap = function(chunkCoords) {
+  var presetPotentialTiles = this.getPresetPotentialTiles(chunkCoords);
+  var gridSize = 40;
+  var grid = this.build_grid(gridSize);
 
   var filled = new Set();
-  var potentialTerrains = {"water": new Set(), "grass": new Set(),
-    "sand": new Set()};
+  var potentialTerrains = {'water': new Set(), 'grass': new Set(),
+    'sand': new Set()};
   try {
-    loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains);
+    this.loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains);
   } catch (e) {
     console.log(e);
   }
   for (var key in potentialTerrains) {
     if (potentialTerrains.hasOwnProperty(key)) {
-       setSpawns(potentialTerrains[key], gridSize);
+       this.setSpawns(potentialTerrains[key], gridSize);
     }
   }
-  populateMap(potentialTerrains, filled, grid);
+  this.populateMap(potentialTerrains, filled, grid);
+  this.database.saveChunkToDB(chunkCoords, grid);
   return grid;
 }
 
-function build_grid(gridSize) {
+WorldGen.prototype.build_grid = function(gridSize) {
   grid = [];
   for (var i = 0; i < gridSize; i++) {
     grid.push([]);
@@ -31,40 +38,42 @@ function build_grid(gridSize) {
   return grid;
 }
 
-function loadPresetPotentialTiles(presetPotentialTiles, potentialTerrains) {
+WorldGen.prototype.loadPresetPotentialTiles = function(presetPotentialTiles,
+  potentialTerrains) {
   for (var i = 0; i < presetPotentialTiles.length; i++) {
-    var parsedPresetPotentialTiles = presetPotentialTiles[i].split(" ");
+    var parsedPresetPotentialTiles = presetPotentialTiles[i].split(' ');
     var row = parsedPresetPotentialTiles[0];
     var col = parsedPresetPotentialTiles[1];
     var terrain = parsedPresetPotentialTiles[2];
-    potentialTerrains[terrain].add(row + " " + col);
+    potentialTerrains[terrain].add(row + ' ' + col);
   }
 }
 
 //TODO replace this hardcoding with user-supplied parameters
-function setSpawns(potentialTiles, gridSize) {
-  var spawnCount = randInt(10) + 1;
+WorldGen.prototype.setSpawns = function(potentialTiles, gridSize) {
+  var spawnCount = this.randInt(10) + 1;
   for (var i = 0; i < spawnCount; i++) {
-    var spawn = randInt(gridSize - 1).toString() + " " +
-      randInt(gridSize - 1).toString();
+    var spawn = this.randInt(gridSize - 1).toString() + ' ' +
+      this.randInt(gridSize - 1).toString();
     potentialTiles.add(spawn);
   }
 }
 
-function populateMap(potentials, filled, grid) {
+WorldGen.prototype.populateMap = function(potentials, filled, grid) {
   var terrainNamesToCodes = {'water': 0, 'grass': 1, 'sand': 2};
-  while (potentialsRemaining(potentials)) {
+  while (this.potentialsRemaining(potentials)) {
     for (var key in potentials) {
       if (potentials.hasOwnProperty(key)) {
         if (potentials[key].size > 0) {
-          addTile(potentials[key], filled, grid, terrainNamesToCodes[key]);
+          this.addTile(potentials[key], filled, grid, terrainNamesToCodes[key]);
         }
       } //end if
     } //end for
   } //end while
 }
 
-function potentialsRemaining(potentials) {
+
+WorldGen.prototype.potentialsRemaining = function(potentials) {
   for (var key in potentials) {
     if (potentials.hasOwnProperty(key)) {
       if (potentials[key].size > 0) {
@@ -75,21 +84,22 @@ function potentialsRemaining(potentials) {
   return false;
 }
 
-function randInt(upperBound) {
+WorldGen.prototype.randInt = function(upperBound) {
   return Math.floor(Math.random() * upperBound);
 }
 
-function addTile(potentialTiles, filled, grid, terrain_id_number) {
-  var tileCoords = chooseTileCoords(potentialTiles);
+WorldGen.prototype.addTile = function(potentialTiles, filled, grid,
+  terrain_id_number) {
+  var tileCoords = this.chooseTileCoords(potentialTiles);
   potentialTiles.delete(tileCoords);
-  grid = addTileNumberToGrid(grid, terrain_id_number, tileCoords);
+  grid = this.addTileNumberToGrid(grid, terrain_id_number, tileCoords);
   filled.add(tileCoords);
-  addPotentials(grid.length, filled, tileCoords, potentialTiles);
+  this.addPotentials(grid.length, filled, tileCoords, potentialTiles);
 }
 
-function chooseTileCoords(potentialTiles) {
+WorldGen.prototype.chooseTileCoords = function(potentialTiles) {
   size = potentialTiles.size;
-  index = randInt(size);
+  index = this.randInt(size);
   var i = 0;
   for (tileCoords of potentialTiles) {
     if (i === index) {
@@ -99,126 +109,131 @@ function chooseTileCoords(potentialTiles) {
   }
 }
 
-function addTileNumberToGrid(grid, tileNumber, tileCoords) {
-  grid[getRow(tileCoords)][getCol(tileCoords)] = tileNumber;
+WorldGen.prototype.addTileNumberToGrid = function(grid, tileNumber,
+  tileCoords) {
+  grid[this.getRow(tileCoords)][this.getCol(tileCoords)] = tileNumber;
   return grid;
 }
 
-function getRow(coords) {
-  return parseInt(coords.split(" ")[0])
+WorldGen.prototype.getRow = function(coords) {
+  return parseInt(coords.split(' ')[0])
 }
 
-function getCol(coords) {
-  return parseInt(coords.split(" ")[1])
+WorldGen.prototype.getCol = function(coords) {
+  return parseInt(coords.split(' ')[1])
 }
 
-function addPotentials(gridSize, filled, tileCoords, potentialTiles) {
-  var row = getRow(tileCoords);
-  var col = getCol(tileCoords);
+WorldGen.prototype.addPotentials = function(gridSize, filled, tileCoords,
+  potentialTiles) {
+  var row = this.getRow(tileCoords);
+  var col = this.getCol(tileCoords);
 
   var moves = [[1, 0], [-1, 0], [0, 1], [0, -1]];
   for (move of moves) {
-    var modCoords = coordInc(row, col, move[0], move[1])
-    addPotential(modCoords, filled, gridSize, potentialTiles);
+    var modCoords = this.coordInc(row, col, move[0], move[1])
+    this.addPotential(modCoords, filled, gridSize, potentialTiles);
   }
 }
 
-function coordInc(row, col, rowMod, colMod) {
-  return (row + rowMod).toString() + " " + (col + colMod).toString();
+WorldGen.prototype.coordInc = function(row, col, rowMod, colMod) {
+  return (row + rowMod).toString() + ' ' + (col + colMod).toString();
 }
 
-function addPotential(modCoords, filled, gridSize, potentialTiles) {
-  if (!filled.has(modCoords) && getRow(modCoords) >= 0 &&
-    getRow(modCoords) < gridSize &&
-    getCol(modCoords) >= 0 &&
-    getCol(modCoords) < gridSize) {
+WorldGen.prototype.addPotential = function(modCoords, filled, gridSize,
+  potentialTiles) {
+  if (!filled.has(modCoords) && this.getRow(modCoords) >= 0 &&
+    this.getRow(modCoords) < gridSize &&
+    this.getCol(modCoords) >= 0 &&
+    this.getCol(modCoords) < gridSize) {
     potentialTiles.add(modCoords);
   }
 }
 
-function getPresetPotentialTiles(chunkCoords) {
+WorldGen.prototype.getPresetPotentialTiles = function(chunkCoords) {
   var presetPotentialTiles = [];
 
-  var x = parseInt(chunkCoords.split(" ")[0]);
-  var y = parseInt(chunkCoords.split(" ")[1]);
+  var x = parseInt(chunkCoords.split(' ')[0]);
+  var y = parseInt(chunkCoords.split(' ')[1]);
 
-  var upInfluencerChunk = x + " " + (y - 1);
-  var downInfluencerChunk = x + " " + (y + 1);
-  var rightInfluencerChunk = (x + 1) + " " + y;
-  var leftInfluencerChunk = (x - 1) + " " + y;
+  var upInfluencerChunk = x + ' ' + (y - 1);
+  var downInfluencerChunk = x + ' ' + (y + 1);
+  var rightInfluencerChunk = (x + 1) + ' ' + y;
+  var leftInfluencerChunk = (x - 1) + ' ' + y;
 
-  upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
-  downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
-  rightPresetPotentialTiles(rightInfluencerChunk, presetPotentialTiles);
-  leftPresetPotentialTiles(leftInfluencerChunk, presetPotentialTiles);
+  this.upPresetPotentialTiles(upInfluencerChunk, presetPotentialTiles);
+  this.downPresetPotentialTiles(downInfluencerChunk, presetPotentialTiles);
+  this.rightPresetPotentialTiles(rightInfluencerChunk, presetPotentialTiles);
+  this.leftPresetPotentialTiles(leftInfluencerChunk, presetPotentialTiles);
 
   return presetPotentialTiles;
 }
 
-function upPresetPotentialTiles (upInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[upInfluencerChunk] !== undefined) {
-    var relevantRow = CHUNKS[upInfluencerChunk][CHUNK_SIZE - 1];
-    addPresetPotentialTiles(relevantRow, presetPotentialTiles, "\"0 \" + i");
-  }
-}
-
-function downPresetPotentialTiles (downInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[downInfluencerChunk] !== undefined) {
-    var relevantRow = CHUNKS[downInfluencerChunk][0];
-    addPresetPotentialTiles(relevantRow, presetPotentialTiles,
-      "(CHUNK_SIZE - 1).toString() + \" \" + i");
-  }
-}
-
-function rightPresetPotentialTiles (rightInfluencerChunk,
+WorldGen.prototype.upPresetPotentialTiles = function(upInfluencerChunk,
   presetPotentialTiles) {
-  if (CHUNKS[rightInfluencerChunk] !== undefined) {
+  if (this.chunks[upInfluencerChunk] !== undefined) {
+    var relevantRow = this.chunks[upInfluencerChunk][this.chunkSize - 1];
+    this.addPresetPotentialTiles(relevantRow, presetPotentialTiles, '\"0 \" + i');
+  }
+}
+
+WorldGen.prototype.downPresetPotentialTiles = function(downInfluencerChunk,
+  presetPotentialTiles) {
+  if (this.chunks[downInfluencerChunk] !== undefined) {
+    var relevantRow = this.chunks[downInfluencerChunk][0];
+    this.addPresetPotentialTiles(relevantRow, presetPotentialTiles,
+      '(this.chunkSize - 1).toString() + \" \" + i');
+  }
+}
+
+WorldGen.prototype.rightPresetPotentialTiles = function(rightInfluencerChunk,
+  presetPotentialTiles) {
+  if (this.chunks[rightInfluencerChunk] !== undefined) {
     var relevantCol = [];
-    for (var i = 0; i < CHUNK_SIZE; i++) {
+    for (var i = 0; i < this.chunkSize; i++) {
       try {
-        relevantCol.push(CHUNKS[rightInfluencerChunk][i][0]);
+        relevantCol.push(this.chunks[rightInfluencerChunk][i][0]);
       } catch(exception) {
         console.log(exception);
       }
     }
     addPresetPotentialTiles(relevantCol, presetPotentialTiles,
-      "i + \" \" + (CHUNK_SIZE - 1).toString()");
+      'i + \" \" + (this.chunkSize - 1).toString()');
   }
 }
 
-function leftPresetPotentialTiles (leftInfluencerChunk, presetPotentialTiles) {
-  if (CHUNKS[leftInfluencerChunk] !== undefined) {
+WorldGen.prototype.leftPresetPotentialTiles = function(leftInfluencerChunk,
+  presetPotentialTiles) {
+  if (this.chunks[leftInfluencerChunk] !== undefined) {
     var relevantCol = [];
-    for (var i = 0; i < CHUNK_SIZE; i++) {
+    for (var i = 0; i < this.chunkSize; i++) {
       try {
-        relevantCol.push(CHUNKS[leftInfluencerChunk][i][CHUNK_SIZE - 1]);
+        relevantCol.push(this.chunks[leftInfluencerChunk][i][this.chunkSize - 1]
+        );
       } catch(exception) {
         console.log(exception);
       }
     }
-    addPresetPotentialTiles(relevantCol, presetPotentialTiles, "i + \" 0\"");
+    this.addPresetPotentialTiles(relevantCol, presetPotentialTiles, 'i + \" 0\"');
   }
 }
 
-function addPresetPotentialTiles(tileArray, presetPotentialTiles, evalString) {
+WorldGen.prototype.addPresetPotentialTiles = function(tileArray,
+  presetPotentialTiles, evalString) {
   for (var i = 0; i < tileArray.length; i++) {
     switch (tileArray[i]) {
       case 0:
-        presetPotentialTiles.push(eval(evalString) + " water");
+        presetPotentialTiles.push(eval(evalString) + ' water');
         break;
       case 1:
-        presetPotentialTiles.push(eval(evalString) + " grass");
+        presetPotentialTiles.push(eval(evalString) + ' grass');
         break;
       case 2:
-        presetPotentialTiles.push(eval(evalString) + " sand");
+        presetPotentialTiles.push(eval(evalString) + ' sand');
         break;
       default:
-        console.log("error: invalid tilecode " + tileArray[i] + "found");
+        console.log('invalid tilecode ' + tileArray[i] + 'found');
     } //end switch
   } //end for
 }
 
-exports.addTileNumberToGrid = addTileNumberToGrid;
-exports.chooseTileCoords = chooseTileCoords;
-exports.genMap = genMap;
-exports.getRow = getRow;
+exports.WorldGen = WorldGen;
