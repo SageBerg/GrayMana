@@ -196,7 +196,7 @@ WorldGen.prototype.rightPresetPotentialTiles = function(rightInfluencerChunk,
         console.log(exception);
       }
     }
-    addPresetPotentialTiles(relevantCol, presetPotentialTiles,
+    this.addPresetPotentialTiles(relevantCol, presetPotentialTiles,
       'i + \" \" + (this.chunkSize - 1).toString()');
   }
 }

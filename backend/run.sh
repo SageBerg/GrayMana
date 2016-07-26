@@ -1,0 +1,1 @@
+sudo PORT=3002 PSQLPASSWORD=soveryveryverysecretbogyl TOKEN_SECRET=soveryveryverysecretbogyl nodemon server.js
