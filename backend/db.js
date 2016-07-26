@@ -1,9 +1,8 @@
 const postgres = require('pg');
 
 var DB = function() {
-  //set up the database connection
-  var conParam = 'postgres://sage:' + process.env.PSQLPASSWORD +
-    '@localhost:5432/sage';
+  var conParam = 'postgres://' + process.env.PSQL_USER + ':' +
+    process.env.PSQL_PASSWORD + '@localhost:5432/graymana';
   this.psqlClient = new postgres.Client(conParam);
   this.psqlClient.connect();
 };

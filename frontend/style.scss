@@ -93,6 +93,10 @@ button {
   margin-left: 20px;
 }
 
+.login-input {
+  width: 300px;
+}
+
 .mana_bar {
   @extend .bordered;
   border-radius: $mana_bar_size / 2;

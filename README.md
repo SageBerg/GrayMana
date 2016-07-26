@@ -24,13 +24,23 @@ The game itself will probably be built with Unity.
 ## How to run Gray Mana (work in progress)
 1. `$ git clone https://github.com/SageBerg/GrayMana.git`
 2. `$ cd GrayMana`
-3. Install PostgreSQL (I'm running version 9.3.13).
-4. Set up the necessary tables (sorry, instructions coming later).
-5. `$ npm install`
-6. `$ npm install -g nodemon`
-7. `$ sudo PORT=3002 PSQLPASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> nodemon server.js`
-8. In your browser, navigate to [http://localhost:3002](http://localhost:3002).
+3. Install PostgreSQL (I'm using version 9.3.13).
+4. `$ createdb graymana`
+5. `$ psql graymana`
+6. `CREATE TABLE maps(id SERIAL PRIMARY KEY NOT NULL, grid INT[40][40] NOT NULL, coords VARCHAR(64) NOT NULL, world_id INT);`
+7. `CREATE TABLE users(id SERIAL PRIMARY KEY NOT NULL, email VARCHAR(64) NOT NULL, password VARCHAR(64) NOT NULL, world_id INT);`
+8. `INSERT INTO users (email, password, world_id) VALUES ('person@example.com', 'not_a_real_password_used_anywhere_else', 1);`
+9. `\q`
+10. `$ npm install`
+11. `$ npm install -g nodemon`
+12. `$ sudo PORT=3002 PSQL_PASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> nodemon server.js`
+13. In your browser, navigate to [http://localhost:3002](http://localhost:3002).
 
 ## How to test Gray Mana
 1. `$ npm install -g mocha`
 2. `$ TOKEN_SECRET=<your_secret> mocha`
+
+## How to transpile style.scss into style.css
+1. Install Ruby (I'm using version 2.3).
+2. `$ sudo gem install sass`
+3. `$ sass --watch frontend/style.scss:frontend/style.css`

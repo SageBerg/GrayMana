@@ -59,6 +59,9 @@ button {
   display: inline-block;
   margin-left: 20px; }
 
+.login-input {
+  width: 300px; }
+
 .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white {
   border-radius: 38.5px;
   border-color: gray;
