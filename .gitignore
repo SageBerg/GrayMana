@@ -38,3 +38,7 @@ jspm_packages
 
 # Thought process
 brainstorm
+
+# Sass
+*.map
+*.sass-cache
