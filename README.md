@@ -32,15 +32,20 @@ The game itself will probably be built with Unity.
 8. `INSERT INTO users (email, password, world_id) VALUES ('person@example.com', 'not_a_real_password_used_anywhere_else', 1);`
 9. `\q`
 10. `$ npm install`
-11. `$ npm install -g nodemon`
+11. `$ sudo npm install -g nodemon`
 12. `$ sudo PORT=3002 PSQL_USER=<your_postgres_user> PSQL_PASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> nodemon server.js`
 13. In your browser, navigate to [http://localhost:3002](http://localhost:3002).
 
 ## How to test Gray Mana
-1. `$ npm install -g mocha`
+1. `$ sudo npm install -g mocha`
 2. `$ PSQL_USER=<your_postgres_user> PSQL_PASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> mocha`
 
-## How to transpile style.scss into style.css
+## How to transpile frontent/index.pug into frontend/index.html
+1. `$ sudo npm install -g pug-cli`
+2. `cd frontend`
+2. `$ pug -P index.pug`
+
+## How to transpile frontend/style.scss into frontend/into style.css
 1. Install Ruby (I'm using version 2.3).
 2. `$ sudo gem install sass`
 3. `$ sass --watch frontend/style.scss:frontend/style.css`

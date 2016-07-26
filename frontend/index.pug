@@ -1,0 +1,147 @@
+doctype html5
+html
+
+  head
+
+    link(rel="stylesheet", href="style.css")
+    link(rel="stylesheet", href="hud.css")
+    link(rel="stylesheet", href="modal.css")
+
+  body
+
+    div(id="learn_spells_modal" class="modal")
+      div(class="modal-content")
+        span(class="close") X
+        h3(Learn Spells)
+        div(class="hud_section")
+          h4 Runes
+
+          div(id="rune_section")
+            div(id="runes")
+
+        div(class="hud_section_learn_spells")
+          div(id="spell_learn_list")
+
+    button(class="metabutton") Logout
+    //- hotkey esc, x
+    
+    button(class="metabutton") Options
+    //- hotkey o
+
+    div(id="login_div")
+      h1 Gray Mana
+      h2 Username:
+      input(class="login-input" id="username" value="person@example.com")
+      h2 Password:
+      input(class="login-input" id="password"
+        value="not_a_real_password_used_anywhere_else")
+      button(onclick="login()") Submit
+
+    div(id="map")
+
+    div(class="hud_section")
+      <h3>Mana</h3>
+      div(id="mana_bar_1_red") 0
+      div(id="mana_bar_2_orange") 0
+      div(id="mana_bar_3_yellow") 0
+      div(id="mana_bar_4_green") 0
+      div(id="mana_bar_5_blue") 0
+      div(id="mana_bar_6_indigo") 0
+      div(id="mana_bar_7_violet") 0
+      div(id="mana_bar_8_black") 0
+      div(id="mana_bar_9_gray") 0
+      div(id="mana_bar_10_white") 0
+
+    div(class="hud_section")
+      h3 Spells
+      p You haven't learned any spells yet.
+
+      div(class="spell_slot", id="spell_slot_1")
+        div(class="spell_logo blue") Quickness
+
+      div(class="spell_slot", id="spell_slot_2")
+        div(class="spell_logo white") Burst
+
+      div(class="spell_slot", id="spell_slot_3")
+        div(class="spell_logo blue") Teleport
+
+      div(class="spell_slot", id="spell_slot_4")
+        div(class="spell_logo indigo") Heal
+
+      div(class="spell_slot", id="spell_slot_5")
+        div(class="spell_logo white") Shield
+
+      div(class="spell_slot", id="spell_slot_6")
+        div(class="spell_logo gray") Light
+
+      div(class="spell_slot", id="spell_slot_7")
+        div(class="spell_logo red") Clean
+
+      div(class="spell_slot", id="spell_slot_8")
+        div(class="spell_logo black") Storage
+
+      div(class="spell_slot", id="spell_slot_9")
+        div(class="spell_logo gray") Map
+
+      div(class="selected_spell_slot spell_slot", id="spell_slot_10")
+        div(class="spell_logo violet") Message
+
+    div(class="hud_section")
+      h3 Damage
+      p You haven't taken any damage yet.
+      div(id="damage_bar")
+
+    div(class="hud_section")
+      h3 Actions
+
+      div(class="button_group")
+        button(class="action_button") Manatate
+        //- hotkey m
+
+      div(class="button_group")
+        button(class="action_button", disabled="disabled") Eat
+        //- hotkey e
+
+        button(class="action_button") Sleep
+        //- hotkey z
+
+      div(class="button_group")
+        button(class="action_button", disabled="disabled") Cast Spell
+        //- hotkey r
+
+        button(class="action_button", disabled="disabled") Prepare Spells
+        //- hotkey p
+
+        button(class="action_button", id="learn_spells") Learn Spells
+        //- hotkey l
+
+      div(class="button_group")
+        button(class="action_button") Interact
+        //- hotkey q
+
+        button(class="action_button") Talk
+        //- hotkey t
+
+        //- button(class="action_button") Bow
+        //- hotkey b
+
+        button(class="action_button", disabled="disabled") Faction
+        //- hotkey f
+
+      div(class="button_group")
+        button(class="action_button", disabled="disabled") Inventory
+        //- hotkey i
+
+        button(class="action_button", disabled="disabled") Achievements
+        //- hotkey c
+
+  script(src="jquery.min.js")
+  script(src="state_client.js")
+  script(src="client.js")
+  script(src="auth_client.js")
+  script(src="controls.js")
+  script(src="render.js")
+  script(src="request.js")
+  script(src="spell_list.js")
+  script(src="modal.js")
+  script(src="start.js")
