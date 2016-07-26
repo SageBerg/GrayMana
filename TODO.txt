@@ -29,7 +29,6 @@ Security:
   Stop trusting the client with character location
     Make sever verify that it's not skipping moves
   Move all of conParam composition to environment variables
-  Check authorization for move requests
 
 Style:
   Clean up terminology (grid, map, chunk)
