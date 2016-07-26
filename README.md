@@ -42,7 +42,7 @@ The game itself will probably be built with Unity.
 
 ## How to transpile frontent/index.pug into frontend/index.html
 1. `$ sudo npm install -g pug-cli`
-2. `cd frontend`
+2. `$ cd frontend`
 2. `$ pug -P index.pug`
 
 ## How to transpile frontend/style.scss into frontend/into style.css
