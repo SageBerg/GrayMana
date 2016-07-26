@@ -3,10 +3,15 @@ const jwt = require('jsonwebtoken');
 var Auth = function() {};
 
 Auth.prototype.isAuth = function(token) {
-  if (jwt.verify(token, process.env.TOKEN_SECRET)) {
-    return true;
+  try {
+    if (jwt.verify(token, process.env.TOKEN_SECRET)) {
+      return true;
+    }
+    return false;
+  } catch (exception) {
+    console.log(exception);
+    return false;
   }
-  return false;
 }
 
 Auth.prototype.getEmailFromToken = function(token) {
