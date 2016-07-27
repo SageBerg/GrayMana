@@ -13,7 +13,7 @@ $black: #434343;
 $gray: #B6B6B6;
 $white: #F3F3F3;
 
-.action_button {
+.action-button {
   display: list-item;
   margin: 5px;
 }
@@ -34,7 +34,7 @@ $white: #F3F3F3;
   display: inline-block;
 }
 
-.button_group {
+.button-group {
   display: inline-block;
   margin: 5px;
 }
@@ -47,7 +47,7 @@ $white: #F3F3F3;
   background-color: $green;
 }
 
-.hud_section {
+.hud-section {
   @extend .bordered;
   float: left;
   height: 160px;
@@ -56,8 +56,8 @@ $white: #F3F3F3;
   width: 46%;
 }
 
-.hud_section_learn_spells {
-  @extend .hud_section;
+.hud-section-learn-spells {
+  @extend .hud-section;
   height: 85%;
 }
 
@@ -70,7 +70,7 @@ $white: #F3F3F3;
   margin-left: 20px;
 }
 
-.mana_bar {
+.mana-bar {
   @extend .bordered;
   border-radius: $mana_bar_size / 2;
   border-color: gray;
@@ -102,20 +102,20 @@ $white: #F3F3F3;
   text-align: center;
   width: $rune_size;
 }
-.selected_spell_slot {
+.selected-spell-slot {
   border-color: gold;
   border-style: solid;
   border-width: 5px;
 }
 
-.spell_logo {
+.spell-logo {
   display: inline-block;
   height: $spell_logo_size;
   text-align: center;
   width: $spell_logo_size;
 }
 
-.spell_slot {
+.spell-slot {
   display: inline-block;
 }
 
@@ -131,7 +131,7 @@ $white: #F3F3F3;
   background-color: $yellow;
 }
 
-#damage_bar {
+#damage-bar {
   @extend .bordered;
   border-radius: 5px;
   height: 20px;
@@ -140,60 +140,59 @@ $white: #F3F3F3;
 }
 
 
-#mana_bar_1_red {
-  @extend .mana_bar;
+#mana-bar-1-red {
+  @extend .mana-bar;
   background-color: $red;
 }
 
-#mana_bar_2_orange {
-  @extend .mana_bar;
+#mana-bar-2-orange {
+  @extend .mana-bar;
   background-color: $orange;
 }
 
-#mana_bar_3_yellow {
-  @extend .mana_bar;
+#mana-bar-3-yellow {
+  @extend .mana-bar;
   background-color: $yellow;
 }
 
-#mana_bar_4_green {
-  @extend .mana_bar;
+#mana-bar-4-green {
+  @extend .mana-bar;
   background-color: $green;
 }
 
-#mana_bar_5_blue {
-  @extend .mana_bar;
+#mana-bar-5-blue {
+  @extend .mana-bar;
   background-color: $blue;
 }
 
-#mana_bar_6_indigo {
-  @extend .mana_bar;
+#mana-bar-6-indigo {
+  @extend .mana-bar;
   background-color: $indigo;
 }
 
-#mana_bar_7_violet {
-  @extend .mana_bar;
+#mana-bar-7-violet {
+  @extend .mana-bar;
   background-color: $violet;
 }
 
-#mana_bar_8_black {
-  @extend .mana_bar;
+#mana-bar-8-black {
+  @extend .mana-bar;
   background-color: $black;
   color: $white;
 }
 
-#mana_bar_9_gray {
-  @extend .mana_bar;
+#mana-bar-9-gray {
+  @extend .mana-bar;
   background-color: $gray;
 }
 
-#mana_bar_10_white {
-  @extend .mana_bar;
+#mana-bar-10-white {
+  @extend .mana-bar;
   background-color: $white;
 }
 
-#rune_section {
+#rune-section {
   @extend .bordered;
   padding: 2px;
-  //height: 150px;
   width: ($rune_size * 9) + (8 * 4);
 }

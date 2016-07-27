@@ -6,23 +6,23 @@
     <link rel="stylesheet" href="modal.css"/>
   </head>
   <body>
-    <div class="modal" id="learn_spells_modal">
+    <div class="modal" id="learn-spells-modal">
       <div class="modal-content"><span class="close">X</span>
         <h3 Learn="Learn" Spells="Spells"></h3>
-        <div class="hud_section">
+        <div class="hud-section">
           <h4>Runes</h4>
-          <div id="rune_section">
+          <div id="rune-section">
             <div id="runes"></div>
           </div>
         </div>
-        <div class="hud_section_learn_spells">
-          <div id="spell_learn_list"></div>
+        <div class="hud-section-learn-spells">
+          <div id="spell-learn-list"></div>
         </div>
       </div>
     </div>
     <button class="metabutton">Logout</button>
     <button class="metabutton">Options</button>
-    <div id="login_div">
+    <div id="login-div">
       <h1>Gray Mana</h1>
       <h2>Username:</h2>
       <input class="login-input" id="username" value="person@example.com"/>
@@ -31,79 +31,79 @@
       <button onclick="login()">Submit</button>
     </div>
     <div id="map"></div>
-    <div class="hud_section"><h3>Mana</h3>
-      <div id="mana_bar_1_red">0</div>
-      <div id="mana_bar_2_orange">0</div>
-      <div id="mana_bar_3_yellow">0</div>
-      <div id="mana_bar_4_green">0</div>
-      <div id="mana_bar_5_blue">0</div>
-      <div id="mana_bar_6_indigo">0</div>
-      <div id="mana_bar_7_violet">0</div>
-      <div id="mana_bar_8_black">0</div>
-      <div id="mana_bar_9_gray">0</div>
-      <div id="mana_bar_10_white">0</div>
+    <div class="hud-section"><h3>Mana</h3>
+      <div id="mana-bar-1-red">0</div>
+      <div id="mana-bar-2-orange">0</div>
+      <div id="mana-bar-3-yellow">0</div>
+      <div id="mana-bar-4-green">0</div>
+      <div id="mana-bar-5-blue">0</div>
+      <div id="mana-bar-6-indigo">0</div>
+      <div id="mana-bar-7-violet">0</div>
+      <div id="mana-bar-8-black">0</div>
+      <div id="mana-bar-9-gray">0</div>
+      <div id="mana-bar-10-white">0</div>
     </div>
-    <div class="hud_section">
+    <div class="hud-section">
       <h3>Spells</h3>
       <p>You haven't learned any spells yet.</p>
-      <div class="spell_slot" id="spell_slot_1">
-        <div class="spell_logo blue">Quickness</div>
+      <div class="spell-slot" id="spell-slot-1">
+        <div class="spell-logo blue">Quickness</div>
       </div>
-      <div class="spell_slot" id="spell_slot_2">
-        <div class="spell_logo white">Burst</div>
+      <div class="spell-slot" id="spell-slot-2">
+        <div class="spell-logo white">Burst</div>
       </div>
-      <div class="spell_slot" id="spell_slot_3">
-        <div class="spell_logo blue">Teleport</div>
+      <div class="spell-slot" id="spell-slot-3">
+        <div class="spell-logo blue">Teleport</div>
       </div>
-      <div class="spell_slot" id="spell_slot_4">
-        <div class="spell_logo indigo">Heal</div>
+      <div class="spell-slot" id="spell-slot-4">
+        <div class="spell-logo indigo">Heal</div>
       </div>
-      <div class="spell_slot" id="spell_slot_5">
-        <div class="spell_logo white">Shield</div>
+      <div class="spell-slot" id="spell-slot-5">
+        <div class="spell-logo white">Shield</div>
       </div>
-      <div class="spell_slot" id="spell_slot_6">
-        <div class="spell_logo gray">Light</div>
+      <div class="spell-slot" id="spell-slot-6">
+        <div class="spell-logo gray">Light</div>
       </div>
-      <div class="spell_slot" id="spell_slot_7">
-        <div class="spell_logo red">Clean</div>
+      <div class="spell-slot" id="spell-slot-7">
+        <div class="spell-logo red">Clean</div>
       </div>
-      <div class="spell_slot" id="spell_slot_8">
-        <div class="spell_logo black">Storage</div>
+      <div class="spell-slot" id="spell-slot-8">
+        <div class="spell-logo black">Storage</div>
       </div>
-      <div class="spell_slot" id="spell_slot_9">
-        <div class="spell_logo gray">Map</div>
+      <div class="spell-slot" id="spell-slot-9">
+        <div class="spell-logo gray">Map</div>
       </div>
-      <div class="selected_spell_slot spell_slot" id="spell_slot_10">
-        <div class="spell_logo violet">Message</div>
+      <div class="selected-spell-slot spell-slot" id="spell-slot-10">
+        <div class="spell-logo violet">Message</div>
       </div>
     </div>
-    <div class="hud_section">
+    <div class="hud-section">
       <h3>Damage</h3>
       <p>You haven't taken any damage yet.</p>
-      <div id="damage_bar"></div>
+      <div id="damage-bar"></div>
     </div>
-    <div class="hud_section">
+    <div class="hud-section">
       <h3>Actions</h3>
-      <div class="button_group">
-        <button class="action_button">Manatate</button>
+      <div class="button-group">
+        <button class="action-button">Manatate</button>
       </div>
-      <div class="button_group">
-        <button class="action_button" disabled="disabled">Eat</button>
-        <button class="action_button">Sleep</button>
+      <div class="button-group">
+        <button class="action-button" disabled="disabled">Eat</button>
+        <button class="action-button">Sleep</button>
       </div>
-      <div class="button_group">
-        <button class="action_button" disabled="disabled">Cast Spell</button>
-        <button class="action_button" disabled="disabled">Prepare Spells</button>
-        <button class="action_button" id="learn_spells">Learn Spells</button>
+      <div class="button-group">
+        <button class="action-button" disabled="disabled">Cast Spell</button>
+        <button class="action-button" disabled="disabled">Prepare Spells</button>
+        <button class="action-button" id="learn-spells">Learn Spells</button>
       </div>
-      <div class="button_group">
-        <button class="action_button">Interact</button>
-        <button class="action_button">Talk</button>
-        <button class="action_button" disabled="disabled">Faction</button>
+      <div class="button-group">
+        <button class="action-button">Interact</button>
+        <button class="action-button">Talk</button>
+        <button class="action-button" disabled="disabled">Faction</button>
       </div>
-      <div class="button_group">
-        <button class="action_button" disabled="disabled">Inventory</button>
-        <button class="action_button" disabled="disabled">Achievements</button>
+      <div class="button-group">
+        <button class="action-button" disabled="disabled">Inventory</button>
+        <button class="action-button" disabled="disabled">Achievements</button>
       </div>
     </div>
   </body>

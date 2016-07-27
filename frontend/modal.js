@@ -1,8 +1,8 @@
 // Get the modal
-var modal = document.getElementById('learn_spells_modal');
+var modal = document.getElementById('learn-spells-modal');
 
 // Get the button that opens the modal
-var btn = document.getElementById("learn_spells");
+var btn = document.getElementById("learn-spells");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];

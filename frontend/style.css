@@ -18,13 +18,13 @@ h3 {
 .login-input {
   width: 300px; }
 
-.playerCharacter {
+.player-character {
   background-color: chocolate; }
 
 .sand {
   background-color: #fd4; }
 
-.tile, .grass, .playerCharacter, .sand, .water {
+.tile, .grass, .player-character, .sand, .water {
   display: inline-block;
   height: 10px;
   width: 10px; }
@@ -32,7 +32,7 @@ h3 {
 .water {
   background-color: #6af; }
 
-#login_div {
+#login-div {
   margin: 10px; }
 
 #map {

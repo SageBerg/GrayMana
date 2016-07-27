@@ -1,4 +1,4 @@
-.action_button {
+.action-button {
   display: list-item;
   margin: 5px; }
 
@@ -9,13 +9,13 @@
 .blue {
   background-color: #C9DAF8; }
 
-.bordered, .hud_section, .hud_section_learn_spells, .mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white, #damage_bar, #rune_section {
+.bordered, .hud-section, .hud-section-learn-spells, .mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white, #damage-bar, #rune-section {
   border-style: solid;
   border-width: 1px;
   border-color: black;
   display: inline-block; }
 
-.button_group {
+.button-group {
   display: inline-block;
   margin: 5px; }
 
@@ -25,14 +25,14 @@
 .green {
   background-color: #D9EAD3; }
 
-.hud_section, .hud_section_learn_spells {
+.hud-section, .hud-section-learn-spells {
   float: left;
   height: 160px;
   margin: 10px;
   overflow-y: auto;
   width: 46%; }
 
-.hud_section_learn_spells {
+.hud-section-learn-spells {
   height: 85%; }
 
 .indigo {
@@ -42,7 +42,7 @@
   display: inline-block;
   margin-left: 20px; }
 
-.mana_bar, #mana_bar_1_red, #mana_bar_2_orange, #mana_bar_3_yellow, #mana_bar_4_green, #mana_bar_5_blue, #mana_bar_6_indigo, #mana_bar_7_violet, #mana_bar_8_black, #mana_bar_9_gray, #mana_bar_10_white {
+.mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white {
   border-radius: 38.5px;
   border-color: gray;
   height: 77px;
@@ -69,18 +69,18 @@
   text-align: center;
   width: 30px; }
 
-.selected_spell_slot {
+.selected-spell-slot {
   border-color: gold;
   border-style: solid;
   border-width: 5px; }
 
-.spell_logo {
+.spell-logo {
   display: inline-block;
   height: 77px;
   text-align: center;
   width: 77px; }
 
-.spell_slot {
+.spell-slot {
   display: inline-block; }
 
 .violet {
@@ -92,44 +92,44 @@
 .yellow {
   background-color: #FEF1CB; }
 
-#damage_bar {
+#damage-bar {
   border-radius: 5px;
   height: 20px;
   margin: 10px;
   width: 800px; }
 
-#mana_bar_1_red {
+#mana-bar-1-red {
   background-color: #F4CCCC; }
 
-#mana_bar_2_orange {
+#mana-bar-2-orange {
   background-color: #FCE5CD; }
 
-#mana_bar_3_yellow {
+#mana-bar-3-yellow {
   background-color: #FEF1CB; }
 
-#mana_bar_4_green {
+#mana-bar-4-green {
   background-color: #D9EAD3; }
 
-#mana_bar_5_blue {
+#mana-bar-5-blue {
   background-color: #C9DAF8; }
 
-#mana_bar_6_indigo {
+#mana-bar-6-indigo {
   background-color: #9FC5E8; }
 
-#mana_bar_7_violet {
+#mana-bar-7-violet {
   background-color: #D9D2E9; }
 
-#mana_bar_8_black {
+#mana-bar-8-black {
   background-color: #434343;
   color: #F3F3F3; }
 
-#mana_bar_9_gray {
+#mana-bar-9-gray {
   background-color: #B6B6B6; }
 
-#mana_bar_10_white {
+#mana-bar-10-white {
   background-color: #F3F3F3; }
 
-#rune_section {
+#rune-section {
   padding: 2px;
   width: 302px; }
 

@@ -7,7 +7,7 @@ function renderLearnSpellList() {
     spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
     spellMarkup += '</div>';
   }
-  $('#spell_learn_list').html(spellMarkup);
+  $('#spell-learn-list').html(spellMarkup);
 }
 
 function renderRunes() {
@@ -15,25 +15,25 @@ function renderRunes() {
   var runeMarkup = '';
   for (var i = 0; i < alphabet.length; i++) {
     var letter = alphabet[i];
-    runeMarkup += '<div class=\'rune\' id=\'rune_' + letter + '\'>' + letter +
+    runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' + letter +
       ' ' + RUNES[letter] + '</div>';
   }
-  runeMarkup += '<div class=\'rune\' id=\'rune_\'>\' \' ' + RUNES[' '] +
+  runeMarkup += '<div class=\'rune\' id=\'rune-\'>\' \' ' + RUNES[' '] +
     '</div>';
   $('#runes').html(runeMarkup);
 }
 
 function renderMana() {
-  $('#mana_bar_1_red').html(RED_MANA);
-  $('#mana_bar_2_orange').html(ORANGE_MANA);
-  $('#mana_bar_3_yellow').html(YELLOW_MANA);
-  $('#mana_bar_4_green').html(BLUE_MANA);
-  $('#mana_bar_5_blue').html(GREEN_MANA);
-  $('#mana_bar_6_indigo').html(INDIGO_MANA);
-  $('#mana_bar_7_violet').html(VIOLET_MANA);
-  $('#mana_bar_8_black').html(BLACK_MANA);
-  $('#mana_bar_9_gray').html(GRAY_MANA);
-  $('#mana_bar_10_white').html(WHITE_MANA);
+  $('#mana-bar-1-red').html(RED_MANA);
+  $('#mana-bar-2-orange').html(ORANGE_MANA);
+  $('#mana-bar-3-yellow').html(YELLOW_MANA);
+  $('#mana-bar-4-green').html(BLUE_MANA);
+  $('#mana-bar-5-blue').html(GREEN_MANA);
+  $('#mana-bar-6-indigo').html(INDIGO_MANA);
+  $('#mana-bar-7-violet').html(VIOLET_MANA);
+  $('#mana-bar-8-black').html(BLACK_MANA);
+  $('#mana-bar-9-gray').html(GRAY_MANA);
+  $('#mana-bar-10-white').html(WHITE_MANA);
 }
 
 function renderInitialMap() {
@@ -87,7 +87,7 @@ function genMapHTML(grid) {
     for (var col = 0; col < CHUNK_SIZE; col++) {
       var terrain = terrainCodesToNames[grid[row][col]];
       if (row === MID && col === MID) { //draw player in center of map
-        mapHTML += '<div class=\"playerCharacter\"></div>';
+        mapHTML += '<div class=\"player-character\"></div>';
       } else {
         mapHTML += '<div class=' + terrain + '></div>';
       } //end if player or terrain

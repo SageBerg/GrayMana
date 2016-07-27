@@ -9,26 +9,26 @@ html
 
   body
 
-    div(id="learn_spells_modal" class="modal")
+    div(id="learn-spells-modal" class="modal")
       div(class="modal-content")
         span(class="close") X
         h3(Learn Spells)
-        div(class="hud_section")
+        div(class="hud-section")
           h4 Runes
 
-          div(id="rune_section")
+          div(id="rune-section")
             div(id="runes")
 
-        div(class="hud_section_learn_spells")
-          div(id="spell_learn_list")
+        div(class="hud-section-learn-spells")
+          div(id="spell-learn-list")
 
     button(class="metabutton") Logout
     //- hotkey esc, x
-    
+
     button(class="metabutton") Options
     //- hotkey o
 
-    div(id="login_div")
+    div(id="login-div")
       h1 Gray Mana
       h2 Username:
       input(class="login-input" id="username" value="person@example.com")
@@ -39,100 +39,100 @@ html
 
     div(id="map")
 
-    div(class="hud_section")
+    div(class="hud-section")
       <h3>Mana</h3>
-      div(id="mana_bar_1_red") 0
-      div(id="mana_bar_2_orange") 0
-      div(id="mana_bar_3_yellow") 0
-      div(id="mana_bar_4_green") 0
-      div(id="mana_bar_5_blue") 0
-      div(id="mana_bar_6_indigo") 0
-      div(id="mana_bar_7_violet") 0
-      div(id="mana_bar_8_black") 0
-      div(id="mana_bar_9_gray") 0
-      div(id="mana_bar_10_white") 0
+      div(id="mana-bar-1-red") 0
+      div(id="mana-bar-2-orange") 0
+      div(id="mana-bar-3-yellow") 0
+      div(id="mana-bar-4-green") 0
+      div(id="mana-bar-5-blue") 0
+      div(id="mana-bar-6-indigo") 0
+      div(id="mana-bar-7-violet") 0
+      div(id="mana-bar-8-black") 0
+      div(id="mana-bar-9-gray") 0
+      div(id="mana-bar-10-white") 0
 
-    div(class="hud_section")
+    div(class="hud-section")
       h3 Spells
       p You haven't learned any spells yet.
 
-      div(class="spell_slot", id="spell_slot_1")
-        div(class="spell_logo blue") Quickness
+      div(class="spell-slot", id="spell-slot-1")
+        div(class="spell-logo blue") Quickness
 
-      div(class="spell_slot", id="spell_slot_2")
-        div(class="spell_logo white") Burst
+      div(class="spell-slot", id="spell-slot-2")
+        div(class="spell-logo white") Burst
 
-      div(class="spell_slot", id="spell_slot_3")
-        div(class="spell_logo blue") Teleport
+      div(class="spell-slot", id="spell-slot-3")
+        div(class="spell-logo blue") Teleport
 
-      div(class="spell_slot", id="spell_slot_4")
-        div(class="spell_logo indigo") Heal
+      div(class="spell-slot", id="spell-slot-4")
+        div(class="spell-logo indigo") Heal
 
-      div(class="spell_slot", id="spell_slot_5")
-        div(class="spell_logo white") Shield
+      div(class="spell-slot", id="spell-slot-5")
+        div(class="spell-logo white") Shield
 
-      div(class="spell_slot", id="spell_slot_6")
-        div(class="spell_logo gray") Light
+      div(class="spell-slot", id="spell-slot-6")
+        div(class="spell-logo gray") Light
 
-      div(class="spell_slot", id="spell_slot_7")
-        div(class="spell_logo red") Clean
+      div(class="spell-slot", id="spell-slot-7")
+        div(class="spell-logo red") Clean
 
-      div(class="spell_slot", id="spell_slot_8")
-        div(class="spell_logo black") Storage
+      div(class="spell-slot", id="spell-slot-8")
+        div(class="spell-logo black") Storage
 
-      div(class="spell_slot", id="spell_slot_9")
-        div(class="spell_logo gray") Map
+      div(class="spell-slot", id="spell-slot-9")
+        div(class="spell-logo gray") Map
 
-      div(class="selected_spell_slot spell_slot", id="spell_slot_10")
-        div(class="spell_logo violet") Message
+      div(class="selected-spell-slot spell-slot", id="spell-slot-10")
+        div(class="spell-logo violet") Message
 
-    div(class="hud_section")
+    div(class="hud-section")
       h3 Damage
       p You haven't taken any damage yet.
-      div(id="damage_bar")
+      div(id="damage-bar")
 
-    div(class="hud_section")
+    div(class="hud-section")
       h3 Actions
 
-      div(class="button_group")
-        button(class="action_button") Manatate
+      div(class="button-group")
+        button(class="action-button") Manatate
         //- hotkey m
 
-      div(class="button_group")
-        button(class="action_button", disabled="disabled") Eat
+      div(class="button-group")
+        button(class="action-button", disabled="disabled") Eat
         //- hotkey e
 
-        button(class="action_button") Sleep
+        button(class="action-button") Sleep
         //- hotkey z
 
-      div(class="button_group")
-        button(class="action_button", disabled="disabled") Cast Spell
+      div(class="button-group")
+        button(class="action-button", disabled="disabled") Cast Spell
         //- hotkey r
 
-        button(class="action_button", disabled="disabled") Prepare Spells
+        button(class="action-button", disabled="disabled") Prepare Spells
         //- hotkey p
 
-        button(class="action_button", id="learn_spells") Learn Spells
+        button(class="action-button", id="learn-spells") Learn Spells
         //- hotkey l
 
-      div(class="button_group")
-        button(class="action_button") Interact
+      div(class="button-group")
+        button(class="action-button") Interact
         //- hotkey q
 
-        button(class="action_button") Talk
+        button(class="action-button") Talk
         //- hotkey t
 
-        //- button(class="action_button") Bow
+        //- button(class="action-button") Bow
         //- hotkey b
 
-        button(class="action_button", disabled="disabled") Faction
+        button(class="action-button", disabled="disabled") Faction
         //- hotkey f
 
-      div(class="button_group")
-        button(class="action_button", disabled="disabled") Inventory
+      div(class="button-group")
+        button(class="action-button", disabled="disabled") Inventory
         //- hotkey i
 
-        button(class="action_button", disabled="disabled") Achievements
+        button(class="action-button", disabled="disabled") Achievements
         //- hotkey c
 
   script(src="jquery.min.js")
