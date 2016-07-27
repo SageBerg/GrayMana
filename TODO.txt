@@ -1,46 +1,96 @@
+Aesthetics:
+  Center lots of stuff
+  Figure out what to do with titles for sections
+  Figure how to position notifications
+  Figure out placement for text console
+  Modals Wireframes:
+    Manatate
+    Sleep
+    Faction
+    Inventory
+    Achievements
+    Options
+
+
 Bugs:
   Add more exception handling to make application more robust
 
+
 Deployment:
-  Put limits on the growth of the database
+  Put limits on the growth of the database tables (handle limits gracefully)
   Deploy on AWS
-  Get a "Let's Encrypt" certificate
+  Set up a "Let's Encrypt" certificate
+
 
 Docs:
-  Walk through instructions on another computer
-  Walk through instructions with another person on another computer
+  Developer Docs:
+    Walk through instructions on another computer
+    Walk through instructions with another person on another computer
+  Player Docs:
+    Make list of content needed
+
 
 Features:
-  Mana
-  Runes
-  Learn spell
-  Saving character
-  No walking on water
-  Slow walking on sand
-  Light spell
-  Day and night cycle
-  Register user
-  Delete user
-  Logout
+  Abilities:
+    Treasure Button (Temporary)
+    Light spell
+    Learn spell system
+    Prepare spells system
+    Cast spells with no effect
+  Account System:
+    Saving character
+    Register user with email
+    Delete user
+    Logout and kill session
+  Damage:
+    Damage system with eating
+  Leader Board:
+  Movement:
+    No walking on water
+    Slow walking on sand
+  Options:
+    Sound settings
+    Display settings
+  Terrain:
+    Larger biomes
+    Edge smoothing
+    Elevation
+    Rivers and lakes
+  World:
+    Day and night cycle
+
 
 Organization:
-  Get the spell data in one place, preferably Postgres
-  Move the CHUNK_SIZE to the server and make client request it
-  Break up the scss and css files
-  Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
-  Make blocks an object instead of integer
+  Code Level:
+    Make blocks an object instead of integer
+    Move the CHUNK_SIZE to the server and make client request it
+  Data Level:
+    Get the spell data in one place, preferably Postgres
+  File Level:
+    Break up the scss and css files
+    Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
+
 
 Performance:
-  Test out React.js on client to speed up rendering
+  Test out React on client to speed up rendering
+
 
 Security:
-  Set up HTTPS with Express
-  Write validation for user input
-  Stop trusting the client with character location
-  Hash, salt, and encrypt passwords in DB
+  Cheating:
+    Stop trusting the client with character location
+  Information Security:
+    Write validation for user input
+    Set up HTTPS with Express
+    Hash, salt, and encrypt passwords in DB
+
 
 Style:
+
 
 Testing:
   Increase unit test coverage
   Write integration tests
+
+
+User Testing:
+  Have another person play the game once it's marginally fun
