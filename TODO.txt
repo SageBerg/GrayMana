@@ -1,10 +1,7 @@
 Aesthetics:
-  Center lots of stuff
-  Figure out what to do with titles for sections
-  Figure how to position notifications
   Figure out placement for text console
+  Make spells boxes not slide around when selecting spells
   Modals Wireframes:
-    Manatate
     Sleep
     Faction
     Inventory
@@ -73,6 +70,7 @@ Organization:
 
 Performance:
   Try out React to speed up rendering
+  Minify everything sent to the client
 
 
 Security:
@@ -93,6 +91,7 @@ Testing:
   Increase unit test coverage
   Write integration tests
   Set up test coverage widget on GitHub
+  Test on IE, Edge, Firefox, Safari, and Opera browsers
 
 
 User Testing:

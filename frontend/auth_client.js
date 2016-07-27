@@ -7,7 +7,10 @@ function handleLogin(res) {
   CHUNKS = {}; //clear out any cached data
   window.sessionStorage.accessToken = res.token;
   setup();
-  $('#login-div').html(''); //removes login view
+
+  //remove login view
+  $('#login-div').html('');
+  $('#login-div').css('height', 0);
 }
 
 function refreshToken() {

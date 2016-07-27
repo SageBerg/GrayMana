@@ -1,6 +1,7 @@
 $mana_bar_size: 77px;
 $rune_size: 30px;
 $spell_logo_size: 77px;
+$hud_section_height: 130px;
 
 $red: #F4CCCC;
 $orange: #FCE5CD;
@@ -47,18 +48,39 @@ $white: #F3F3F3;
   background-color: $green;
 }
 
+.hud-heading {
+}
+
+.hud-panel {
+  border-radius: 6px;
+  background-color: white;
+  min-height: $hud_section_height;
+  margin: auto;
+  padding-bottom: 10px;
+  width: 98%
+}
+
+.hud-panel-content {
+  text-align: center;
+}
+
 .hud-section {
-  @extend .bordered;
+  display: inline-block;
   float: left;
-  height: 160px;
-  margin: 10px;
-  overflow-y:auto;
-  width: 46%;
+  min-height: 120px;
+  padding-top: 10px;
+  vertical-align: middle;
+  width: 50%;
 }
 
 .hud-section-learn-spells {
   @extend .hud-section;
   height: 85%;
+}
+
+.hud-title {
+  font-size: 200%;
+  margin-left: 10px;
 }
 
 .indigo {
@@ -75,12 +97,19 @@ $white: #F3F3F3;
   border-radius: $mana_bar_size / 2;
   border-color: gray;
   height: $mana_bar_size;
+  margin: 2px;
   text-align: center;
   width: $mana_bar_size;
 }
 
+.metabutton-container {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 .metabutton {
-  float: right;
+  display: block;
   margin: 10px;
 }
 
@@ -102,6 +131,7 @@ $white: #F3F3F3;
   text-align: center;
   width: $rune_size;
 }
+
 .selected-spell-slot {
   border-color: gold;
   border-style: solid;
@@ -111,8 +141,15 @@ $white: #F3F3F3;
 .spell-logo {
   display: inline-block;
   height: $spell_logo_size;
+  margin: 2px;
   text-align: center;
   width: $spell_logo_size;
+}
+
+.spell-logo-empty {
+  @extend .bordered;
+  @extend .spell-logo;
+  background-color: white;
 }
 
 .spell-slot {
@@ -133,12 +170,10 @@ $white: #F3F3F3;
 
 #damage-bar {
   @extend .bordered;
-  border-radius: 5px;
   height: 20px;
-  margin: 10px;
-  width: 800px;
+  margin-top: 10px;
+  width: 95%;
 }
-
 
 #mana-bar-1-red {
   @extend .mana-bar;

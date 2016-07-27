@@ -1,11 +1,19 @@
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
-  margin: 0px; }
+  background-color: #F0F0F0; }
 
 button {
-  width: 120px; }
+  width: 160px; }
 
-h3 {
-  margin-left: 20px; }
+.game-title {
+  color: #B6B6B6;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 500%;
+  margin-top: 20px;
+  text-align: center; }
 
 .chest {
   background-color: gray;
@@ -33,10 +41,12 @@ h3 {
   background-color: #6af; }
 
 #login-div {
-  margin: 10px; }
+  height: 400px;
+  margin: auto;
+  width: 400px; }
 
 #map {
-  margin: 10px;
+  margin: auto;
   width: 1000px; }
 
 /*# sourceMappingURL=style.css.map */

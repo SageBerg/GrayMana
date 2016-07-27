@@ -6,6 +6,7 @@ html
     link(rel="stylesheet", href="style.css")
     link(rel="stylesheet", href="hud.css")
     link(rel="stylesheet", href="modal.css")
+    link(href='https://fonts.googleapis.com/css?family=Josefin+Sans', rel='stylesheet', type='text/css')
 
   body
 
@@ -22,118 +23,127 @@ html
         div(class="hud-section-learn-spells")
           div(id="spell-learn-list")
 
-    button(class="metabutton") Logout
-    //- hotkey esc, x
+    dif(class="metabutton-container")
+      button(class="metabutton") Log Out (x)
+      button(class="metabutton") Edit Options (o)
+      button(class="metabutton") Get Game Info (h)
 
-    button(class="metabutton") Options
-    //- hotkey o
+    h1(class="game-title") Gray Mana
 
     div(id="login-div")
-      h1 Gray Mana
       h2 Username:
       input(class="login-input" id="username" value="person@example.com")
       h2 Password:
       input(class="login-input" id="password"
         value="not_a_real_password_used_anywhere_else")
-      button(onclick="login()") Submit
+      button(onclick="login()") Log In
 
     div(id="map")
 
     div(class="hud-section")
-      <h3>Mana</h3>
-      div(id="mana-bar-1-red") 0
-      div(id="mana-bar-2-orange") 0
-      div(id="mana-bar-3-yellow") 0
-      div(id="mana-bar-4-green") 0
-      div(id="mana-bar-5-blue") 0
-      div(id="mana-bar-6-indigo") 0
-      div(id="mana-bar-7-violet") 0
-      div(id="mana-bar-8-black") 0
-      div(id="mana-bar-9-gray") 0
-      div(id="mana-bar-10-white") 0
+      div(class="hud-panel")
+        div(class="hud-heading")
+          span(class="hud-title") Mana
+          span(id="notifications-mana")
+
+        div(class="hud-panel-content")
+          div(id="mana-bar-1-red") 0
+          div(id="mana-bar-2-orange") 0
+          div(id="mana-bar-3-yellow") 0
+          div(id="mana-bar-4-green") 0
+          div(id="mana-bar-5-blue") 0
+          div(id="mana-bar-6-indigo") 0
+          div(id="mana-bar-7-violet") 0
+          div(id="mana-bar-8-black") 0
+          div(id="mana-bar-9-gray") 0
+          div(id="mana-bar-10-white") 0
 
     div(class="hud-section")
-      h3 Spells
-      p You haven't learned any spells yet.
+      div(class="hud-panel")
+        div(class="hud-heading")
+          span(class="hud-title") Prepared Spells
+          span(id="notifications-prepared-spells") &nbsp;- You haven't prepared a spell yet.
 
-      div(class="spell-slot", id="spell-slot-1")
-        div(class="spell-logo blue") Quickness
+        div(class="hud-panel-content")
 
-      div(class="spell-slot", id="spell-slot-2")
-        div(class="spell-logo white") Burst
+          div(class="spell-slot", id="spell-slot-1")
+            //- div(class="spell-logo blue") Quickness
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-3")
-        div(class="spell-logo blue") Teleport
+          div(class="spell-slot", id="spell-slot-2")
+            //- div(class="spell-logo white") Burst
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-4")
-        div(class="spell-logo indigo") Heal
+          div(class="spell-slot", id="spell-slot-3")
+            //- div(class="spell-logo blue") Teleport
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-5")
-        div(class="spell-logo white") Shield
+          div(class="spell-slot", id="spell-slot-4")
+            //- div(class="spell-logo indigo") Heal
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-6")
-        div(class="spell-logo gray") Light
+          div(class="spell-slot", id="spell-slot-5")
+            //- div(class="spell-logo white") Shield
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-7")
-        div(class="spell-logo red") Clean
+          div(class="spell-slot", id="spell-slot-6")
+            //- div(class="spell-logo gray") Light
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-8")
-        div(class="spell-logo black") Storage
+          div(class="spell-slot", id="spell-slot-7")
+            //- div(class="spell-logo red") Clean
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="spell-slot", id="spell-slot-9")
-        div(class="spell-logo gray") Map
+          div(class="spell-slot", id="spell-slot-8")
+            //- div(class="spell-logo black") Storage
+            div(class="spell-logo-empty") Empty Slot
 
-      div(class="selected-spell-slot spell-slot", id="spell-slot-10")
-        div(class="spell-logo violet") Message
+          div(class="spell-slot", id="spell-slot-9")
+            //- div(class="spell-logo gray") Map
+            div(class="spell-logo-empty") Empty Slot
+
+          div(class="selected-spell-slot spell-slot", id="spell-slot-10")
+            //- div(class="spell-logo violet") Message
+            div(class="spell-logo-empty") Empty Slot
 
     div(class="hud-section")
-      h3 Damage
-      p You haven't taken any damage yet.
-      div(id="damage-bar")
+      div(class="hud-panel")
+        div(class="hud-heading")
+          span(class="hud-title") Damage
+          span(id="notifications-damage") &nbsp;- You haven't taken any damage yet.
+        div(class="hud-panel-content")
+          div(id="damage-bar")
 
     div(class="hud-section")
-      h3 Actions
+      div(class="hud-panel")
+        div(class="hud-heading")
+          span(class="hud-title") Actions
+          span(id="notifications-actions")
 
-      div(class="button-group")
-        button(class="action-button") Manatate
-        //- hotkey m
+        div(class="hud-panel-content")
+          div(class="button-group")
+            button(class="action-button") Manatate (m)
 
-      div(class="button-group")
-        button(class="action-button", disabled="disabled") Eat
-        //- hotkey e
+          div(class="button-group")
+            button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact (k)
+            button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat (e)
+            button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep (z)
 
-        button(class="action-button") Sleep
-        //- hotkey z
+          div(class="button-group")
+            button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell (r)
+            button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells (p)
+            button(class="action-button", id="learn-spells") Learn Spells (l)
 
-      div(class="button-group")
-        button(class="action-button", disabled="disabled") Cast Spell
-        //- hotkey r
+          div(class="button-group")
 
-        button(class="action-button", disabled="disabled") Prepare Spells
-        //- hotkey p
+            button(class="action-button") Talk (t)
+            button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests (q)
+            //- button(class="action-button") Bow (b)
+            button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details (f)
 
-        button(class="action-button", id="learn-spells") Learn Spells
-        //- hotkey l
-
-      div(class="button-group")
-        button(class="action-button") Interact
-        //- hotkey q
-
-        button(class="action-button") Talk
-        //- hotkey t
-
-        //- button(class="action-button") Bow
-        //- hotkey b
-
-        button(class="action-button", disabled="disabled") Faction
-        //- hotkey f
-
-      div(class="button-group")
-        button(class="action-button", disabled="disabled") Inventory
-        //- hotkey i
-
-        button(class="action-button", disabled="disabled") Achievements
-        //- hotkey c
+          div(class="button-group")
+            button(class="action-button") View Inventory (i)
+            button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
 
   script(src="jquery.min.js")
   script(src="state_client.js")

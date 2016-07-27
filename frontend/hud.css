@@ -9,7 +9,7 @@
 .blue {
   background-color: #C9DAF8; }
 
-.bordered, .hud-section, .hud-section-learn-spells, .mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white, #damage-bar, #rune-section {
+.bordered, .mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white, .spell-logo-empty, #damage-bar, #rune-section {
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -25,15 +25,31 @@
 .green {
   background-color: #D9EAD3; }
 
+.hud-panel {
+  border-radius: 6px;
+  background-color: white;
+  min-height: 130px;
+  margin: auto;
+  padding-bottom: 10px;
+  width: 98%; }
+
+.hud-panel-content {
+  text-align: center; }
+
 .hud-section, .hud-section-learn-spells {
+  display: inline-block;
   float: left;
-  height: 160px;
-  margin: 10px;
-  overflow-y: auto;
-  width: 46%; }
+  min-height: 120px;
+  padding-top: 10px;
+  vertical-align: middle;
+  width: 50%; }
 
 .hud-section-learn-spells {
   height: 85%; }
+
+.hud-title {
+  font-size: 200%;
+  margin-left: 10px; }
 
 .indigo {
   background-color: #9FC5E8; }
@@ -46,11 +62,17 @@
   border-radius: 38.5px;
   border-color: gray;
   height: 77px;
+  margin: 2px;
   text-align: center;
   width: 77px; }
 
+.metabutton-container {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
 .metabutton {
-  float: right;
+  display: block;
   margin: 10px; }
 
 .orange {
@@ -74,11 +96,15 @@
   border-style: solid;
   border-width: 5px; }
 
-.spell-logo {
+.spell-logo, .spell-logo-empty {
   display: inline-block;
   height: 77px;
+  margin: 2px;
   text-align: center;
   width: 77px; }
+
+.spell-logo-empty {
+  background-color: white; }
 
 .spell-slot {
   display: inline-block; }
@@ -93,10 +119,9 @@
   background-color: #FEF1CB; }
 
 #damage-bar {
-  border-radius: 5px;
   height: 20px;
-  margin: 10px;
-  width: 800px; }
+  margin-top: 10px;
+  width: 95%; }
 
 #mana-bar-1-red {
   background-color: #F4CCCC; }

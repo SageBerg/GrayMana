@@ -40,10 +40,13 @@ The game itself will probably be built with Unity.
 1. `$ sudo npm install -g mocha`
 2. `$ PSQL_USER=<your_postgres_user> PSQL_PASSWORD=<your_postgres_password> TOKEN_SECRET=<your_secret> mocha`
 
-## How to transpile frontent/index.pug into frontend/index.html
+## How to transpile frontent/index.pug into frontend/index.html and minify it
 1. `$ sudo npm install -g pug-cli`
 2. `$ cd frontend`
-2. `$ pug -P index.pug`
+3. `$ pug -P index.pug`
+4. `$ sudo npm install -g html-minifier`
+5. `$ html-minifier --collapse-whitespace index.html > interim_index.html`
+6. `$ mv interim_index.html index.html`
 
 ## How to transpile frontend/style.scss into frontend/into style.css
 1. Install Ruby (I'm using version 2.3).
