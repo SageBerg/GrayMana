@@ -67,12 +67,12 @@ Organization:
   Data Level:
     Get the spell data in one place, preferably Postgres
   File Level:
-    Break up the scss and css files
+    Continue breaking up the SCSS/CSS files by concern
     Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
 
 
 Performance:
-  Test out React on client to speed up rendering
+  Try out React to speed up rendering
 
 
 Security:
@@ -85,11 +85,14 @@ Security:
 
 
 Style:
+  Try out CoffeeScript
+  Try out Angular to abstract away the modal logic
 
 
 Testing:
   Increase unit test coverage
   Write integration tests
+  Set up test coverage widget on GitHub
 
 
 User Testing:
