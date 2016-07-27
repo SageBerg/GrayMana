@@ -4,18 +4,19 @@ Bugs:
 Deployment:
   Put limits on the growth of the database
   Deploy on AWS
-  Get a "Let's Encrypt" Cert
+  Get a "Let's Encrypt" certificate
 
 Docs:
   Walk through instructions on another computer
   Walk through instructions with another person on another computer
 
 Features:
-  Saving character
-  No walking on water
   Mana
   Runes
   Learn spell
+  Saving character
+  No walking on water
+  Slow walking on sand
   Light spell
   Day and night cycle
   Register user
@@ -32,7 +33,7 @@ Performance:
   Test out React.js on client to speed up rendering
 
 Security:
-  Prevent tokens from being stolen like cookies
+  Set up HTTPS with Express
   Write validation for user input
   Stop trusting the client with character location
     Make sever verify that it's not skipping moves
