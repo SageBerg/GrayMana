@@ -28,6 +28,7 @@ Organization:
   Move the CHUNK_SIZE to the server and make client request it
   Break up the scss and css files
   Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
+  Make blocks an object instead of integer
 
 Performance:
   Test out React.js on client to speed up rendering
@@ -36,12 +37,9 @@ Security:
   Set up HTTPS with Express
   Write validation for user input
   Stop trusting the client with character location
-    Make sever verify that it's not skipping moves
   Hash, salt, and encrypt passwords in DB
 
 Style:
-  Clean up terminology (grid, map, chunk)
-  Change to dash style HTML id and class names
 
 Testing:
   Increase unit test coverage

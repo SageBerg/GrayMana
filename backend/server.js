@@ -24,6 +24,6 @@ Promise.all(
 
 //set up routes
 app.post('/login.json', handlers.respondWithLogin);
-app.post('/map.json', handlers.respondWithMap);
+app.post('/chunk.json', handlers.respondWithChunk);
 app.post('/move', handlers.respondWithMove);
 app.post('/refresh_token.json', handlers.respondWithNewToken);

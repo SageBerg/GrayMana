@@ -3,9 +3,9 @@ var assert = require('chai').assert;
 var WorldGen = require('../backend/world_gen').WorldGen;
 var worldGen = new WorldGen();
 
-describe('addTileNumberToGrid', function() {
-  it('should add a 1 to the middle of the grid', function() {
-    assert.equal(worldGen.addTileNumberToGrid([[0,0,0], [0,0,0], [0,0,0]],
+describe('addTileNumberToChunk', function() {
+  it('should add a 1 to the middle of the chunk', function() {
+    assert.equal(worldGen.addTileNumberToChunk([[0,0,0], [0,0,0], [0,0,0]],
       1, "1 1")[1][1], 1);
   });
 });

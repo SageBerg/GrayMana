@@ -19,11 +19,11 @@ function stitchChunksPrep() {
 
 function loadChunk(chunkCoords, callback) {
   if (CHUNKS[chunkCoords] === undefined) {
-    $.post('map.json', {'token': window.sessionStorage.accessToken,
+    $.post('chunk.json', {'token': window.sessionStorage.accessToken,
       'chunkCoords': chunkCoords},
     function(res) {
       CHUNKS[chunkCoords] = res;
-      callback(); //can use to render map
+      callback(); //can use to render chunk
     });
   }
 }

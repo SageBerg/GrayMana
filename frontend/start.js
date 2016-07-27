@@ -1,5 +1,5 @@
 function setup() {
-  loadChunk(getChunkCoords(), renderInitialMap);
+  loadChunk(getChunkCoords(), renderInitialChunk);
   bindKeys();
 
   setInterval(function() {

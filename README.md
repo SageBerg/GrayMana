@@ -27,8 +27,8 @@ The game itself will probably be built with Unity.
 3. Install PostgreSQL (I'm using version 9.3.13).
 4. `$ createdb graymana`
 5. `$ psql graymana`
-6. `CREATE TABLE maps(id SERIAL PRIMARY KEY NOT NULL, grid INT[40][40] NOT NULL, coords VARCHAR(64) NOT NULL, world_id INT);`
-7. `CREATE TABLE users(id SERIAL PRIMARY KEY NOT NULL, email VARCHAR(64) NOT NULL, password VARCHAR(64) NOT NULL, world_id INT);`
+6. `CREATE TABLE chunks (id SERIAL PRIMARY KEY NOT NULL, chunk INT[40][40] NOT NULL, coords VARCHAR(64) NOT NULL, world_id INT);`
+7. `CREATE TABLE users (id SERIAL PRIMARY KEY NOT NULL, email VARCHAR(64) NOT NULL, password VARCHAR(64) NOT NULL, world_id INT);`
 8. `INSERT INTO users (email, password, world_id) VALUES ('person@example.com', 'not_a_real_password_used_anywhere_else', 1);`
 9. `\q`
 10. `$ npm install`

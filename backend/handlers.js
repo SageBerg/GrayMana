@@ -21,14 +21,14 @@ Handlers.prototype.respondWithLogin = function(req, res) {
   });
 }
 
-Handlers.prototype.respondWithMap = function(req, res) {
+Handlers.prototype.respondWithChunk = function(req, res) {
   if (this.state.auth.isAuth(req.body.token)) {
     if (this.state.chunks[req.body.chunkCoords] !== undefined) {
       res.json(this.state.chunks[req.body.chunkCoords]);
     } else {
-      var grid = this.state.worldGen.genMap(req.body.chunkCoords);
-      this.state.chunks[req.body.chunkCoords] = grid;
-      res.json(grid);
+      var chunk = this.state.worldGen.genChunk(req.body.chunkCoords);
+      this.state.chunks[req.body.chunkCoords] = chunk;
+      res.json(chunk);
     }
   } //end isAuth
 }

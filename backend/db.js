@@ -7,31 +7,31 @@ var DB = function() {
   this.psqlClient.connect();
 };
 
-DB.prototype.parseJavaScriptMapToPostgresMap = function(grid) {
-  var postgresGrid = '\{';
-  for (var i = 0; i < grid.length; i++) {
-    postgresGrid += '{';
-    for (var j = 0; j < grid.length; j++) {
-      postgresGrid += '\"' + grid[i][j] + '\",';
+DB.prototype.parseJavaScriptChunkToPostgresChunk = function(chunk) {
+  var postgresChunk = '\{';
+  for (var i = 0; i < chunk.length; i++) {
+    postgresChunk += '{';
+    for (var j = 0; j < chunk.length; j++) {
+      postgresChunk += '\"' + chunk[i][j] + '\",';
     }
-    postgresGrid = postgresGrid.slice(0,-1); //remove extra comma
-    postgresGrid += '},';
+    postgresChunk = postgresChunk.slice(0,-1); //remove extra comma
+    postgresChunk += '},';
   }
-  postgresGrid = postgresGrid.slice(0,-1); //remove that last comma
-  postgresGrid += '}';
-  return postgresGrid;
+  postgresChunk = postgresChunk.slice(0,-1); //remove that last comma
+  postgresChunk += '}';
+  return postgresChunk;
 }
 
-DB.prototype.saveChunkToDB = function(chunkCoords, grid) {
-  var psqlGrid = this.parseJavaScriptMapToPostgresMap(grid);
-  this.psqlClient.query('INSERT INTO maps (grid, world_id, coords) VALUES ' +
-    '($1, 1, $2)', [psqlGrid, chunkCoords]);
+DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
+  var psqlChunk = this.parseJavaScriptChunkToPostgresChunk(chunk);
+  this.psqlClient.query('INSERT INTO chunks (chunk, world_id, coords) VALUES ' +
+    '($1, 1, $2)', [psqlChunk, chunkCoords]);
 }
 
 DB.prototype.loadAllChunksFromDB = function(chunks) {
-  var psqlResponse = this.psqlClient.query('SELECT grid, coords FROM maps');
+  var psqlResponse = this.psqlClient.query('SELECT chunk, coords FROM chunks');
   psqlResponse.on('row', function(row) {
-    chunks[row['coords']] = row['grid'];
+    chunks[row['coords']] = row['chunk'];
   });
 }
 
