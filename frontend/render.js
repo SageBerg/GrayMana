@@ -16,24 +16,24 @@ function renderRunes() {
   for (var i = 0; i < alphabet.length; i++) {
     var letter = alphabet[i];
     runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' + letter +
-      ' ' + RUNES[letter] + '</div>';
+      ' ' + CHARACTER.runes[letter] + '</div>';
   }
-  runeMarkup += '<div class=\'rune\' id=\'rune-\'>\' \' ' + RUNES[' '] +
-    '</div>';
+  runeMarkup += '<div class=\'rune\' id=\'rune-\'>\' \' ' + CHARACTER.runes[' ']
+    + '</div>';
   $('#runes').html(runeMarkup);
 }
 
 function renderMana() {
-  $('#mana-bar-1-red').html(RED_MANA);
-  $('#mana-bar-2-orange').html(ORANGE_MANA);
-  $('#mana-bar-3-yellow').html(YELLOW_MANA);
-  $('#mana-bar-4-green').html(BLUE_MANA);
-  $('#mana-bar-5-blue').html(GREEN_MANA);
-  $('#mana-bar-6-indigo').html(INDIGO_MANA);
-  $('#mana-bar-7-violet').html(VIOLET_MANA);
-  $('#mana-bar-8-black').html(BLACK_MANA);
-  $('#mana-bar-9-gray').html(GRAY_MANA);
-  $('#mana-bar-10-white').html(WHITE_MANA);
+  $('#mana-bar-1-red').html(CHARACTER.mana.red);
+  $('#mana-bar-2-orange').html(CHARACTER.mana.orange);
+  $('#mana-bar-3-yellow').html(CHARACTER.mana.yellow);
+  $('#mana-bar-4-green').html(CHARACTER.mana.blue);
+  $('#mana-bar-5-blue').html(CHARACTER.mana.green);
+  $('#mana-bar-6-indigo').html(CHARACTER.mana.indigo);
+  $('#mana-bar-7-violet').html(CHARACTER.mana.violet);
+  $('#mana-bar-8-black').html(CHARACTER.mana.black);
+  $('#mana-bar-9-gray').html(CHARACTER.mana.gray);
+  $('#mana-bar-10-white').html(CHARACTER.mana.white);
 }
 
 function renderInitialChunk() {
