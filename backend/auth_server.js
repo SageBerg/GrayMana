@@ -12,11 +12,11 @@ Auth.prototype.isAuth = function(token) {
     console.log(exception);
     return false;
   }
-}
+};
 
 Auth.prototype.getEmailFromToken = function(token) {
   var decodedToken = jwt.decode(token, {complete: true});
   return decodedToken.payload.username;
-}
+};
 
 exports.Auth = Auth;
