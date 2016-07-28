@@ -21,14 +21,14 @@ function getRequestedChunkCoords(rowInc, colInc) {
 }
 
 function incMana() {
-  RED_MANA += 1;
-  ORANGE_MANA += 1;
-  YELLOW_MANA += 1;
-  GREEN_MANA += 1;
-  BLUE_MANA += 1;
-  INDIGO_MANA += 1;
-  VIOLET_MANA += 1;
-  BLACK_MANA += 1;
-  GRAY_MANA += 1;
-  WHITE_MANA += 1;
+  CHARACTER.mana.red += 1;
+  CHARACTER.mana.orange += 1;
+  CHARACTER.mana.yellow += 1;
+  CHARACTER.mana.green += 1;
+  CHARACTER.mana.blue += 1;
+  CHARACTER.mana.indigo += 1;
+  CHARACTER.mana.violet += 1;
+  CHARACTER.mana.black += 1;
+  CHARACTER.mana.gray += 1;
+  CHARACTER.mana.white += 1;
 }
