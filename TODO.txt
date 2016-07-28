@@ -42,6 +42,9 @@ Features:
   Damage:
     Damage system with eating
   Leader Board:
+    Richest character
+    Richest faction
+    Most quest effort?
   Movement:
     No walking on water
     Slow walking on sand
@@ -83,6 +86,10 @@ Security:
 
 
 Style:
+  Add 'use strict' to all JavaScript files
+  Change all JavaScript files to not use strings as keys in objects
+  Remove all whitespace from ends of lines
+  Standardize one line of whitespace at ends of files
   Try out CoffeeScript
   Try out Angular to abstract away the modal logic
 
