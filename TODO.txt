@@ -8,7 +8,7 @@ Aesthetics:
     Inventory
     Options
     Sleep
-    
+
 
 Bugs:
   Add more exception handling to make application more robust
@@ -65,7 +65,6 @@ Organization:
   Code Level:
     Make blocks an object instead of integer
     Move the CHUNK_SIZE to the server and make client request it
-    Put redundant resources like alphabets and color lists in their own module
   Data Level:
     Get the spell data in one place, preferably Postgres
   File Level:
@@ -91,6 +90,7 @@ Style:
   Add 'use strict' to all JavaScript files
   Change all JavaScript files to not use strings as keys in objects
   Remove all whitespace from ends of lines
+  Rename render.js so as not to confuse it with the official library Render.js
   Standardize one line of whitespace at ends of files
   Try out CoffeeScript
   Try out Angular to abstract away the modal logic
