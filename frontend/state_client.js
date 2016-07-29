@@ -1,11 +1,10 @@
 var world = {
-  chunkSize: 40
+  chunkSize: 40,
+  currentBlock: {row: 0, col: 0},
+  currentChunk: {x: 0, y: 0}
 };
 
 var CHUNKS = {}; //the client's representation of the game map
-
-var CURRENT_CHUNK = {x: 0, y: 0}; //the region of the map the player is on
-var CURRENT_BLOCK = {row: 0, col: 0}; //player's locaiton within region
 
 var MID = Math.floor(world.chunkSize / 2);
 var COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',
@@ -30,37 +29,37 @@ var character = {
 };
 
 function getChunkCoords() {
-  return CURRENT_CHUNK.x + ' ' + CURRENT_CHUNK.y;
+  return world.currentChunk.x + ' ' + world.currentChunk.y;
 }
 
 function getIncrementedChunkCoords(xInc, yInc) {
-  return (CURRENT_CHUNK.x + xInc) + ' ' + (CURRENT_CHUNK.y + yInc);
+  return (world.currentChunk.x + xInc) + ' ' + (world.currentChunk.y + yInc);
 }
 
 function changeCurrentBlock(row, col) {
-  CURRENT_BLOCK.row += row;
-  CURRENT_BLOCK.col += col;
+  world.currentBlock.row += row;
+  world.currentBlock.col += col;
   changeCurrentChunkY();
   changeCurrentChunkX();
 }
 
 function changeCurrentChunkY() {
-  if (CURRENT_BLOCK.row < 0) {
-    CURRENT_CHUNK.y -= 1;
-    CURRENT_BLOCK.row = world.chunkSize - 1;
-  } else if (CURRENT_BLOCK.row > world.chunkSize - 1) {
-    CURRENT_CHUNK.y += 1;
-    CURRENT_BLOCK.row = 0;
+  if (world.currentBlock.row < 0) {
+    world.currentChunk.y -= 1;
+    world.currentBlock.row = world.chunkSize - 1;
+  } else if (world.currentBlock.row > world.chunkSize - 1) {
+    world.currentChunk.y += 1;
+    world.currentBlock.row = 0;
   }
 }
 
 function changeCurrentChunkX() {
-  if (CURRENT_BLOCK.col < 0) {
-    CURRENT_CHUNK.x -= 1;
-    CURRENT_BLOCK.col = world.chunkSize - 1;
-  } else if (CURRENT_BLOCK.col > world.chunkSize - 1) {
-    CURRENT_CHUNK.x += 1;
-    CURRENT_BLOCK.col = 0;
+  if (world.currentBlock.col < 0) {
+    world.currentChunk.x -= 1;
+    world.currentBlock.col = world.chunkSize - 1;
+  } else if (world.currentBlock.col > world.chunkSize - 1) {
+    world.currentChunk.x += 1;
+    world.currentBlock.col = 0;
   }
 }
 

@@ -1,11 +1,11 @@
 function getRequestedChunkCoords(rowInc, colInc) {
-  if (CURRENT_BLOCK.row + rowInc < 0) {
+  if (world.currentBlock.row + rowInc < 0) {
     return getIncrementedChunkCoords(colInc, rowInc);
-  } else if (CURRENT_BLOCK.row + rowInc >= world.chunkSize) {
+  } else if (world.currentBlock.row + rowInc >= world.chunkSize) {
     return getIncrementedChunkCoords(colInc, rowInc);
-  } else if (CURRENT_BLOCK.col + colInc < 0) {
+  } else if (world.currentBlock.col + colInc < 0) {
     return getIncrementedChunkCoords(colInc, rowInc);
-  } else if (CURRENT_BLOCK.col + colInc >= world.chunkSize) {
+  } else if (world.currentBlock.col + colInc >= world.chunkSize) {
     return getIncrementedChunkCoords(colInc, rowInc);
   } else {
     return getChunkCoords();
@@ -45,12 +45,12 @@ function loadChunk(chunkCoords, callback) {
 function move(rowInc, colInc) {
   refreshToken(); //while the players is active keep the token refreshed
 
-  var chunkY = CURRENT_CHUNK.y + rowInc;
-  var chunkX = CURRENT_CHUNK.x + colInc;
+  var chunkY = world.currentChunk.y + rowInc;
+  var chunkX = world.currentChunk.x + colInc;
   var reqChunkCoords = getRequestedChunkCoords();
 
-  var reqRow = (CURRENT_BLOCK.row + rowInc) % world.chunkSize;
-  var reqCol = (CURRENT_BLOCK.col + colInc) % world.chunkSize;
+  var reqRow = (world.currentBlock.row + rowInc) % world.chunkSize;
+  var reqCol = (world.currentBlock.col + colInc) % world.chunkSize;
 
   if (reqRow < 0) {
     reqRow += world.chunkSize;

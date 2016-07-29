@@ -72,8 +72,8 @@ function renderInitialChunk() {
 
 function stitchChunks() {
   var chunk = buildBlankChunk();
-  var row = CURRENT_BLOCK.row;
-  var col = CURRENT_BLOCK.col;
+  var row = world.currentBlock.row;
+  var col = world.currentBlock.col;
   var currentChunk = CHUNKS[getChunkCoords()];
   var downChunk = CHUNKS[getIncrementedChunkCoords(0, 1)];
   var rightChunk = CHUNKS[getIncrementedChunkCoords(1, 0)];
