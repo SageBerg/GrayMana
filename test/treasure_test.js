@@ -11,7 +11,7 @@ describe('randInt', function() {
         assert.fail();
       }
     }
-    assert.equal(true, true)
+    assert.equal(true, true);
   });
 });
 
@@ -23,7 +23,7 @@ describe('randInt', function() {
         assert.fail();
       }
     }
-    assert.equal(true, true)
+    assert.equal(true, true);
   });
 });
 
@@ -35,6 +35,58 @@ describe('randInt', function() {
         assert.fail();
       }
     }
-    assert.equal(true, true)
+    assert.equal(true, true);
+  });
+});
+
+describe('treasureGen.runeDrop()', function() {
+  it('should return an array', function() {
+    var runes = treasureGen.runeDrop();
+    assert.isArray(runes);
+  });
+});
+
+describe('treasureGen.runeDrop()', function() {
+  it('should return an object of length <= treasureGen.maxRunes', function() {
+    var runes = treasureGen.runeDrop();
+    assert.equal(true, runes.length <= treasureGen.maxRunes);
+  });
+});
+
+describe('treasureGen.runeDrop()', function() {
+  it('should return number of runes in the expected statistical distribution',
+    function() {
+
+    var numberOfRuneDrops = 1000;
+    var tolerableDeviaton = 0.3;
+
+    var expectedProbabilities = {0: 0.25};
+    expectedProbabilities[treasureGen.maxRunes] =
+      Math.pow(0.75, treasureGen.maxRunes);
+    var sumOfProbabilities = 0.25;
+    for (var i = 1; i <= treasureGen.maxRunes - 1; i++) {
+      var expectedProbability = Math.pow(0.75, i) * 0.25;
+      sumOfProbabilities += expectedProbability;
+      expectedProbabilities[i] = expectedProbability;
+    }
+
+    var runeDropCounts = {};
+    for (var i = 0; i <= treasureGen.maxRunes; i++) {
+      runeDropCounts[i] = 0;
+    }
+    for (var i = 0; i < numberOfRuneDrops; i++) {
+      var numberOfRunesInDrop = treasureGen.runeDrop().length;
+      runeDropCounts[numberOfRunesInDrop] += 1;
+    }
+
+    for (var i = 0; i < treasureGen.maxRunes; i++) {
+      var diviationFromExpected = Math.abs(
+        (runeDropCounts[i] / numberOfRuneDrops) - expectedProbabilities[i])
+      if (diviationFromExpected > tolerableDeviaton) {
+        console.log(diviationFromExpected);
+        assert.fail();
+      }
+    }
+    assert.equal(true, true);
   });
 });

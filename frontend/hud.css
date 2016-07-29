@@ -81,8 +81,8 @@
 .red {
   background-color: #F4CCCC; }
 
-.rune {
-  background-color: gray;
+.rune, .rune-faded {
+  background-color: #B6B6B6;
   border-radius: 7.5px;
   color: white;
   display: inline-block;
@@ -90,6 +90,9 @@
   margin-bottom: 2px;
   text-align: center;
   width: 30px; }
+
+.rune-faded {
+  background-color: #DDD; }
 
 .selected-spell-slot {
   border-color: gold;

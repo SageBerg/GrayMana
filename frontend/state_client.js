@@ -43,3 +43,11 @@ function changeCurrentChunkX() {
     CURRENT_BLOCK.col = 0;
   }
 }
+
+function getRunes() {
+  var treasureGen = new TreasureGen();
+  var runeDrop = treasureGen.runeDrop();
+  for (var i = 0; i < runeDrop.length; i++) {
+    CHARACTER.runes[runeDrop[i]] += 1;
+  }
+}

@@ -11,15 +11,29 @@ function renderLearnSpellList() {
 }
 
 function renderRunes() {
-  var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  var alphabet = 'abcdefghijklmnopqrstuvwxyz ';
   var runeMarkup = '';
   for (var i = 0; i < alphabet.length; i++) {
     var letter = alphabet[i];
-    runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' + letter +
-      ' ' + CHARACTER.runes[letter] + '</div>';
+    var numberOfRunes = CHARACTER.runes[letter];
+    if (numberOfRunes > 0) {
+      if (letter === ' ') {
+        runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' +
+          '\' \'' + ' ' + numberOfRunes + '</div>';
+      } else {
+        runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' +
+          letter + ' ' + numberOfRunes + '</div>';
+      }
+    } else {
+      if (letter === ' ') {
+        runeMarkup += '<div class=\'rune-faded\' id=\'rune-' + letter + '\'>' +
+          '\' \'' + ' ' + numberOfRunes + '</div>';
+      } else {
+        runeMarkup += '<div class=\'rune-faded\' id=\'rune-' + letter + '\'>' +
+          letter + ' ' + numberOfRunes + '</div>';
+      }
+    }
   }
-  runeMarkup += '<div class=\'rune\' id=\'rune-\'>\' \' ' + CHARACTER.runes[' ']
-    + '</div>';
   $('#runes').html(runeMarkup);
 }
 
