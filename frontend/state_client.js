@@ -1,20 +1,14 @@
+var HUDState = {
+  selectedManaSlot: 10,
+  selectedSpellSlot: 10
+}
+
 var world = {
   chunkSize: 40,
   chunks: {},
   currentBlock: {row: 0, col: 0},
   currentChunk: {x: 0, y: 0}
 };
-
-//var CHUNKS = {}; //the client's representation of the game map
-
-var MID = Math.floor(world.chunkSize / 2);
-var COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',
-  'black', 'gray', 'white'];
-
-var HUDState = {
-  selectedManaSlot: 10,
-  selectedSpellSlot: 10
-}
 
 var character = {
   damage: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
