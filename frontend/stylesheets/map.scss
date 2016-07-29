@@ -1,0 +1,36 @@
+.chest {
+  background-color: gray;
+  height: 6px;
+  width: 6px;
+}
+
+.grass {
+  @extend .tile;
+  background-color: #0e2;
+}
+
+.player-character {
+  @extend .tile;
+  background-color: chocolate;
+}
+
+.sand {
+  @extend .tile;
+  background-color: #fd4;
+}
+
+.tile {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+.water {
+  @extend .tile;
+  background-color: #6af;
+}
+
+#map {
+  margin: auto;
+  width: 1000px;
+}

@@ -39,7 +39,7 @@ body {
 button {
   width: 155px; }
 
-.bordered {
+.bordered, .mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white {
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -88,4 +88,43 @@ button {
   display: block;
   margin: 10px; }
 
-/*# sourceMappingURL=hud.css.map */
+.mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white {
+  border-radius: 38.5px;
+  border-color: gray;
+  height: 77px;
+  margin: 2px;
+  text-align: center;
+  width: 77px; }
+
+#mana-bar-1-red {
+  background-color: #F4CCCC; }
+
+#mana-bar-2-orange {
+  background-color: #FCE5CD; }
+
+#mana-bar-3-yellow {
+  background-color: #FEF1CB; }
+
+#mana-bar-4-green {
+  background-color: #D9EAD3; }
+
+#mana-bar-5-blue {
+  background-color: #C9DAF8; }
+
+#mana-bar-6-indigo {
+  background-color: #9FC5E8; }
+
+#mana-bar-7-violet {
+  background-color: #D9D2E9; }
+
+#mana-bar-8-black {
+  background-color: #434343;
+  color: #F3F3F3; }
+
+#mana-bar-9-gray {
+  background-color: #B6B6B6; }
+
+#mana-bar-10-white {
+  background-color: #F3F3F3; }
+
+/*# sourceMappingURL=mana_dashboard.css.map */

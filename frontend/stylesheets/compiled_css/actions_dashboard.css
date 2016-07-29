@@ -56,4 +56,40 @@ button {
   margin-top: 20px;
   text-align: center; }
 
-/*# sourceMappingURL=style.css.map */
+.hud-panel {
+  border-radius: 6px;
+  background-color: white;
+  min-height: 130px;
+  margin: auto;
+  padding-bottom: 10px;
+  width: 98%; }
+
+.hud-panel-content {
+  text-align: center; }
+
+.hud-section {
+  display: inline-block;
+  float: left;
+  min-height: 120px;
+  padding-top: 10px;
+  vertical-align: middle;
+  width: 50%; }
+
+.hud-title {
+  font-size: 200%;
+  margin-left: 10px; }
+
+.metabutton-container {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+
+.metabutton {
+  display: block;
+  margin: 10px; }
+
+.action-button {
+  display: list-item;
+  margin: 5px; }
+
+/*# sourceMappingURL=actions_dashboard.css.map */

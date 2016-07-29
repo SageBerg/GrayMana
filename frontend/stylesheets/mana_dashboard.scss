@@ -1,0 +1,64 @@
+@import 'hud';
+
+$mana_bar_size: 77px;
+
+.mana-bar {
+  @extend .bordered;
+  border-radius: $mana_bar_size / 2;
+  border-color: gray;
+  height: $mana_bar_size;
+  margin: 2px;
+  text-align: center;
+  width: $mana_bar_size;
+}
+
+#mana-bar-1-red {
+  @extend .mana-bar;
+  background-color: $red;
+}
+
+#mana-bar-2-orange {
+  @extend .mana-bar;
+  background-color: $orange;
+}
+
+#mana-bar-3-yellow {
+  @extend .mana-bar;
+  background-color: $yellow;
+}
+
+#mana-bar-4-green {
+  @extend .mana-bar;
+  background-color: $green;
+}
+
+#mana-bar-5-blue {
+  @extend .mana-bar;
+  background-color: $blue;
+}
+
+#mana-bar-6-indigo {
+  @extend .mana-bar;
+  background-color: $indigo;
+}
+
+#mana-bar-7-violet {
+  @extend .mana-bar;
+  background-color: $violet;
+}
+
+#mana-bar-8-black {
+  @extend .mana-bar;
+  background-color: $black;
+  color: $white;
+}
+
+#mana-bar-9-gray {
+  @extend .mana-bar;
+  background-color: $gray;
+}
+
+#mana-bar-10-white {
+  @extend .mana-bar;
+  background-color: $white;
+}

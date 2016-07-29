@@ -3,9 +3,17 @@ html
 
   head
 
-    link(rel="stylesheet", href="stylesheets/style.css")
-    link(rel="stylesheet", href="stylesheets/hud.css")
-    link(rel="stylesheet", href="stylesheets/modal.css")
+    link(href="stylesheets/compiled_css/actions_dashboard.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/colors.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/damage_dashboard.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/hud.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/learn_spells_modal.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/login.css", rel="stylesheet", )
+    link(href="stylesheets/compiled_css/mana_dashboard.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/map.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/modal.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/prepared_spells_dashboard.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/style.css", rel="stylesheet")
     link(href='https://fonts.googleapis.com/css?family=Josefin+Sans', rel='stylesheet', type='text/css')
 
   body
@@ -13,14 +21,14 @@ html
     div(id="learn-spells-modal" class="modal")
       div(class="modal-content")
         span(class="close") X
-        h3(Learn Spells)
+        h3 Learn Spells
         div(class="hud-section")
           h4 Runes
 
           div(id="rune-section")
             div(id="runes")
 
-        div(class="hud-section-learn-spells")
+        div(class="learn-spells-pane")
           div(id="spell-learn-list")
 
     dif(class="metabutton-container")

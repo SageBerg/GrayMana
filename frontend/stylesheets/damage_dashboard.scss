@@ -1,0 +1,14 @@
+@import 'hud';
+
+.damage {
+  display: inline-block;
+  float: left;
+  height: 100%;
+}
+
+#damage-bar {
+  @extend .bordered;
+  height: 20px;
+  margin-top: 10px;
+  width: 95%;
+}

@@ -39,7 +39,7 @@ body {
 button {
   width: 155px; }
 
-.bordered {
+.bordered, #rune-section {
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -67,7 +67,7 @@ button {
 .hud-panel-content {
   text-align: center; }
 
-.hud-section {
+.hud-section, .learn-spells-pane {
   display: inline-block;
   float: left;
   min-height: 120px;
@@ -88,4 +88,27 @@ button {
   display: block;
   margin: 10px; }
 
-/*# sourceMappingURL=hud.css.map */
+.learn-it {
+  display: inline-block;
+  margin-left: 20px; }
+
+.learn-spells-pane {
+  height: 85%; }
+
+.rune, .rune-faded {
+  background-color: #B6B6B6;
+  border-radius: 7.5px;
+  color: white;
+  display: inline-block;
+  height: 30px;
+  margin-bottom: 2px;
+  text-align: center;
+  width: 30px; }
+
+.rune-faded {
+  background-color: #DDD; }
+
+#rune-section {
+  width: 270px; }
+
+/*# sourceMappingURL=learn_spells_modal.css.map */
