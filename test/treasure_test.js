@@ -90,3 +90,35 @@ describe('treasureGen.runeDrop()', function() {
     assert.equal(true, true);
   });
 });
+
+describe('treasureGen.manaDrop()', function() {
+  it('should return an object with the manaColor field', function() {
+    assert.isDefined(treasureGen.manaDrop().manaColor);
+  });
+});
+
+describe('treasureGen.manaDrop()', function() {
+  it('should return an object with the manaAmount field', function() {
+    assert.isDefined(treasureGen.manaDrop().manaAmount);
+  });
+});
+
+describe('treasureGen.manaDrop()', function() {
+  it('should return an object with a string in the manaColor bucket',
+    function() {
+    assert.isString(treasureGen.manaDrop().manaColor);
+  });
+});
+
+describe('treasureGen.manaDrop()', function() {
+  it('should return an object with a number in the manaAmount bucket',
+    function() {
+    assert.isNumber(treasureGen.manaDrop().manaAmount);
+  });
+});
+
+describe('treasureGen.manaDrop()', function() {
+  it('should return an object more than 0 mana', function() {
+    assert.equal(true, treasureGen.manaDrop().manaAmount > 0);
+  });
+});

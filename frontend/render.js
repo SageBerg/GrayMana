@@ -1,3 +1,18 @@
+function renderDamage() {
+  for (var i = 0; i < COLORS.length; i++) {
+    $('#damge-1-red').css('width', CHARACTER.damage['red'] + '%');
+    $('#damge-2-orange').css('width', CHARACTER.damage['orange']  + '%');
+    $('#damge-3-yellow').css('width', CHARACTER.damage['yellow']  + '%');
+    $('#damge-4-green').css('width', CHARACTER.damage['green']  + '%');
+    $('#damge-5-blue').css('width', CHARACTER.damage['blue'] + '%');
+    $('#damge-6-indigo').css('width', CHARACTER.damage['indigo'] + '%');
+    $('#damge-7-violet').css('width', CHARACTER.damage['violet'] + '%');
+    $('#damge-8-black').css('width', CHARACTER.damage['black'] + '%');
+    $('#damge-9-gray').css('width', CHARACTER.damage['gray' + '%']);
+    $('#damge-10-white').css('width', CHARACTER.damage['white'] + '%');
+  }
+}
+
 function renderLearnSpellList() {
   var spellMarkup = '';
   SPELL_LIST.sort();

@@ -113,6 +113,16 @@ html
           span(id="notifications-damage") &nbsp;- You haven't taken any damage yet.
         div(class="hud-panel-content")
           div(id="damage-bar")
+            div(class="damage red", id="damge-1-red")
+            div(class="damage orange", id="damge-2-orange")
+            div(class="damage yellow", id="damge-3-yellow")
+            div(class="damage green", id="damge-4-green")
+            div(class="damage blue", id="damge-5-blue")
+            div(class="damage indigo", id="damge-6-indigo")
+            div(class="damage violet", id="damge-7-violet")
+            div(class="damage black", id="damge-8-black")
+            div(class="damage gray", id="damge-9-gray")
+            div(class="damage white", id="damge-10-white")
 
     div(class="hud-section")
       div(class="hud-panel")
@@ -122,7 +132,7 @@ html
 
         div(class="hud-panel-content")
           div(class="button-group")
-            button(class="action-button", onclick="getRunes()") Get Treasure (g)
+            button(class="action-button", onclick="getTreasure()") Get Treasure (g)
             button(class="action-button") Manatate (m)
 
           div(class="button-group")
@@ -148,7 +158,6 @@ html
 
   script(src="jquery.min.js")
   script(src="state_client.js")
-  script(src="client.js")
   script(src="auth_client.js")
   script(src="controls.js")
   script(src="render.js")
