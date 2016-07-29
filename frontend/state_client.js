@@ -8,13 +8,10 @@ var MID = Math.floor(CHUNK_SIZE / 2);
 var COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',
   'black', 'gray', 'white'];
 
-var HUD_STATE = {
+var HUDState = {
   selectedManaSlot: 10,
   selectedSpellSlot: 10
 }
-
-var SELECTED_SPELL_SLOT = 10;
-var SELECTED_MANA_SLOT = 10;
 
 var CHARACTER = {
   damage: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,

@@ -3,23 +3,23 @@ document.addEventListener('wheel', wheelHandler);
 function wheelHandler(e) {
   e.preventDefault();
   var prev_spell_slot = document.getElementById('spell-slot-' +
-    SELECTED_SPELL_SLOT);
+    HUDState.selectedSpellSlot);
   prev_spell_slot.removeAttribute('class', 'selected-spell-slot');
   prev_spell_slot.setAttribute('class', 'spell-logo');
   var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
   if (delta === 1) {
-     SELECTED_SPELL_SLOT -= 1;
-     if (SELECTED_SPELL_SLOT < 1) {
-       SELECTED_SPELL_SLOT = 10;
+     HUDState.selectedSpellSlot -= 1;
+     if (HUDState.selectedSpellSlot < 1) {
+       HUDState.selectedSpellSlot = 10;
      }
   } else {
-    SELECTED_SPELL_SLOT += 1;
-    if (SELECTED_SPELL_SLOT > 10) {
-      SELECTED_SPELL_SLOT = 1;
+    HUDState.selectedSpellSlot += 1;
+    if (HUDState.selectedSpellSlot > 10) {
+      HUDState.selectedSpellSlot = 1;
     }
   }
   var current_spell_slot = document.getElementById("spell-slot-" +
-    SELECTED_SPELL_SLOT);
+    HUDState.selectedSpellSlot);
   current_spell_slot.setAttribute('class', 'selected-spell-slot spell-logo');
 }
 
