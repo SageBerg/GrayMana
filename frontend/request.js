@@ -18,13 +18,13 @@ function stitchChunksPrep() {
   var yPlus = getIncrementedChunkCoords(0, 1);
   var xyPlus = getIncrementedChunkCoords(1, 1);
 
-  if (CHUNKS[current] === undefined) {
+  if (world.chunks[current] === undefined) {
     loadChunk(current, stitchChunksPrep);
-  } else if (CHUNKS[yPlus] === undefined) {
+  } else if (world.chunks[yPlus] === undefined) {
     loadChunk(yPlus, stitchChunksPrep);
-  } else if (CHUNKS[xPlus] === undefined) {
+  } else if (world.chunks[xPlus] === undefined) {
     loadChunk(xPlus, stitchChunksPrep);
-  } else if (CHUNKS[xyPlus] === undefined) {
+  } else if (world.chunks[xyPlus] === undefined) {
     loadChunk(xyPlus, stitchChunksPrep);
   } else {
     stitchChunks();
@@ -32,11 +32,11 @@ function stitchChunksPrep() {
 }
 
 function loadChunk(chunkCoords, callback) {
-  if (CHUNKS[chunkCoords] === undefined) {
+  if (world.chunks[chunkCoords] === undefined) {
     $.post('chunk.json', {'token': window.sessionStorage.accessToken,
       'chunkCoords': chunkCoords},
     function(res) {
-      CHUNKS[chunkCoords] = res;
+      world.chunks[chunkCoords] = res;
       callback(); //can use to render chunk
     });
   }

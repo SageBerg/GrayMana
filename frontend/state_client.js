@@ -1,10 +1,11 @@
 var world = {
   chunkSize: 40,
+  chunks: {},
   currentBlock: {row: 0, col: 0},
   currentChunk: {x: 0, y: 0}
 };
 
-var CHUNKS = {}; //the client's representation of the game map
+//var CHUNKS = {}; //the client's representation of the game map
 
 var MID = Math.floor(world.chunkSize / 2);
 var COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',

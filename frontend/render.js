@@ -67,17 +67,17 @@ function renderMana() {
 
 function renderInitialChunk() {
   $('#map').css('width', world.chunkSize * 10);
-  $('#map').html(genChunkHTML(CHUNKS[getChunkCoords()]));
+  $('#map').html(genChunkHTML(world.chunks[getChunkCoords()]));
 }
 
 function stitchChunks() {
   var chunk = buildBlankChunk();
   var row = world.currentBlock.row;
   var col = world.currentBlock.col;
-  var currentChunk = CHUNKS[getChunkCoords()];
-  var downChunk = CHUNKS[getIncrementedChunkCoords(0, 1)];
-  var rightChunk = CHUNKS[getIncrementedChunkCoords(1, 0)];
-  var downRightChunk = CHUNKS[getIncrementedChunkCoords(1, 1)];
+  var currentChunk = world.chunks[getChunkCoords()];
+  var downChunk = world.chunks[getIncrementedChunkCoords(0, 1)];
+  var rightChunk = world.chunks[getIncrementedChunkCoords(1, 0)];
+  var downRightChunk = world.chunks[getIncrementedChunkCoords(1, 1)];
 
   for (var i = 0; i < world.chunkSize; i++) {
     for (var j = 0; j < world.chunkSize; j++) {
