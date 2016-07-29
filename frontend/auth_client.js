@@ -4,7 +4,6 @@ function login() {
 }
 
 function handleLogin(res) {
-  CHUNKS = {}; //clear out any cached data
   window.sessionStorage.accessToken = res.token;
   setup();
 
