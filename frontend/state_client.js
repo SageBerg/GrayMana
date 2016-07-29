@@ -13,7 +13,7 @@ var HUDState = {
   selectedSpellSlot: 10
 }
 
-var CHARACTER = {
+var character = {
   damage: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
     violet: 0, black: 0, gray: 0, white: 0},
   life: 100,
@@ -64,8 +64,8 @@ function changeCurrentChunkX() {
 function incAllMana() {
   for (var i = 0; i < COLORS.length; i++) {
     var color = COLORS[i];
-    if (CHARACTER.mana[color] < 1000) {
-      CHARACTER.mana[color] += 1;
+    if (character.mana[color] < 1000) {
+      character.mana[color] += 1;
     }
   }
 }
@@ -80,23 +80,23 @@ function getRunes() {
   var treasureGen = new TreasureGen();
   var runeDrop = treasureGen.runeDrop();
   for (var i = 0; i < runeDrop.length; i++) {
-    CHARACTER.runes[runeDrop[i]] += 1;
+    character.runes[runeDrop[i]] += 1;
   }
 }
 
 function getMana() {
   var treasureGen = new TreasureGen();
   var manaBundle = treasureGen.manaDrop();
-  CHARACTER.mana[manaBundle.manaColor] += manaBundle.manaAmount;
+  character.mana[manaBundle.manaColor] += manaBundle.manaAmount;
 }
 
 function takeDamage(amount, color) {
-  CHARACTER.damage[color] += amount;
+  character.damage[color] += amount;
   deathCheck();
 }
 
 function deathCheck() {
-  if (CHARACTER.damage > CHARACTER.life) {
+  if (character.damage > character.life) {
     console.log('Ya dead!')
     clearDamage();
     printDeathMessage(color);
@@ -104,7 +104,7 @@ function deathCheck() {
 }
 
 function clearDamage() {
-  CHARACTER.mana = {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
+  character.mana = {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
     violet: 0, black: 0, gray: 0, white: 0};
 }
 

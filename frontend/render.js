@@ -1,15 +1,15 @@
 function renderDamage() {
   for (var i = 0; i < COLORS.length; i++) {
-    $('#damge-1-red').css('width', CHARACTER.damage['red'] + '%');
-    $('#damge-2-orange').css('width', CHARACTER.damage['orange']  + '%');
-    $('#damge-3-yellow').css('width', CHARACTER.damage['yellow']  + '%');
-    $('#damge-4-green').css('width', CHARACTER.damage['green']  + '%');
-    $('#damge-5-blue').css('width', CHARACTER.damage['blue'] + '%');
-    $('#damge-6-indigo').css('width', CHARACTER.damage['indigo'] + '%');
-    $('#damge-7-violet').css('width', CHARACTER.damage['violet'] + '%');
-    $('#damge-8-black').css('width', CHARACTER.damage['black'] + '%');
-    $('#damge-9-gray').css('width', CHARACTER.damage['gray' + '%']);
-    $('#damge-10-white').css('width', CHARACTER.damage['white'] + '%');
+    $('#damge-1-red').css('width', character.damage['red'] + '%');
+    $('#damge-2-orange').css('width', character.damage['orange']  + '%');
+    $('#damge-3-yellow').css('width', character.damage['yellow']  + '%');
+    $('#damge-4-green').css('width', character.damage['green']  + '%');
+    $('#damge-5-blue').css('width', character.damage['blue'] + '%');
+    $('#damge-6-indigo').css('width', character.damage['indigo'] + '%');
+    $('#damge-7-violet').css('width', character.damage['violet'] + '%');
+    $('#damge-8-black').css('width', character.damage['black'] + '%');
+    $('#damge-9-gray').css('width', character.damage['gray' + '%']);
+    $('#damge-10-white').css('width', character.damage['white'] + '%');
   }
 }
 
@@ -30,7 +30,7 @@ function renderRunes() {
   var runeMarkup = '';
   for (var i = 0; i < alphabet.length; i++) {
     var letter = alphabet[i];
-    var numberOfRunes = CHARACTER.runes[letter];
+    var numberOfRunes = character.runes[letter];
     if (numberOfRunes > 0) {
       if (letter === ' ') {
         runeMarkup += '<div class=\'rune\' id=\'rune-' + letter + '\'>' +
@@ -53,16 +53,16 @@ function renderRunes() {
 }
 
 function renderMana() {
-  $('#mana-bar-1-red').html(CHARACTER.mana.red);
-  $('#mana-bar-2-orange').html(CHARACTER.mana.orange);
-  $('#mana-bar-3-yellow').html(CHARACTER.mana.yellow);
-  $('#mana-bar-4-green').html(CHARACTER.mana.blue);
-  $('#mana-bar-5-blue').html(CHARACTER.mana.green);
-  $('#mana-bar-6-indigo').html(CHARACTER.mana.indigo);
-  $('#mana-bar-7-violet').html(CHARACTER.mana.violet);
-  $('#mana-bar-8-black').html(CHARACTER.mana.black);
-  $('#mana-bar-9-gray').html(CHARACTER.mana.gray);
-  $('#mana-bar-10-white').html(CHARACTER.mana.white);
+  $('#mana-bar-1-red').html(character.mana.red);
+  $('#mana-bar-2-orange').html(character.mana.orange);
+  $('#mana-bar-3-yellow').html(character.mana.yellow);
+  $('#mana-bar-4-green').html(character.mana.blue);
+  $('#mana-bar-5-blue').html(character.mana.green);
+  $('#mana-bar-6-indigo').html(character.mana.indigo);
+  $('#mana-bar-7-violet').html(character.mana.violet);
+  $('#mana-bar-8-black').html(character.mana.black);
+  $('#mana-bar-9-gray').html(character.mana.gray);
+  $('#mana-bar-10-white').html(character.mana.white);
 }
 
 function renderInitialChunk() {
