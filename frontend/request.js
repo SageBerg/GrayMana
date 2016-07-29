@@ -1,11 +1,11 @@
 function getRequestedChunkCoords(rowInc, colInc) {
   if (CURRENT_BLOCK.row + rowInc < 0) {
     return getIncrementedChunkCoords(colInc, rowInc);
-  } else if (CURRENT_BLOCK.row + rowInc >= CHUNK_SIZE) {
+  } else if (CURRENT_BLOCK.row + rowInc >= world.chunkSize) {
     return getIncrementedChunkCoords(colInc, rowInc);
   } else if (CURRENT_BLOCK.col + colInc < 0) {
     return getIncrementedChunkCoords(colInc, rowInc);
-  } else if (CURRENT_BLOCK.col + colInc >= CHUNK_SIZE) {
+  } else if (CURRENT_BLOCK.col + colInc >= world.chunkSize) {
     return getIncrementedChunkCoords(colInc, rowInc);
   } else {
     return getChunkCoords();
@@ -49,14 +49,14 @@ function move(rowInc, colInc) {
   var chunkX = CURRENT_CHUNK.x + colInc;
   var reqChunkCoords = getRequestedChunkCoords();
 
-  var reqRow = (CURRENT_BLOCK.row + rowInc) % CHUNK_SIZE;
-  var reqCol = (CURRENT_BLOCK.col + colInc) % CHUNK_SIZE;
+  var reqRow = (CURRENT_BLOCK.row + rowInc) % world.chunkSize;
+  var reqCol = (CURRENT_BLOCK.col + colInc) % world.chunkSize;
 
   if (reqRow < 0) {
-    reqRow += CHUNK_SIZE;
+    reqRow += world.chunkSize;
   }
   if (reqCol < 0) {
-    reqCol += CHUNK_SIZE;
+    reqCol += world.chunkSize;
   }
 
   $.post('move', {chunkCoords: reqChunkCoords, row: reqRow,

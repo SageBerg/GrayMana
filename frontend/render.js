@@ -66,7 +66,7 @@ function renderMana() {
 }
 
 function renderInitialChunk() {
-  $('#map').css('width', CHUNK_SIZE * 10);
+  $('#map').css('width', world.chunkSize * 10);
   $('#map').html(genChunkHTML(CHUNKS[getChunkCoords()]));
 }
 
@@ -79,19 +79,19 @@ function stitchChunks() {
   var rightChunk = CHUNKS[getIncrementedChunkCoords(1, 0)];
   var downRightChunk = CHUNKS[getIncrementedChunkCoords(1, 1)];
 
-  for (var i = 0; i < CHUNK_SIZE; i++) {
-    for (var j = 0; j < CHUNK_SIZE; j++) {
+  for (var i = 0; i < world.chunkSize; i++) {
+    for (var j = 0; j < world.chunkSize; j++) {
       var adjustedRow = i + row;
       var adjustedCol = j + col;
-      if (adjustedRow < CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
+      if (adjustedRow < world.chunkSize && adjustedCol < world.chunkSize) {
         chunk[i][j] = currentChunk[adjustedRow][adjustedCol];
-      } else if (adjustedRow >= CHUNK_SIZE && adjustedCol < CHUNK_SIZE) {
-        chunk[i][j] = downChunk[adjustedRow - CHUNK_SIZE][adjustedCol];
-      } else if (adjustedRow < CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
-        chunk[i][j] = rightChunk[adjustedRow][adjustedCol - CHUNK_SIZE];
-      } else if (adjustedRow >= CHUNK_SIZE && adjustedCol >= CHUNK_SIZE) {
+      } else if (adjustedRow >= world.chunkSize && adjustedCol < world.chunkSize) {
+        chunk[i][j] = downChunk[adjustedRow - world.chunkSize][adjustedCol];
+      } else if (adjustedRow < world.chunkSize && adjustedCol >= world.chunkSize) {
+        chunk[i][j] = rightChunk[adjustedRow][adjustedCol - world.chunkSize];
+      } else if (adjustedRow >= world.chunkSize && adjustedCol >= world.chunkSize) {
         chunk[i][j] =
-          downRightChunk[adjustedRow - CHUNK_SIZE][adjustedCol - CHUNK_SIZE];
+          downRightChunk[adjustedRow - world.chunkSize][adjustedCol - world.chunkSize];
       }
     } //end for i loop
   } //end for j loop
@@ -100,9 +100,9 @@ function stitchChunks() {
 
 function buildBlankChunk() {
   var chunk = [];
-  for (var i = 0; i < CHUNK_SIZE; i++) {
+  for (var i = 0; i < world.chunkSize; i++) {
     chunk.push([]);
-    for (var j = 0; j < CHUNK_SIZE; j++) {
+    for (var j = 0; j < world.chunkSize; j++) {
       chunk[i].push(null);
     }
   }
@@ -112,8 +112,8 @@ function buildBlankChunk() {
 function genChunkHTML(chunk) {
   chunkHTML = '';
   var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
-  for (var row = 0; row < CHUNK_SIZE; row++) {
-    for (var col = 0; col < CHUNK_SIZE; col++) {
+  for (var row = 0; row < world.chunkSize; row++) {
+    for (var col = 0; col < world.chunkSize; col++) {
       var terrain = terrainCodesToNames[chunk[row][col]];
       if (row === MID && col === MID) { //draw player in center of map
         chunkHTML += '<div class=\"player-character\"></div>';
