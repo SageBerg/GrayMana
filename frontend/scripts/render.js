@@ -17,12 +17,30 @@ function renderLearnSpellList() {
   var spellMarkup = '';
   SPELL_LIST.sort();
   for (var i = 0; i < SPELL_LIST.length; i++) {
+    var spell = SPELL_LIST[i];
     spellMarkup += '<div>';
-    spellMarkup += '<p class=\'learn-it\'>' + SPELL_LIST[i] + '</p>';
-    spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
+    spellMarkup += '<p class=\'inline-block\'>' + spell + '</p>';
+    if (isLearnable(spell)) {
+      spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
+    } else {
+      spellMarkup += '<button class=\'learn-it\' disabled=true>Learn it</button>';
+    }
     spellMarkup += '</div>';
   }
   $('#spell-learn-list').html(spellMarkup);
+}
+
+function isLearnable(spellName) {
+  var spellName = spellName.toLowerCase();
+  var runesCopy = $.extend({}, character.runes);
+  for (var i = 0; i < spellName.length; i++) {
+    if (runesCopy[spellName[i]] === 0) {
+      return false;
+    } else {
+      runesCopy[spellName[i]] -= 1;
+    }
+  }
+  return true;
 }
 
 function renderRunes() {
