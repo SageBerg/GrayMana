@@ -8,8 +8,10 @@ $rune_size: 30px;
 }
 
 .learn-spells-pane {
+  @extend .bordered;
   @extend .hud-section;
   height: 85%;
+  overflow-y: auto;
 }
 
 .rune {

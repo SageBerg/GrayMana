@@ -39,11 +39,10 @@ body {
 button {
   width: 155px; }
 
-.bordered, #rune-section {
+.bordered, .learn-spells-pane, #rune-section {
   border-style: solid;
   border-width: 1px;
-  border-color: black;
-  display: inline-block; }
+  border-color: black; }
 
 .button-group {
   display: inline-block;
@@ -93,7 +92,8 @@ button {
   margin-left: 20px; }
 
 .learn-spells-pane {
-  height: 85%; }
+  height: 85%;
+  overflow-y: auto; }
 
 .rune, .rune-faded {
   background-color: #B6B6B6;

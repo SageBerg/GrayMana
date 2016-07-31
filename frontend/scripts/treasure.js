@@ -1,8 +1,8 @@
 'use strict';
 
 var TreasureGen = function() {
-  this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',
-    'black', 'gray', 'white'];
+  this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
+    'violet', 'black', 'gray', 'white'];
   this.manaSpread = 2047;
   this.maxRunes = 21;
   this.runeProbability = 0.75;
