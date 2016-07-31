@@ -1,6 +1,6 @@
 var assert = require('chai').assert;
 
-var TreasureGen = require('../frontend/treasure').TreasureGen;
+var TreasureGen = require('../frontend/scripts/treasure').TreasureGen;
 var treasureGen = new TreasureGen();
 
 describe('randInt', function() {
