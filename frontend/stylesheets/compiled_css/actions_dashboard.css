@@ -55,6 +55,9 @@ button {
   margin-top: 20px;
   text-align: center; }
 
+.inline-block {
+  display: inline-block; }
+
 .hud-panel {
   border-radius: 6px;
   background-color: white;
