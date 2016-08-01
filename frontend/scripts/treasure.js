@@ -7,17 +7,32 @@ var TreasureGen = function() {
   this.maxRunes = 21;
   this.runeProbability = 0.75;
   this.runes = 'abcdefghijklmnopqrstuvwxyz ';
+  this.allRuneLetters = this.initializeAllRuneLetters();
 };
 
 TreasureGen.prototype.randInt = function(upperBound) {
   return Math.floor(Math.random() * upperBound);
 };
 
+TreasureGen.prototype.initializeAllRuneLetters = function() {
+  var allRuneLetters = '';
+  for (var i = 0; i < SPELL_LIST.length; i++) {
+    for (var j = 0; j < SPELL_LIST[i].length; j++) {
+      allRuneLetters += SPELL_LIST[i][j].toLowerCase();
+    }
+  }
+  return allRuneLetters;
+};
+
+TreasureGen.prototype.chooseRune = function() {
+  return this.allRuneLetters[this.randInt(this.allRuneLetters.length)];
+}
+
 TreasureGen.prototype.runeDrop = function() {
   var runes = [];
   var runeCount = 0;
   while (Math.random() < this.runeProbability && runeCount < this.maxRunes) {
-    runes.push(this.runes[this.randInt(this.runes.length)]);
+    runes.push(this.chooseRune());
     runeCount += 1;
   }
   return runes;
