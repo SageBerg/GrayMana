@@ -118,7 +118,15 @@ describe('treasureGen.manaDrop()', function() {
 });
 
 describe('treasureGen.manaDrop()', function() {
-  it('should return an object more than 0 mana', function() {
+  it('should return an object with more than 0 mana', function() {
     assert.equal(true, treasureGen.manaDrop().manaAmount > 0);
+  });
+});
+
+describe('treasureGen.clueDrop()', function() {
+  it('should return an object a coordinateAxis of x y or z', function() {
+    var clueCoordAxis = treasureGen.clueDrop().coordinateAxis;
+    assert.equal(true, clueCoordAxis === 'x' || clueCoordAxis === 'y' ||
+      clueCoordAxis === 'z');
   });
 });

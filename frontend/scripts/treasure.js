@@ -1,5 +1,7 @@
 'use strict';
 
+var SPELL_LIST = require('./globals').SPELL_LIST;
+
 var TreasureGen = function() {
   this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
     'violet', 'black', 'gray', 'white'];

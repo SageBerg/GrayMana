@@ -1,4 +1,8 @@
-const COLORS = [
+'use strict';
+
+var state_client = require('./state_client');
+
+var COLORS = [
   'red',
   'orange',
   'yellow',
@@ -11,9 +15,13 @@ const COLORS = [
   'white'
 ];
 
-const MID = Math.floor(world.chunkSize / 2);
+try {
+  var MID = Math.floor(world.chunkSize / 2);
+} catch (exception) {
+  console.log(exception)
+}
 
-const SPELL_LIST = [
+var SPELL_LIST = [
   'Clean',
   'Detox',
   'Dispel Magic',
@@ -61,3 +69,5 @@ const SPELL_LIST = [
   'Mana Pool',
   'Trigger'
 ]
+
+exports.SPELL_LIST = SPELL_LIST;

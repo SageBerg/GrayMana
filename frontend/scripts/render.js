@@ -15,18 +15,41 @@ function renderDamage() {
 
 function renderLearnSpellList() {
   var spellMarkup = '';
-  SPELL_LIST.sort();
+  var learnableSpells = [];
+  var notYetLearnableSpells = [];
+
   for (var i = 0; i < SPELL_LIST.length; i++) {
     var spell = SPELL_LIST[i];
+    if (isLearnable(spell)) {
+      learnableSpells.push(spell);
+    } else {
+      notYetLearnableSpells.push(spell);
+    }
+  }
+  learnableSpells.sort();
+  notYetLearnableSpells.sort();
+
+  for (var i = 0; i < learnableSpells.length; i++) {
+    var spell = learnableSpells[i];
     spellMarkup += '<div>';
     spellMarkup += '<p class=\'inline-block\'>' + spell + '</p>';
-    if (isLearnable(spell)) {
-      spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
-    } else {
-      spellMarkup += '<button class=\'learn-it\' disabled=true>Learn it</button>';
-    }
+    spellMarkup += '<button class=\'learn-it\'>Learn it</button>';
     spellMarkup += '</div>';
   }
+
+  //don't include the break if there aren't two groups
+  if (learnableSpells.length > 0 && notYetLearnableSpells.length > 0) {
+    spellMarkup += '<br>';
+  }
+
+  for (var i = 0; i < notYetLearnableSpells.length; i++) {
+    var spell = notYetLearnableSpells[i];
+    spellMarkup += '<div>';
+    spellMarkup += '<p class=\'inline-block\'>' + spell + '</p>';
+    spellMarkup += '<button class=\'learn-it\' disabled=true>Learn it</button>';
+    spellMarkup += '</div>';
+  }
+
   $('#spell-learn-list').html(spellMarkup);
 }
 
