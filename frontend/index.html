@@ -1,1 +1,176 @@
-<!DOCTYPE html5><html><head><link href="stylesheets/compiled_css/actions_dashboard.css" rel="stylesheet"><link href="stylesheets/compiled_css/colors.css" rel="stylesheet"><link href="stylesheets/compiled_css/damage_dashboard.css" rel="stylesheet"><link href="stylesheets/compiled_css/hud.css" rel="stylesheet"><link href="stylesheets/compiled_css/learn_spells_modal.css" rel="stylesheet"><link href="stylesheets/compiled_css/login.css" rel="stylesheet"><link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"><link href="stylesheets/compiled_css/map.css" rel="stylesheet"><link href="stylesheets/compiled_css/modal.css" rel="stylesheet"><link href="stylesheets/compiled_css/prepared_spells_dashboard.css" rel="stylesheet"><link href="stylesheets/compiled_css/style.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"></head><body><div class="modal" id="learn-spells-modal"><div class="modal-content"><span class="close">X</span><h3>Learn Spells</h3><div class="hud-section"><h4>Runes</h4><div id="rune-section"><div id="runes"></div></div></div><div class="hud-section"><div class="learn-spells-pane"><div id="spell-learn-list"></div></div></div></div></div><dif class="metabutton-container"><button class="metabutton">Log Out (x)</button> <button class="metabutton">Edit Options (o)</button> <button class="metabutton">Get Game Info (h)</button></dif><h1 class="game-title">Gray Mana</h1><div id="login-div"><h2>Username:</h2><input class="login-input" id="username" value="person@example.com"><h2>Password:</h2><input class="login-input" id="password" value="not_a_real_password_used_anywhere_else"> <button onclick="login()">Log In</button></div><div id="map"></div><div class="hud-section"><div class="hud-panel"><div class="hud-heading"><span class="hud-title">Mana</span><span id="notifications-mana"></span></div><div class="hud-panel-content"><div id="mana-bar-1-red">0</div><div id="mana-bar-2-orange">0</div><div id="mana-bar-3-yellow">0</div><div id="mana-bar-4-green">0</div><div id="mana-bar-5-blue">0</div><div id="mana-bar-6-indigo">0</div><div id="mana-bar-7-violet">0</div><div id="mana-bar-8-black">0</div><div id="mana-bar-9-gray">0</div><div id="mana-bar-10-white">0</div></div></div></div><div class="hud-section"><div class="hud-panel"><div class="hud-heading"><span class="hud-title">Prepared Spells</span><span id="notifications-prepared-spells">&nbsp;- You haven't prepared a spell yet.</span></div><div class="hud-panel-content"><div class="spell-slot" id="spell-slot-1"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-2"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-3"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-4"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-5"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-6"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-7"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-8"><div class="spell-logo-empty">Empty Slot</div></div><div class="spell-slot" id="spell-slot-9"><div class="spell-logo-empty">Empty Slot</div></div><div class="selected-spell-slot spell-slot" id="spell-slot-10"><div class="spell-logo-empty">Empty Slot</div></div></div></div></div><div class="hud-section"><div class="hud-panel"><div class="hud-heading"><span class="hud-title">Damage</span><span id="notifications-damage">&nbsp;- You haven't taken any damage yet.</span></div><div class="hud-panel-content"><div id="damage-bar"><div class="damage red" id="damge-1-red"></div><div class="damage orange" id="damge-2-orange"></div><div class="damage yellow" id="damge-3-yellow"></div><div class="damage green" id="damge-4-green"></div><div class="damage blue" id="damge-5-blue"></div><div class="damage indigo" id="damge-6-indigo"></div><div class="damage violet" id="damge-7-violet"></div><div class="damage black" id="damge-8-black"></div><div class="damage gray" id="damge-9-gray"></div><div class="damage white" id="damge-10-white"></div></div></div></div></div><div class="hud-section"><div class="hud-panel"><div class="hud-heading"><span class="hud-title">Actions</span><span id="notifications-actions"></span></div><div class="hud-panel-content"><div class="button-group"><button class="action-button" onclick="getTreasure()">Get Treasure (g)</button> <button class="action-button">Manatate (m)</button></div><div class="button-group"><button class="action-button" disabled="disabled" title="You're not standing in front of anyone or anything you can interact with.">Interact (k)</button> <button class="action-button" disabled="disabled" title="You don't have any food yet.">Eat (e)</button> <button class="action-button" disabled="disabled" title="You're not tired enough yet.">Sleep (z)</button></div><div class="button-group"><button class="action-button" disabled="disabled" title="You don't have a spell selected yet.">Cast Selected Spell (r)</button> <button class="action-button" disabled="disabled" title="You haven't learned a spells yet.">Prepare Spells (p)</button> <button class="action-button" id="learn-spells">Learn Spells (l)</button></div><div class="button-group"><button class="action-button">Talk (t)</button> <button class="action-button" disabled="disabled" title="You haven't given or recieved a quest yet.">View Quests (q)</button> <button class="action-button" disabled="disabled" title="You haven't joined or founded a faction yet.">View Faction Details (f)</button></div><div class="button-group"><button class="action-button">View Inventory (i)</button> <button class="action-button" disabled="disabled" title="You have no achievements :&lt;">Admire Achievements (c)</button></div></div></div></div></body><script src="scripts/jquery.min.js"></script><script src="scripts/state_client.js"></script><script src="scripts/globals.js"></script><script src="scripts/auth_client.js"></script><script src="scripts/controls.js"></script><script src="scripts/render.js"></script><script src="scripts/request.js"></script><script src="scripts/modal.js"></script><script src="scripts/treasure.js"></script><script src="scripts/start.js"></script></html>
+<!DOCTYPE html5>
+<html>
+  <head>
+    <link href="stylesheets/compiled_css/actions_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/damage_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/hud.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/learn_spells_modal.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/login.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/map.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/modal.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/prepared_spells_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/style.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="angular_gray_mana_app.js"></script>
+    <script src="angular_gray_mana_controller.js"></script>
+  </head>
+
+  <body>
+
+    <div data-ng-app="angularFrontEnd" data-ng-init="metabuttons=['Log Out (x)',
+      'Edit Options (o)', 'Get Game Info (h)']">
+
+      <div class="modal" id="learn-spells-modal">
+        <div class="modal-content"><span class="close">X</span>
+          <h3>Learn Spells</h3>
+          <div class="hud-section">
+            <h4>Runes</h4>
+            <div id="rune-section">
+              <div id="runes"></div>
+            </div>
+          </div>
+          <div class="hud-section">
+            <div class="learn-spells-pane">
+              <div id="spell-learn-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metabutton-container">
+        <button class="metabutton" data-ng-repeat="buttonTitle in metabuttons">
+          {{ buttonTitle }}
+        </button>
+      </div>
+
+      <h1 class="game-title">Gray Mana</h1>
+      <div id="login-div">
+        <h2>Username:</h2>
+        <input class="login-input" id="username" value="person@example.com"/>
+        <h2>Password:</h2>
+        <input class="login-input" id="password" value="not_a_real_password_used_anywhere_else"/>
+        <button onclick="login()">Log In</button>
+      </div>
+      <div id="map"></div>
+      <div class="hud-section">
+        <div class="hud-panel">
+          <div class="hud-heading"><span class="hud-title">Mana</span><span id="notifications-mana"></span></div>
+          <div class="hud-panel-content">
+            <div id="mana-bar-1-red">0</div>
+            <div id="mana-bar-2-orange">0</div>
+            <div id="mana-bar-3-yellow">0</div>
+            <div id="mana-bar-4-green">0</div>
+            <div id="mana-bar-5-blue">0</div>
+            <div id="mana-bar-6-indigo">0</div>
+            <div id="mana-bar-7-violet">0</div>
+            <div id="mana-bar-8-black">0</div>
+            <div id="mana-bar-9-gray">0</div>
+            <div id="mana-bar-10-white">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="hud-section">
+        <div class="hud-panel">
+          <div class="hud-heading"><span class="hud-title">Prepared Spells</span><span id="notifications-prepared-spells">&nbsp;- You haven't prepared a spell yet.</span></div>
+          <div class="hud-panel-content">
+            <div class="spell-slot" id="spell-slot-1">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-2">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-3">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-4">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-5">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-6">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-7">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-8">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="spell-slot" id="spell-slot-9">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+            <div class="selected-spell-slot spell-slot" id="spell-slot-10">
+              <div class="spell-logo-empty">Empty Slot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hud-section">
+        <div class="hud-panel">
+          <div class="hud-heading"><span class="hud-title">Damage</span><span id="notifications-damage">&nbsp;- You haven't taken any damage yet.</span></div>
+          <div class="hud-panel-content">
+            <div id="damage-bar">
+              <div class="damage red" id="damge-1-red"></div>
+              <div class="damage orange" id="damge-2-orange"></div>
+              <div class="damage yellow" id="damge-3-yellow"></div>
+              <div class="damage green" id="damge-4-green"></div>
+              <div class="damage blue" id="damge-5-blue"></div>
+              <div class="damage indigo" id="damge-6-indigo"></div>
+              <div class="damage violet" id="damge-7-violet"></div>
+              <div class="damage black" id="damge-8-black"></div>
+              <div class="damage gray" id="damge-9-gray"></div>
+              <div class="damage white" id="damge-10-white"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hud-section">
+        <div class="hud-panel">
+          <div class="hud-heading"><span class="hud-title">Actions</span><span id="notifications-actions"></span></div>
+          <div class="hud-panel-content">
+            <div class="button-group">
+              <button class="action-button" onclick="getTreasure()">Get Treasure (g)</button>
+              <button class="action-button">Manatate (m)</button>
+            </div>
+            <div class="button-group">
+              <button class="action-button" disabled="disabled" title="You're not standing in front of anyone or anything you can interact with.">Interact (k)</button>
+              <button class="action-button" disabled="disabled" title="You don't have any food yet.">Eat (e)</button>
+              <button class="action-button" disabled="disabled" title="You're not tired enough yet.">Sleep (z)</button>
+            </div>
+            <div class="button-group">
+              <button class="action-button" disabled="disabled" title="You don't have a spell selected yet.">Cast Selected Spell (r)</button>
+              <button class="action-button" disabled="disabled" title="You haven't learned a spells yet.">Prepare Spells (p)</button>
+              <button class="action-button" id="learn-spells">Learn Spells (l)</button>
+            </div>
+            <div class="button-group">
+              <button class="action-button">Talk (t)</button>
+              <button class="action-button" disabled="disabled" title="You haven't given or recieved a quest yet.">View Quests (q)</button>
+              <button class="action-button" disabled="disabled" title="You haven't joined or founded a faction yet.">View Faction Details (f)</button>
+            </div>
+            <div class="button-group">
+              <button class="action-button">View Inventory (i)</button>
+              <button class="action-button" disabled="disabled" title="You have no achievements :&lt;">Admire Achievements (c)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end angular app -->
+
+  </body>
+
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/state_client.js"></script>
+  <script src="scripts/globals.js"></script>
+  <script src="scripts/auth_client.js"></script>
+  <script src="scripts/controls.js"></script>
+  <script src="scripts/render.js"></script>
+  <script src="scripts/request.js"></script>
+  <script src="scripts/modal.js"></script>
+  <script src="scripts/treasure.js"></script>
+  <script src="scripts/start.js"></script>
+</html>
