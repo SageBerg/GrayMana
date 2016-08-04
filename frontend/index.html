@@ -33,11 +33,14 @@
     </script>
     <script src="angular_gray_mana_app.js"></script>
     <script src="angular_gray_mana_controller.js"></script>
+    <script src="damage_controller.js"></script>
   </head>
 
   <body>
 
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
+
+      <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
 
       <div class="modal" id="learn-spells-modal">
         <div class="modal-content"><span class="close">X</span>
@@ -101,9 +104,13 @@
           <div class="hud-heading"><span class="hud-title">Damage</span><span id="notifications-damage">&nbsp;- You haven't taken any damage yet.</span></div>
           <div class="hud-panel-content">
             <div id="damage-bar">
-              <div data-ng-repeat="x in colorClasses" class="damage {{ x }}"
-                id="{{ 'damage-' + ($index + 1) + '-' + x }}"></div>
-             </div>
+              <div
+                data-ng-repeat="color in colorClasses"
+                class="damage {{ color }}"
+                data-ng-style="widthObj[color]"
+                  id="{{ 'damage-' + ($index + 1) + '-' + color }}">
+              </div>
+            </div>
           </div>
         </div>
       </div>
