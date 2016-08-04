@@ -1,6 +1,10 @@
 'use strict';
 
-var SPELL_LIST = require('./globals').SPELL_LIST;
+//using require for unit testing
+try {
+  var SPELL_LIST = require('./globals').SPELL_LIST;
+} catch (exception) {
+}
 
 var TreasureGen = function() {
   this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
@@ -78,4 +82,7 @@ TreasureGen.prototype.wizmarkDrop = function() {
 TreasureGen.prototype.clueDrop = function() {
 }
 
-exports.TreasureGen = TreasureGen;
+try {
+  exports.TreasureGen = TreasureGen;
+} catch (exception) {
+}

@@ -1,6 +1,10 @@
 'use strict';
 
-var state_client = require('./state_client');
+//using require for unit testing
+try {
+  var state_client = require('./state_client');
+} catch (exception) {
+}
 
 var COLORS = [
   'red',
@@ -18,7 +22,7 @@ var COLORS = [
 try {
   var MID = Math.floor(world.chunkSize / 2);
 } catch (exception) {
-  console.log(exception)
+  console.log(exception);
 }
 
 var SPELL_LIST = [
@@ -70,4 +74,7 @@ var SPELL_LIST = [
   'Trigger'
 ]
 
-exports.SPELL_LIST = SPELL_LIST;
+try {
+  exports.SPELL_LIST = SPELL_LIST;
+} catch (exception) {
+}
