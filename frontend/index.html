@@ -1,27 +1,43 @@
 <!DOCTYPE html5>
 <html>
   <head>
-    <link href="stylesheets/compiled_css/actions_dashboard.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/damage_dashboard.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/hud.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/learn_spells_modal.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/login.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/map.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/modal.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/prepared_spells_dashboard.css" rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/style.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <title>Gray Mana</title>
+    <meta charset="UTF-8">
+
+    <link href="stylesheets/compiled_css/actions_dashboard.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/damage_dashboard.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/compiled_css/hud.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/learn_spells_modal.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/compiled_css/login.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/map.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/modal.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="stylesheets/compiled_css/prepared_spells_dashboard.css"
+      rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/style.css" rel="stylesheet"
+      type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans"
+      rel="stylesheet" type="text/css"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
+    </script>
     <script src="angular_gray_mana_app.js"></script>
     <script src="angular_gray_mana_controller.js"></script>
   </head>
 
   <body>
 
-    <div data-ng-app="angularFrontEnd" data-ng-init="metabuttons=['Log Out (x)',
-      'Edit Options (o)', 'Get Game Info (h)']">
+    <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
 
       <div class="modal" id="learn-spells-modal">
         <div class="modal-content"><span class="close">X</span>
@@ -41,7 +57,7 @@
       </div>
 
       <div class="metabutton-container">
-        <button class="metabutton" data-ng-repeat="buttonTitle in metabuttons">
+        <button class="metabutton" data-ng-repeat="buttonTitle in metaButtons">
           {{ buttonTitle }}
         </button>
       </div>
@@ -54,80 +70,44 @@
         <input class="login-input" id="password" value="not_a_real_password_used_anywhere_else"/>
         <button onclick="login()">Log In</button>
       </div>
+
       <div id="map"></div>
+
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Mana</span><span id="notifications-mana"></span></div>
           <div class="hud-panel-content">
-            <div id="mana-bar-1-red">0</div>
-            <div id="mana-bar-2-orange">0</div>
-            <div id="mana-bar-3-yellow">0</div>
-            <div id="mana-bar-4-green">0</div>
-            <div id="mana-bar-5-blue">0</div>
-            <div id="mana-bar-6-indigo">0</div>
-            <div id="mana-bar-7-violet">0</div>
-            <div id="mana-bar-8-black">0</div>
-            <div id="mana-bar-9-gray">0</div>
-            <div id="mana-bar-10-white">0</div>
+            <div data-ng-repeat="manaBarId in manaBarIds" id="{{ manaBarId }}">0</div>
           </div>
         </div>
       </div>
+
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Prepared Spells</span><span id="notifications-prepared-spells">&nbsp;- You haven't prepared a spell yet.</span></div>
           <div class="hud-panel-content">
-            <div class="spell-slot" id="spell-slot-1">
+
+            <div data-ng-repeat="_ in spellSlots" class="{{ lastSpellSlot( $index + 1 ) }} spell-slot"
+              id="spell-slot-{{ $index + 1 }}">
               <div class="spell-logo-empty">Empty Slot</div>
             </div>
-            <div class="spell-slot" id="spell-slot-2">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-3">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-4">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-5">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-6">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-7">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-8">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="spell-slot" id="spell-slot-9">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
-            <div class="selected-spell-slot spell-slot" id="spell-slot-10">
-              <div class="spell-logo-empty">Empty Slot</div>
-            </div>
+
           </div>
         </div>
       </div>
+
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Damage</span><span id="notifications-damage">&nbsp;- You haven't taken any damage yet.</span></div>
           <div class="hud-panel-content">
             <div id="damage-bar">
-              <div class="damage red" id="damge-1-red"></div>
-              <div class="damage orange" id="damge-2-orange"></div>
-              <div class="damage yellow" id="damge-3-yellow"></div>
-              <div class="damage green" id="damge-4-green"></div>
-              <div class="damage blue" id="damge-5-blue"></div>
-              <div class="damage indigo" id="damge-6-indigo"></div>
-              <div class="damage violet" id="damge-7-violet"></div>
-              <div class="damage black" id="damge-8-black"></div>
-              <div class="damage gray" id="damge-9-gray"></div>
-              <div class="damage white" id="damge-10-white"></div>
-            </div>
+              <div data-ng-repeat="x in colorClasses" class="damage {{ x }}"
+                id="{{ 'damage-' + ($index + 1) + '-' + x }}"></div>
+             </div>
           </div>
         </div>
       </div>
+
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Actions</span><span id="notifications-actions"></span></div>
@@ -159,11 +139,12 @@
         </div>
       </div>
 
-    </div> <!-- end angular app -->
+    </div> <!-- end Angular app -->
 
   </body>
 
   <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/treasure.js"></script>
   <script src="scripts/state_client.js"></script>
   <script src="scripts/globals.js"></script>
   <script src="scripts/auth_client.js"></script>
@@ -171,6 +152,5 @@
   <script src="scripts/render.js"></script>
   <script src="scripts/request.js"></script>
   <script src="scripts/modal.js"></script>
-  <script src="scripts/treasure.js"></script>
   <script src="scripts/start.js"></script>
 </html>
