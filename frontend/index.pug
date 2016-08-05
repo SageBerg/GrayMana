@@ -143,10 +143,10 @@ html
                 h3 Spells
                 div(class="learn-spells-pane")
                   div(id="spell-learn-list")
-                    div(data-ng-repeat="spell in getLearnableSpells()") {{spell}}
+                    div(data-ng-repeat="spell in getLearnableSpells() | orderBy") {{spell}}
                       button() Pay {{runeCost(spell)}} runes to learn
                     br
-                    div(data-ng-repeat="spell in getUnlearnableSpells()") {{spell}}
+                    div(data-ng-repeat="spell in getUnlearnableSpells() | orderBy") {{spell}}
                       button() You have not enough runes
 
               div(class="hud-section")

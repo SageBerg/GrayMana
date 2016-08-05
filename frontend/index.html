@@ -106,10 +106,10 @@
                 <h3>Spells</h3>
                 <div class="learn-spells-pane">
                   <div id="spell-learn-list">
-                    <div data-ng-repeat="spell in getLearnableSpells()">{{spell}}
+                    <div data-ng-repeat="spell in getLearnableSpells() | orderBy">{{spell}}
                       <button>Pay {{runeCost(spell)}} runes to learn</button>
                     </div><br/>
-                    <div data-ng-repeat="spell in getUnlearnableSpells()">{{spell}}
+                    <div data-ng-repeat="spell in getUnlearnableSpells() | orderBy">{{spell}}
                       <button>You have not enough runes</button>
                     </div>
                   </div>
