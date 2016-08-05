@@ -20,22 +20,6 @@
   </head>
   <body>
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
-      <div class="modal" id="learn-spells-modal">
-        <div class="modal-content"><span class="close">X</span>
-          <h3>Learn Spells</h3>
-          <div class="hud-section">
-            <h4>Runes</h4>
-            <div id="rune-section">
-              <div id="runes"></div>
-            </div>
-          </div>
-          <div class="hud-section">
-            <div class="learn-spells-pane">
-              <div id="spell-learn-list"></div>
-            </div>
-          </div>
-        </div>
-      </div>
       <h1 class="game-title">Gray Mana</h1>
       <div class="metabutton-container">
         <button class="metabutton" data-ng-repeat="buttonTitle in metaButtons">{{ buttonTitle }}</button>
@@ -82,7 +66,7 @@
           <div class="hud-panel-content">
             <div class="button-group">
               <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
-              <button class="action-button" onclick="getTreasure()">Get Treasure (g)</button>
+              <button class="action-button" onclick="getTreasure()">Get Treasure</button>
               <button class="action-button">Manatate (m)</button>
             </div>
             <div class="button-group">
@@ -93,7 +77,7 @@
             <div class="button-group">
               <button class="action-button" disabled="disabled" title="You don't have a spell selected yet.">Cast Selected Spell (r)</button>
               <button class="action-button" disabled="disabled" title="You haven't learned a spells yet.">Prepare Spells (p)</button>
-              <button class="action-button" id="learn-spells">Learn Spells (l)</button>
+              <button class="action-button" data-ng-click="openModal('learnSpells')" id="learn-spells">Learn Spells (l)</button>
             </div>
             <div class="button-group">
               <button class="action-button">Talk (t)</button>
@@ -107,7 +91,28 @@
           </div>
         </div>
       </div>
+      <div class="modal">
+        <div class="modal-content"><span class="close" data-ng-click="closeModal()">&times;</span>
+          <div id="inner-modal-content"></div>
+        </div>
+      </div>
     </div>
+    <!--
+    div(id="learn_spells_modal", class="modal")
+      div(class="modal-content")
+        span(class="close") X
+        h3 {{ getModalTitle() }}
+        div(class="hud-section")
+          h4 Runes
+    
+          div(id="rune-section")
+            div(id="runes")
+    
+        div(class="hud-section")
+          div(class="learn-spells-pane")
+            div(id="spell-learn-list")
+    
+    -->
   </body>
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/state_client.js"></script>
@@ -116,7 +121,7 @@
   <script src="scripts/controls.js"></script>
   <script src="scripts/render.js"></script>
   <script src="scripts/request.js"></script>
-  <script src="scripts/modal.js"></script>
+  <!--script(src="scripts/modal.js")-->
   <script src="scripts/treasure.js"></script>
   <script src="scripts/start.js"></script>
 </html>

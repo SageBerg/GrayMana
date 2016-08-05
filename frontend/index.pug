@@ -25,20 +25,6 @@ html
 
     div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController")
 
-      div(id="learn-spells-modal" class="modal")
-        div(class="modal-content")
-          span(class="close") X
-          h3 Learn Spells
-          div(class="hud-section")
-            h4 Runes
-
-            div(id="rune-section")
-              div(id="runes")
-
-          div(class="hud-section")
-            div(class="learn-spells-pane")
-              div(id="spell-learn-list")
-
       h1(class="game-title") Gray Mana
 
       div(class="metabutton-container")
@@ -107,7 +93,7 @@ html
             div(class="button-group")
               button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell (r)
               button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells (p)
-              button(class="action-button", id="learn-spells") Learn Spells (l)
+              button(data-ng-click="openModal('learnSpells')", class="action-button", id="learn-spells") Learn Spells (l)
 
             div(class="button-group")
 
@@ -120,6 +106,26 @@ html
               button(class="action-button") View Inventory (i)
               button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
 
+      div(class="modal")
+        div(class="modal-content")
+          span(data-ng-click="closeModal()", class="close") &times;
+          div(id="inner-modal-content")
+
+    //
+      div(id="learn_spells_modal", class="modal")
+        div(class="modal-content")
+          span(class="close") X
+          h3 {{ getModalTitle() }}
+          div(class="hud-section")
+            h4 Runes
+
+            div(id="rune-section")
+              div(id="runes")
+
+          div(class="hud-section")
+            div(class="learn-spells-pane")
+              div(id="spell-learn-list")
+
   script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")
   script(src="scripts/globals.js")
@@ -127,6 +133,6 @@ html
   script(src="scripts/controls.js")
   script(src="scripts/render.js")
   script(src="scripts/request.js")
-  script(src="scripts/modal.js")
+  //script(src="scripts/modal.js")
   script(src="scripts/treasure.js")
   script(src="scripts/start.js")

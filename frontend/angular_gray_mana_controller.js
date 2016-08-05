@@ -43,4 +43,23 @@ app.controller('grayManaController', function($scope) {
     console.log($scope.widthObj[color]);
   };
 
+  $scope.openModal = function(modalContent) {
+    document.getElementsByClassName('modal')[0].style.display = 'block';
+    switch (modalContent) {
+      case 'learnSpells':
+        $scope.initLearnSpellsModal();
+        break;
+    }
+  }
+
+  $scope.initLearnSpellsModal = function() {
+    document.getElementById('inner-modal-content').innerHTML = '<h3>Learn Spells</h3><div class="hud-section"><h4>Runes</h4><div id="rune-section"><div id="runes"></div></div></div><div class="hud-section"><div class="learn-spells-pane"><div id="spell-learn-list"></div></div></div>';
+    renderRunes();
+    renderLearnSpellList();
+  }
+
+  $scope.closeModal = function() {
+    document.getElementsByClassName('modal')[0].style.display = 'none';
+  }
+
 });

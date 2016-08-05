@@ -92,9 +92,9 @@ Style:
   Remove all whitespace from ends of lines
   Rename render.js so as not to confuse it with the official library Render.js
   Standardize one line of whitespace at ends of files
-  Try out CoffeeScript
-  Try out Angular to abstract away the modal logic
+  Use Angular filters for sorting
   Reduce nesting in DOM
+  Change modal to an id in the Pug, SCSS, and Angular controller
 
 
 Testing:
