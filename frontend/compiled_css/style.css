@@ -1,0 +1,61 @@
+.black {
+  background-color: #434343;
+  color: #F3F3F3; }
+
+.blue {
+  background-color: #C9DAF8; }
+
+.gray {
+  background-color: #B6B6B6; }
+
+.green {
+  background-color: #D9EAD3; }
+
+.indigo {
+  background-color: #9FC5E8; }
+
+.orange {
+  background-color: #FCE5CD; }
+
+.red {
+  background-color: #F4CCCC; }
+
+.violet {
+  background-color: #D9D2E9; }
+
+.white {
+  background-color: #F3F3F3; }
+
+.yellow {
+  background-color: #FEF1CB; }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background-color: #F0F0F0; }
+
+button {
+  width: 155px; }
+
+.bordered {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black; }
+
+.button-group {
+  display: inline-block;
+  margin: 5px; }
+
+.game-title {
+  color: #B6B6B6;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 500%;
+  margin-top: 20px;
+  text-align: center; }
+
+.inline-block {
+  display: inline-block; }
+
+/*# sourceMappingURL=style.css.map */
