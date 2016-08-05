@@ -94,6 +94,7 @@ Style:
   Standardize one line of whitespace at ends of files
   Try out CoffeeScript
   Try out Angular to abstract away the modal logic
+  Reduce nesting in DOM
 
 
 Testing:
