@@ -145,4 +145,17 @@ app.controller('grayManaController', function($scope) {
     return unlearnableSpells;
   };
 
+  $scope.isManatating = false;
+
+  $scope.toggleManatate = function() {
+    $scope.isManatating = !$scope.isManatating;
+  }
+
+  $scope.getManatateButtonTitle = function() {
+    if ($scope.isManatating) {
+      return 'Stop Manatating';
+    }
+    return 'Manatate';
+  }
+
 });

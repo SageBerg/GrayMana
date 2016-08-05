@@ -86,7 +86,7 @@ html
             div(class="button-group")
               button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
               button(class="action-button", onclick="getTreasure()") Get Treasure
-              button(class="action-button") Manatate
+              button(class="action-button", data-ng-click="toggleManatate()") {{getManatateButtonTitle()}}
                 span(data-ng-show="switchShowHotKeys") &nbsp;({{manatateHotKey}})
 
             div(class="button-group")
