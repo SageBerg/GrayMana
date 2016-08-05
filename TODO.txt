@@ -7,7 +7,6 @@ Aesthetics:
     Faction
     Inventory
     Options
-    Sleep
 
 
 Bugs:
@@ -70,6 +69,7 @@ Organization:
   File Level:
     Continue breaking up the SCSS/CSS files by concern
     Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
+    Break up Angular controller
 
 
 Performance:
@@ -92,9 +92,9 @@ Style:
   Remove all whitespace from ends of lines
   Rename render.js so as not to confuse it with the official library Render.js
   Standardize one line of whitespace at ends of files
-  Use Angular filters for sorting
   Reduce nesting in DOM
   Change modal to an id in the Pug, SCSS, and Angular controller
+  Try out TypeScript to replace some of the JavaScript
 
 
 Testing:
