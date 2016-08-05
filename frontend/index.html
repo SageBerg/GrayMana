@@ -95,8 +95,23 @@
         <div class="modal-content"><span class="close" data-ng-click="closeModal()">&times;</span>
           <div id="inner-modal-content">
             <div data-ng-show="showEditOptions">
-              <h3>Edit Options</h3>
+              <h2>Edit Options</h2>
               <input type="checkbox" data-ng-model="switchShowTitles"/><span data-ng-show="showEditOptions">Show titles of sections in HUD</span>
+            </div>
+            <div data-ng-show="showLearnSpells">
+              <h2>Learn Spells</h2>
+              <div class="hud-section">
+                <h3>Runes</h3>
+                <div id="rune-section">
+                  <div id="runes"></div>
+                </div>
+              </div>
+              <div class="hud-section">
+                <h3>Spells</h3>
+                <div class="learn-spells-pane">
+                  <div id="spell-learn-list"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

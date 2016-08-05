@@ -114,9 +114,22 @@ html
           div(id="inner-modal-content")
 
             div(data-ng-show="showEditOptions")
-              h3 Edit Options
+              h2 Edit Options
               input(type="checkbox" data-ng-model="switchShowTitles")
               span(data-ng-show="showEditOptions") Show titles of sections in HUD
+
+            div(data-ng-show="showLearnSpells")
+              h2 Learn Spells
+
+              div(class="hud-section")
+                h3 Runes
+                div(id="rune-section")
+                  div(id="runes")
+
+              div(class="hud-section")
+                h3 Spells
+                div(class="learn-spells-pane")
+                  div(id="spell-learn-list")
 
   script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")

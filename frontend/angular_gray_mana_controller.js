@@ -64,9 +64,10 @@ app.controller('grayManaController', function($scope) {
   $scope.showModal = false;
 
   $scope.showEditOptions = false;
+  $scope.showLearnSpells = false;
 
   $scope.initLearnSpellsModal = function() {
-    document.getElementById('inner-modal-content').innerHTML = '<h2>Learn Spells</h2><div class="hud-section"><h3>Runes</h3><div id="rune-section"><div id="runes"></div></div></div><div class="hud-section"><div class="learn-spells-pane"><div id="spell-learn-list"></div></div></div>';
+    $scope.showLearnSpells = true;
     renderRunes();
     renderLearnSpellList();
   }
@@ -74,6 +75,7 @@ app.controller('grayManaController', function($scope) {
   $scope.closeModal = function() {
     $scope.showModal = false;
     $scope.showEditOptions = false;
+    $scope.showLearnSpells = false;
   }
 
 });
