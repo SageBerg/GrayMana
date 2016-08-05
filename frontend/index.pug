@@ -30,6 +30,7 @@ html
       div(class="metabutton-container")
         button(class="metabutton", data-ng-repeat="button in metaButtons",
           data-ng-click="openModal(button.modal)") {{ button.title }}
+          span(data-ng-show="switchShowHotKeys") ({{button.hotKey}})
 
       div(id="login-div")
         h2 Username:
@@ -84,28 +85,39 @@ html
             div(class="button-group")
               button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
               button(class="action-button", onclick="getTreasure()") Get Treasure
-              button(class="action-button") Manatate (m)
+              button(class="action-button") Manatate
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{manatateHotKey}})
 
             div(class="button-group")
-              button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact (k)
-              button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat (e)
-              button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep (z)
+              button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{interactHotKey}})
+              button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{eatHotKey}})
+              button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{sleepHotKey}})
 
             div(class="button-group")
-              button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell (r)
-              button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells (p)
-              button(data-ng-click="openModal('learnSpells')", class="action-button", id="learn-spells") Learn Spells (l)
+              button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{castSelectedSpellHotKey}})
+              button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{prepareSpellsHotKey}})
+              button(data-ng-click="openModal('learnSpells')", class="action-button", id="learn-spells") Learn Spells
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{learnSpellsHotKey}})
 
             div(class="button-group")
 
-              button(class="action-button") Talk (t)
-              button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests (q)
-              //- button(class="action-button") Bow (b)
-              button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details (f)
+              button(class="action-button") Talk
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{talkHotKey}})
+              button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{questHotKey}})
+              button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{factionHotKey}})
 
             div(class="button-group")
-              button(class="action-button") View Inventory (i)
-              button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
+              button(class="action-button") View Inventory
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{inventoryHotKey}})
+              button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{achievementsHotKey}})
 
       div(class="modal", data-ng-show="showModal")
         div(class="modal-content")
@@ -116,7 +128,12 @@ html
             div(data-ng-show="showEditOptions")
               h2 Edit Options
               input(type="checkbox" data-ng-model="switchShowTitles")
-              span(data-ng-show="showEditOptions") Show titles of sections in HUD
+              span Show titles of sections in HUD
+              br
+
+              input(type="checkbox" data-ng-model="switchShowHotKeys")
+              span Show shortcut keys on buttons
+              br
 
             div(data-ng-show="showLearnSpells")
               h2 Learn Spells

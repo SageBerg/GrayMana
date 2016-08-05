@@ -6,9 +6,9 @@ app.controller('grayManaController', function($scope) {
     'mana-bar-2-orange', 'mana-bar-3-yellow', 'mana-bar-4-green',
     'mana-bar-5-blue', 'mana-bar-6-indigo', 'mana-bar-7-violet',
     'mana-bar-8-black', 'mana-bar-9-gray', 'mana-bar-10-white'];
-  $scope.metaButtons = [{title: 'Log Out (x)', modal: 'logOut'},
-                        {title: 'Edit Options (o)', modal: 'editOptions'},
-                        {title: 'Get Game Info (h)', modal: 'getGameInfo'} ];
+  $scope.metaButtons = [{title: 'Log Out', hotKey: 'x', modal: 'logOut'},
+                        {title: 'Edit Options', hotKey: 'o', modal: 'editOptions'},
+                        {title: 'Get Game Info', hotKey: 'g', modal: 'getGameInfo'} ];
   $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   $scope.lastSpellSlot = function(spellSlotNumber) {
@@ -42,13 +42,11 @@ app.controller('grayManaController', function($scope) {
   $scope.takeSomeDamage = function(amount, color) {
     $scope.damages[color] += amount;
     $scope.widthObj[color].width = parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
-    console.log($scope.widthObj[color]);
   };
 
   $scope.openModal = function(modalContent) {
     //document.getElementsByClassName('modal')[0].style.display = 'block';
     $scope.showModal = true;
-    console.log($scope.showModal);
     switch (modalContent) {
       case 'learnSpells':
         $scope.initLearnSpellsModal();
@@ -60,6 +58,7 @@ app.controller('grayManaController', function($scope) {
   }
 
   $scope.switchShowTitles = true;
+  $scope.switchShowHotKeys = true;
 
   $scope.showModal = false;
 
@@ -77,5 +76,21 @@ app.controller('grayManaController', function($scope) {
     $scope.showEditOptions = false;
     $scope.showLearnSpells = false;
   }
+
+  $scope.manatateHotKey = 'm';
+  $scope.interactHotKey = 'k';
+  $scope.eatHotKey = 'e';
+  $scope.sleepHotKey = 'z';
+
+  $scope.learnSpellsHotKey = 'l';
+  $scope.prepareSpellsHotKey = 'p';
+  $scope.castSelectedSpellHotKey = 'r';
+
+  $scope.talkHotKey = 't';
+  $scope.questHotKey = 'q';
+  $scope.factionHotKey = 'f';
+
+  $scope.inventoryHotKey = 'i';
+  $scope.achievementsHotKey = 'c';
 
 });
