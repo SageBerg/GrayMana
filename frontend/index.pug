@@ -16,6 +16,7 @@ html
     link(href="stylesheets/compiled_css/style.css", rel="stylesheet")
     link(href='https://fonts.googleapis.com/css?family=Josefin+Sans', rel='stylesheet', type='text/css')
 
+    script(src="scripts/jquery.min.js")
     script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
     script(src="angular_gray_mana_app.js")
     script(src="angular_gray_mana_controller.js")
@@ -30,7 +31,7 @@ html
       div(class="metabutton-container")
         button(class="metabutton", data-ng-repeat="button in metaButtons",
           data-ng-click="openModal(button.modal)") {{ button.title }}
-          span(data-ng-show="switchShowHotKeys") ({{button.hotKey}})
+          span(data-ng-show="switchShowHotKeys") &nbsp;({{button.hotKey}})
 
       div(id="login-div")
         h2 Username:
@@ -142,6 +143,11 @@ html
                 h3 Spells
                 div(class="learn-spells-pane")
                   div(id="spell-learn-list")
+                    div(data-ng-repeat="spell in getLearnableSpells()") {{spell}}
+                      button() Pay {{runeCost(spell)}} runes to learn
+                    br
+                    div(data-ng-repeat="spell in getUnlearnableSpells()") {{spell}}
+                      button() You have not enough runes
 
               div(class="hud-section")
                 h3 Runes
@@ -150,7 +156,6 @@ html
                     div(data-ng-repeat="letter in alphabet", class="{{ fadedOrClearRune(letter) }}", id="{{'rune-' + letter}}") {{letterOrQuotes(letter)}}
                       span(data-ng-model="runes[letter]") &nbsp;{{runes[letter]}}
 
-  script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")
   script(src="scripts/globals.js")
   script(src="scripts/auth_client.js")

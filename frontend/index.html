@@ -13,6 +13,7 @@
     <link href="stylesheets/compiled_css/prepared_spells_dashboard.css" rel="stylesheet"/>
     <link href="stylesheets/compiled_css/style.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"/>
+    <script src="scripts/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="angular_gray_mana_app.js"></script>
     <script src="angular_gray_mana_controller.js"></script>
@@ -22,7 +23,7 @@
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
       <h1 class="game-title">Gray Mana</h1>
       <div class="metabutton-container">
-        <button class="metabutton" data-ng-repeat="button in metaButtons" data-ng-click="openModal(button.modal)">{{ button.title }}<span data-ng-show="switchShowHotKeys">({{button.hotKey}})</span></button>
+        <button class="metabutton" data-ng-repeat="button in metaButtons" data-ng-click="openModal(button.modal)">{{ button.title }}<span data-ng-show="switchShowHotKeys">&nbsp;({{button.hotKey}})</span></button>
       </div>
       <div id="login-div">
         <h2>Username:</h2>
@@ -104,7 +105,14 @@
               <div class="hud-section">
                 <h3>Spells</h3>
                 <div class="learn-spells-pane">
-                  <div id="spell-learn-list"></div>
+                  <div id="spell-learn-list">
+                    <div data-ng-repeat="spell in getLearnableSpells()">{{spell}}
+                      <button>Pay {{runeCost(spell)}} runes to learn</button>
+                    </div><br/>
+                    <div data-ng-repeat="spell in getUnlearnableSpells()">{{spell}}
+                      <button>You have not enough runes</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="hud-section">
@@ -121,7 +129,6 @@
       </div>
     </div>
   </body>
-  <script src="scripts/jquery.min.js"></script>
   <script src="scripts/state_client.js"></script>
   <script src="scripts/globals.js"></script>
   <script src="scripts/auth_client.js"></script>
