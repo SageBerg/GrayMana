@@ -16,154 +16,109 @@ html
     link(href="stylesheets/compiled_css/style.css", rel="stylesheet")
     link(href='https://fonts.googleapis.com/css?family=Josefin+Sans', rel='stylesheet', type='text/css')
 
+    script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
+    script(src="angular_gray_mana_app.js")
+    script(src="angular_gray_mana_controller.js")
+    script(src="damage_controller.js")
+
   body
 
-    div(id="learn-spells-modal" class="modal")
-      div(class="modal-content")
-        span(class="close") X
-        h3 Learn Spells
-        div(class="hud-section")
-          h4 Runes
+    div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController")
 
-          div(id="rune-section")
-            div(id="runes")
+      div(id="learn-spells-modal" class="modal")
+        div(class="modal-content")
+          span(class="close") X
+          h3 Learn Spells
+          div(class="hud-section")
+            h4 Runes
 
-        div(class="hud-section")
-          div(class="learn-spells-pane")
-            div(id="spell-learn-list")
+            div(id="rune-section")
+              div(id="runes")
 
-    div(class="metabutton-container")
-      button(class="metabutton") Log Out (x)
-      button(class="metabutton") Edit Options (o)
-      button(class="metabutton") Get Game Info (h)
+          div(class="hud-section")
+            div(class="learn-spells-pane")
+              div(id="spell-learn-list")
 
-    h1(class="game-title") Gray Mana
+      h1(class="game-title") Gray Mana
 
-    div(id="login-div")
-      h2 Username:
-      input(class="login-input" id="username" value="person@example.com")
-      h2 Password:
-      input(class="login-input" id="password"
-        value="not_a_real_password_used_anywhere_else")
-      button(onclick="login()") Log In
+      div(class="metabutton-container")
+        button(class="metabutton", data-ng-repeat="buttonTitle in metaButtons") {{ buttonTitle }}
 
-    div(id="map")
+      div(id="login-div")
+        h2 Username:
+        input(class="login-input" id="username" value="person@example.com")
+        h2 Password:
+        input(class="login-input" id="password"
+          value="not_a_real_password_used_anywhere_else")
+        button(onclick="login()") Log In
 
-    div(class="hud-section")
-      div(class="hud-panel")
-        div(class="hud-heading")
-          span(class="hud-title") Mana
-          span(id="notifications-mana")
+      div(id="map")
 
-        div(class="hud-panel-content")
-          div(id="mana-bar-1-red") 0
-          div(id="mana-bar-2-orange") 0
-          div(id="mana-bar-3-yellow") 0
-          div(id="mana-bar-4-green") 0
-          div(id="mana-bar-5-blue") 0
-          div(id="mana-bar-6-indigo") 0
-          div(id="mana-bar-7-violet") 0
-          div(id="mana-bar-8-black") 0
-          div(id="mana-bar-9-gray") 0
-          div(id="mana-bar-10-white") 0
+      div(class="hud-section")
+        div(class="hud-panel")
+          div(class="hud-heading")
+            span(class="hud-title") Mana
+            span(id="notifications-mana")
 
-    div(class="hud-section")
-      div(class="hud-panel")
-        div(class="hud-heading")
-          span(class="hud-title") Prepared Spells
-          span(id="notifications-prepared-spells") &nbsp;- You haven't prepared a spell yet.
+          div(class="hud-panel-content")
+            div(data-ng-repeat="manaBarId in manaBarIds",
+              id="{{ manaBarId }}") 0
 
-        div(class="hud-panel-content")
+      div(class="hud-section")
+        div(class="hud-panel")
+          div(class="hud-heading")
+            span(class="hud-title") Prepared Spells
+            span(id="notifications-prepared-spells") &nbsp;- You haven't prepared a spell yet.
 
-          div(class="spell-slot", id="spell-slot-1")
-            //- div(class="spell-logo blue") Quickness
-            div(class="spell-logo-empty") Empty Slot
+          div(class="hud-panel-content")
+            div(data-ng-repeat="_ in spellSlots",
+              class="{{ lastSpellSlot( $index + 1 ) }} spell-slot",
+              id="spell-slot-{{ $index + 1 }}")
+              div(class="spell-logo-empty") Empty Slot
 
-          div(class="spell-slot", id="spell-slot-2")
-            //- div(class="spell-logo white") Burst
-            div(class="spell-logo-empty") Empty Slot
+      div(class="hud-section")
+        div(class="hud-panel")
+          div(class="hud-heading")
+            span(class="hud-title") Damage
+            span(id="notifications-damage") &nbsp;- You haven't taken any damage yet.
+          div(class="hud-panel-content")
+            div(id="damage-bar")
+              div(data-ng-repeat="color in colorClasses",
+                class="damage {{ color }}", data-ng-style="widthObj[color]",
+                id="{{ 'damage-' + ($index + 1) + '-' + color }}")
 
-          div(class="spell-slot", id="spell-slot-3")
-            //- div(class="spell-logo blue") Teleport
-            div(class="spell-logo-empty") Empty Slot
+      div(class="hud-section")
+        div(class="hud-panel")
+          div(class="hud-heading")
+            span(class="hud-title") Actions
+            span(id="notifications-actions")
 
-          div(class="spell-slot", id="spell-slot-4")
-            //- div(class="spell-logo indigo") Heal
-            div(class="spell-logo-empty") Empty Slot
+          div(class="hud-panel-content")
+            div(class="button-group")
+              button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
+              button(class="action-button", onclick="getTreasure()") Get Treasure
+              button(class="action-button") Manatate (m)
 
-          div(class="spell-slot", id="spell-slot-5")
-            //- div(class="spell-logo white") Shield
-            div(class="spell-logo-empty") Empty Slot
+            div(class="button-group")
+              button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact (k)
+              button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat (e)
+              button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep (z)
 
-          div(class="spell-slot", id="spell-slot-6")
-            //- div(class="spell-logo gray") Light
-            div(class="spell-logo-empty") Empty Slot
+            div(class="button-group")
+              button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell (r)
+              button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells (p)
+              button(class="action-button", id="learn-spells") Learn Spells (l)
 
-          div(class="spell-slot", id="spell-slot-7")
-            //- div(class="spell-logo red") Clean
-            div(class="spell-logo-empty") Empty Slot
+            div(class="button-group")
 
-          div(class="spell-slot", id="spell-slot-8")
-            //- div(class="spell-logo black") Storage
-            div(class="spell-logo-empty") Empty Slot
+              button(class="action-button") Talk (t)
+              button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests (q)
+              //- button(class="action-button") Bow (b)
+              button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details (f)
 
-          div(class="spell-slot", id="spell-slot-9")
-            //- div(class="spell-logo gray") Map
-            div(class="spell-logo-empty") Empty Slot
-
-          div(class="selected-spell-slot spell-slot", id="spell-slot-10")
-            //- div(class="spell-logo violet") Message
-            div(class="spell-logo-empty") Empty Slot
-
-    div(class="hud-section")
-      div(class="hud-panel")
-        div(class="hud-heading")
-          span(class="hud-title") Damage
-          span(id="notifications-damage") &nbsp;- You haven't taken any damage yet.
-        div(class="hud-panel-content")
-          div(id="damage-bar")
-            div(class="damage red", id="damage-1-red")
-            div(class="damage orange", id="damage-2-orange")
-            div(class="damage yellow", id="damage-3-yellow")
-            div(class="damage green", id="damage-4-green")
-            div(class="damage blue", id="damage-5-blue")
-            div(class="damage indigo", id="damage-6-indigo")
-            div(class="damage violet", id="damage-7-violet")
-            div(class="damage black", id="damage-8-black")
-            div(class="damage gray", id="damage-9-gray")
-            div(class="damage white", id="damage-10-white")
-
-    div(class="hud-section")
-      div(class="hud-panel")
-        div(class="hud-heading")
-          span(class="hud-title") Actions
-          span(id="notifications-actions")
-
-        div(class="hud-panel-content")
-          div(class="button-group")
-            button(class="action-button", onclick="getTreasure()") Get Treasure (g)
-            button(class="action-button") Manatate (m)
-
-          div(class="button-group")
-            button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact (k)
-            button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat (e)
-            button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep (z)
-
-          div(class="button-group")
-            button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell (r)
-            button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells (p)
-            button(class="action-button", id="learn-spells") Learn Spells (l)
-
-          div(class="button-group")
-
-            button(class="action-button") Talk (t)
-            button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests (q)
-            //- button(class="action-button") Bow (b)
-            button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details (f)
-
-          div(class="button-group")
-            button(class="action-button") View Inventory (i)
-            button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
+            div(class="button-group")
+              button(class="action-button") View Inventory (i)
+              button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
 
   script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")

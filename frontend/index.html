@@ -1,47 +1,25 @@
 <!DOCTYPE html5>
 <html>
   <head>
-    <title>Gray Mana</title>
-    <meta charset="UTF-8">
-
-    <link href="stylesheets/compiled_css/actions_dashboard.css"
-      rel="stylesheet" type="text/css"/>
-    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/damage_dashboard.css"
-      rel="stylesheet" type="text/css"/>
-    <link href="stylesheets/compiled_css/hud.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/learn_spells_modal.css"
-      rel="stylesheet" type="text/css"/>
-    <link href="stylesheets/compiled_css/login.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/map.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/modal.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="stylesheets/compiled_css/prepared_spells_dashboard.css"
-      rel="stylesheet"/>
-    <link href="stylesheets/compiled_css/style.css" rel="stylesheet"
-      type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans"
-      rel="stylesheet" type="text/css"/>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
-    </script>
+    <link href="stylesheets/compiled_css/actions_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/damage_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/hud.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/learn_spells_modal.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/login.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/mana_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/map.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/modal.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/prepared_spells_dashboard.css" rel="stylesheet"/>
+    <link href="stylesheets/compiled_css/style.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="angular_gray_mana_app.js"></script>
     <script src="angular_gray_mana_controller.js"></script>
     <script src="damage_controller.js"></script>
   </head>
-
   <body>
-
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
-
-      <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
-
       <div class="modal" id="learn-spells-modal">
         <div class="modal-content"><span class="close">X</span>
           <h3>Learn Spells</h3>
@@ -58,14 +36,10 @@
           </div>
         </div>
       </div>
-
-      <div class="metabutton-container">
-        <button class="metabutton" data-ng-repeat="buttonTitle in metaButtons">
-          {{ buttonTitle }}
-        </button>
-      </div>
-
       <h1 class="game-title">Gray Mana</h1>
+      <div class="metabutton-container">
+        <button class="metabutton" data-ng-repeat="buttonTitle in metaButtons">{{ buttonTitle }}</button>
+      </div>
       <div id="login-div">
         <h2>Username:</h2>
         <input class="login-input" id="username" value="person@example.com"/>
@@ -73,9 +47,7 @@
         <input class="login-input" id="password" value="not_a_real_password_used_anywhere_else"/>
         <button onclick="login()">Log In</button>
       </div>
-
       <div id="map"></div>
-
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Mana</span><span id="notifications-mana"></span></div>
@@ -84,42 +56,32 @@
           </div>
         </div>
       </div>
-
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Prepared Spells</span><span id="notifications-prepared-spells">&nbsp;- You haven't prepared a spell yet.</span></div>
           <div class="hud-panel-content">
-
-            <div data-ng-repeat="_ in spellSlots" class="{{ lastSpellSlot( $index + 1 ) }} spell-slot"
-              id="spell-slot-{{ $index + 1 }}">
+            <div class="{{ lastSpellSlot( $index + 1 ) }} spell-slot" data-ng-repeat="_ in spellSlots" id="spell-slot-{{ $index + 1 }}">
               <div class="spell-logo-empty">Empty Slot</div>
             </div>
-
           </div>
         </div>
       </div>
-
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Damage</span><span id="notifications-damage">&nbsp;- You haven't taken any damage yet.</span></div>
           <div class="hud-panel-content">
             <div id="damage-bar">
-              <div
-                data-ng-repeat="color in colorClasses"
-                class="damage {{ color }}"
-                data-ng-style="widthObj[color]"
-                  id="{{ 'damage-' + ($index + 1) + '-' + color }}">
-              </div>
+              <div class="damage {{ color }}" data-ng-repeat="color in colorClasses" data-ng-style="widthObj[color]" id="{{ 'damage-' + ($index + 1) + '-' + color }}"></div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="hud-section">
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title">Actions</span><span id="notifications-actions"></span></div>
           <div class="hud-panel-content">
             <div class="button-group">
+              <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
               <button class="action-button" onclick="getTreasure()">Get Treasure (g)</button>
               <button class="action-button">Manatate (m)</button>
             </div>
@@ -145,13 +107,9 @@
           </div>
         </div>
       </div>
-
-    </div> <!-- end Angular app -->
-
+    </div>
   </body>
-
   <script src="scripts/jquery.min.js"></script>
-  <script src="scripts/treasure.js"></script>
   <script src="scripts/state_client.js"></script>
   <script src="scripts/globals.js"></script>
   <script src="scripts/auth_client.js"></script>
@@ -159,5 +117,6 @@
   <script src="scripts/render.js"></script>
   <script src="scripts/request.js"></script>
   <script src="scripts/modal.js"></script>
+  <script src="scripts/treasure.js"></script>
   <script src="scripts/start.js"></script>
 </html>
