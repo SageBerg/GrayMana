@@ -6,7 +6,9 @@ app.controller('grayManaController', function($scope) {
     'mana-bar-2-orange', 'mana-bar-3-yellow', 'mana-bar-4-green',
     'mana-bar-5-blue', 'mana-bar-6-indigo', 'mana-bar-7-violet',
     'mana-bar-8-black', 'mana-bar-9-gray', 'mana-bar-10-white'];
-  $scope.metaButtons = ['Log Out (x)', 'Edit Options (o)', 'Get Game Info (h)'];
+  $scope.metaButtons = [{title: 'Log Out (x)', modal: 'logOut'},
+                        {title: 'Edit Options (o)', modal: 'editOptions'},
+                        {title: 'Get Game Info (h)', modal: 'getGameInfo'} ];
   $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   $scope.lastSpellSlot = function(spellSlotNumber) {
@@ -44,22 +46,34 @@ app.controller('grayManaController', function($scope) {
   };
 
   $scope.openModal = function(modalContent) {
-    document.getElementsByClassName('modal')[0].style.display = 'block';
+    //document.getElementsByClassName('modal')[0].style.display = 'block';
+    $scope.showModal = true;
+    console.log($scope.showModal);
     switch (modalContent) {
       case 'learnSpells':
         $scope.initLearnSpellsModal();
         break;
+      case 'editOptions':
+        $scope.showEditOptions = true;
+        break;
     }
   }
 
+  $scope.switchShowTitles = true;
+
+  $scope.showModal = false;
+
+  $scope.showEditOptions = false;
+
   $scope.initLearnSpellsModal = function() {
-    document.getElementById('inner-modal-content').innerHTML = '<h3>Learn Spells</h3><div class="hud-section"><h4>Runes</h4><div id="rune-section"><div id="runes"></div></div></div><div class="hud-section"><div class="learn-spells-pane"><div id="spell-learn-list"></div></div></div>';
+    document.getElementById('inner-modal-content').innerHTML = '<h2>Learn Spells</h2><div class="hud-section"><h3>Runes</h3><div id="rune-section"><div id="runes"></div></div></div><div class="hud-section"><div class="learn-spells-pane"><div id="spell-learn-list"></div></div></div>';
     renderRunes();
     renderLearnSpellList();
   }
 
   $scope.closeModal = function() {
-    document.getElementsByClassName('modal')[0].style.display = 'none';
+    $scope.showModal = false;
+    $scope.showEditOptions = false;
   }
 
 });

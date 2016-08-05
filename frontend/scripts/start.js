@@ -6,7 +6,6 @@ function setup() {
   setInterval(function() {
     incAllMana();
 
-    renderDamage();
     renderMana();
   }, 60000);
 

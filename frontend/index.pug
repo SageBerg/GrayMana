@@ -28,7 +28,8 @@ html
       h1(class="game-title") Gray Mana
 
       div(class="metabutton-container")
-        button(class="metabutton", data-ng-repeat="buttonTitle in metaButtons") {{ buttonTitle }}
+        button(class="metabutton", data-ng-repeat="button in metaButtons",
+          data-ng-click="openModal(button.modal)") {{ button.title }}
 
       div(id="login-div")
         h2 Username:
@@ -43,7 +44,7 @@ html
       div(class="hud-section")
         div(class="hud-panel")
           div(class="hud-heading")
-            span(class="hud-title") Mana
+            span(class="hud-title", data-ng-if="switchShowTitles") Mana
             span(id="notifications-mana")
 
           div(class="hud-panel-content")
@@ -53,8 +54,8 @@ html
       div(class="hud-section")
         div(class="hud-panel")
           div(class="hud-heading")
-            span(class="hud-title") Prepared Spells
-            span(id="notifications-prepared-spells") &nbsp;- You haven't prepared a spell yet.
+            span(class="hud-title", data-ng-if="switchShowTitles") Prepared Spells
+            span(id="notifications-prepared-spells", data-ng-if="switchShowTitles") &nbsp;- You haven't prepared a spell yet.
 
           div(class="hud-panel-content")
             div(data-ng-repeat="_ in spellSlots",
@@ -65,8 +66,8 @@ html
       div(class="hud-section")
         div(class="hud-panel")
           div(class="hud-heading")
-            span(class="hud-title") Damage
-            span(id="notifications-damage") &nbsp;- You haven't taken any damage yet.
+            span(class="hud-title", data-ng-if="switchShowTitles") Damage
+            span(id="notifications-damage", data-ng-if="switchShowTitles") &nbsp;- You haven't taken any damage yet.
           div(class="hud-panel-content")
             div(id="damage-bar")
               div(data-ng-repeat="color in colorClasses",
@@ -76,7 +77,7 @@ html
       div(class="hud-section")
         div(class="hud-panel")
           div(class="hud-heading")
-            span(class="hud-title") Actions
+            span(class="hud-title", data-ng-if="switchShowTitles") Actions
             span(id="notifications-actions")
 
           div(class="hud-panel-content")
@@ -106,25 +107,16 @@ html
               button(class="action-button") View Inventory (i)
               button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements (c)
 
-      div(class="modal")
+      div(class="modal", data-ng-show="showModal")
         div(class="modal-content")
           span(data-ng-click="closeModal()", class="close") &times;
+
           div(id="inner-modal-content")
 
-    //
-      div(id="learn_spells_modal", class="modal")
-        div(class="modal-content")
-          span(class="close") X
-          h3 {{ getModalTitle() }}
-          div(class="hud-section")
-            h4 Runes
-
-            div(id="rune-section")
-              div(id="runes")
-
-          div(class="hud-section")
-            div(class="learn-spells-pane")
-              div(id="spell-learn-list")
+            div(data-ng-show="showEditOptions")
+              h3 Edit Options
+              input(type="checkbox" data-ng-model="switchShowTitles")
+              span(data-ng-show="showEditOptions") Show titles of sections in HUD
 
   script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")
@@ -133,6 +125,5 @@ html
   script(src="scripts/controls.js")
   script(src="scripts/render.js")
   script(src="scripts/request.js")
-  //script(src="scripts/modal.js")
   script(src="scripts/treasure.js")
   script(src="scripts/start.js")
