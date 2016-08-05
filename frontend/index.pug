@@ -50,8 +50,8 @@ html
             span(id="notifications-mana")
 
           div(class="hud-panel-content")
-            div(data-ng-repeat="manaBarId in manaBarIds",
-              id="{{ manaBarId }}") 0
+            div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
+              div(class="white", data-ng-style="manaHeights[color]") {{mana[color]}}
 
       div(class="hud-section")
         div(class="hud-panel")
@@ -84,6 +84,7 @@ html
 
           div(class="hud-panel-content")
             div(class="button-group")
+              button(data-ng-click="getMana(1, 'red')") Get Mana
               button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
               button(class="action-button", onclick="getTreasure()") Get Treasure
               button(class="action-button", data-ng-click="toggleManatate()") {{getManatateButtonTitle()}}

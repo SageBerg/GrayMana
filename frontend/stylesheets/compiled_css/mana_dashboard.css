@@ -91,7 +91,6 @@ button {
   margin: 10px; }
 
 .mana-bar, #mana-bar-1-red, #mana-bar-2-orange, #mana-bar-3-yellow, #mana-bar-4-green, #mana-bar-5-blue, #mana-bar-6-indigo, #mana-bar-7-violet, #mana-bar-8-black, #mana-bar-9-gray, #mana-bar-10-white {
-  border-radius: 38.5px;
   border-color: gray;
   display: inline-block;
   height: 77px;

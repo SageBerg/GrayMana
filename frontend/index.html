@@ -37,7 +37,9 @@
         <div class="hud-panel">
           <div class="hud-heading"><span class="hud-title" data-ng-if="switchShowTitles">Mana</span><span id="notifications-mana"></span></div>
           <div class="hud-panel-content">
-            <div data-ng-repeat="manaBarId in manaBarIds" id="{{ manaBarId }}">0</div>
+            <div class="mana-bar {{color}}" data-ng-repeat="color in colorClasses">
+              <div class="white" data-ng-style="manaHeights[color]">{{mana[color]}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -66,6 +68,7 @@
           <div class="hud-heading"><span class="hud-title" data-ng-if="switchShowTitles">Actions</span><span id="notifications-actions"></span></div>
           <div class="hud-panel-content">
             <div class="button-group">
+              <button data-ng-click="getMana(1, 'red')">Get Mana</button>
               <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
               <button class="action-button" onclick="getTreasure()">Get Treasure</button>
               <button class="action-button" data-ng-click="toggleManatate()">{{getManatateButtonTitle()}}<span data-ng-show="switchShowHotKeys">&nbsp;({{manatateHotKey}})</span></button>
