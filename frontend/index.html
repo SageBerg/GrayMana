@@ -102,15 +102,17 @@
             <div data-ng-show="showLearnSpells">
               <h2>Learn Spells</h2>
               <div class="hud-section">
-                <h3>Runes</h3>
-                <div id="rune-section">
-                  <div id="runes"></div>
-                </div>
-              </div>
-              <div class="hud-section">
                 <h3>Spells</h3>
                 <div class="learn-spells-pane">
                   <div id="spell-learn-list"></div>
+                </div>
+              </div>
+              <div class="hud-section">
+                <h3>Runes</h3>
+                <div id="rune-section">
+                  <div id="runes">
+                    <div class="{{ fadedOrClearRune(letter) }}" data-ng-repeat="letter in alphabet" id="{{'rune-' + letter}}">{{letterOrQuotes(letter)}}<span data-ng-model="runes[letter]">&nbsp;{{runes[letter]}}</span></div>
+                  </div>
                 </div>
               </div>
             </div>

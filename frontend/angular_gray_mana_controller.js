@@ -67,7 +67,6 @@ app.controller('grayManaController', function($scope) {
 
   $scope.initLearnSpellsModal = function() {
     $scope.showLearnSpells = true;
-    renderRunes();
     renderLearnSpellList();
   }
 
@@ -92,5 +91,21 @@ app.controller('grayManaController', function($scope) {
 
   $scope.inventoryHotKey = 'i';
   $scope.achievementsHotKey = 'c';
+
+  $scope.runes = character.runes;
+  $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
+  $scope.fadedOrClearRune = function(letter) {
+    if ($scope.runes[letter] > 0) {
+      return 'rune';
+    } else {
+      return 'rune-faded';
+    }
+  }
+  $scope.letterOrQuotes = function(letter) {
+    if (letter === ' ') {
+      return '\' \''
+    }
+    return letter;
+  }
 
 });

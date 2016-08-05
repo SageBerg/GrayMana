@@ -139,14 +139,16 @@ html
               h2 Learn Spells
 
               div(class="hud-section")
-                h3 Runes
-                div(id="rune-section")
-                  div(id="runes")
-
-              div(class="hud-section")
                 h3 Spells
                 div(class="learn-spells-pane")
                   div(id="spell-learn-list")
+
+              div(class="hud-section")
+                h3 Runes
+                div(id="rune-section")
+                  div(id="runes")
+                    div(data-ng-repeat="letter in alphabet", class="{{ fadedOrClearRune(letter) }}", id="{{'rune-' + letter}}") {{letterOrQuotes(letter)}}
+                      span(data-ng-model="runes[letter]") &nbsp;{{runes[letter]}}
 
   script(src="scripts/jquery.min.js")
   script(src="scripts/state_client.js")
