@@ -26,6 +26,11 @@ html
 
     div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController")
 
+      //temporary buttons for testing
+      button(data-ng-click="getMana(1, 'red')") Get Mana
+      button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
+      button(class="action-button", onclick="getTreasure()") Get Treasure
+
       h1(class="game-title") Gray Mana
 
       div(class="metabutton-container")
@@ -84,11 +89,10 @@ html
 
           div(class="hud-panel-content")
             div(class="button-group")
-              button(data-ng-click="getMana(1, 'red')") Get Mana
-              button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
-              button(class="action-button", onclick="getTreasure()") Get Treasure
               button(class="action-button", data-ng-click="toggleManatate()") {{getManatateButtonTitle()}}
                 span(data-ng-show="switchShowHotKeys") &nbsp;({{manatateHotKey}})
+              button(class="action-button", data-ng-click="") {{'Switch to Clone'}}
+                span(data-ng-show="switchShowHotKeys") &nbsp;({{cloneHotKey}})
 
             div(class="button-group")
               button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact

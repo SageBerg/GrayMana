@@ -72,6 +72,8 @@ app.controller('grayManaController', function($scope) {
   }
 
   $scope.manatateHotKey = 'm';
+  $scope.cloneHotKey = 'c';
+
   $scope.interactHotKey = 'k';
   $scope.eatHotKey = 'e';
   $scope.sleepHotKey = 'z';
@@ -85,7 +87,7 @@ app.controller('grayManaController', function($scope) {
   $scope.factionHotKey = 'f';
 
   $scope.inventoryHotKey = 'i';
-  $scope.achievementsHotKey = 'c';
+  $scope.achievementsHotKey = 'v';
 
   $scope.runes = character.runes;
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';

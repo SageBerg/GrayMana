@@ -21,6 +21,10 @@
   </head>
   <body>
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
+      <!--temporary buttons for testing-->
+      <button data-ng-click="getMana(1, 'red')">Get Mana</button>
+      <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
+      <button class="action-button" onclick="getTreasure()">Get Treasure</button>
       <h1 class="game-title">Gray Mana</h1>
       <div class="metabutton-container">
         <button class="metabutton" data-ng-repeat="button in metaButtons" data-ng-click="openModal(button.modal)">{{ button.title }}<span data-ng-show="switchShowHotKeys">&nbsp;({{button.hotKey}})</span></button>
@@ -68,10 +72,8 @@
           <div class="hud-heading"><span class="hud-title" data-ng-if="switchShowTitles">Actions</span><span id="notifications-actions"></span></div>
           <div class="hud-panel-content">
             <div class="button-group">
-              <button data-ng-click="getMana(1, 'red')">Get Mana</button>
-              <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
-              <button class="action-button" onclick="getTreasure()">Get Treasure</button>
               <button class="action-button" data-ng-click="toggleManatate()">{{getManatateButtonTitle()}}<span data-ng-show="switchShowHotKeys">&nbsp;({{manatateHotKey}})</span></button>
+              <button class="action-button" data-ng-click="">{{'Switch to Clone'}}<span data-ng-show="switchShowHotKeys">&nbsp;({{cloneHotKey}})</span></button>
             </div>
             <div class="button-group">
               <button class="action-button" disabled="disabled" title="You're not standing in front of anyone or anything you can interact with.">Interact<span data-ng-show="switchShowHotKeys">&nbsp;({{interactHotKey}})</span></button>
