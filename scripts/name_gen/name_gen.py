@@ -1,13 +1,12 @@
 from random import choice
 from random import randint
 
-
 CONSONANTS = ['b', 'd', 'f', 'gh', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's',
               't', 'v', 'w', 'y', 'z', 'sh', 'kw', 'ch', 'th',]
 CONSONANTS_THAT_CAN_COME_AFTER_S = ['k', 'l', 'm', 'n', 'p', 'r', 't', 'v', 'w']
 
-CONSONANTS_THAT_CAN_COME_BEFORE_R = set(['b', 'd', 'f', 'gh', 'k', 'p', 't', 'v',
-                                     'sh', 'th'])
+CONSONANTS_THAT_CAN_COME_BEFORE_R = set(['b', 'd', 'f', 'gh', 'k', 'p', 't',
+                                         'v', 'sh', 'th'])
 CONSONANTS_THAT_CAN_COME_BEFORE_L = set(['b', 'f', 'gh', 'k', 'p', 'v'])
 EXTRA_CONSONANTS = ['b', 'd', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's',
                     't', 'v', 'w', 'y', 'z', 'ng']
@@ -55,9 +54,9 @@ def gen_name(ending_vowel):
 def gen_woman_name():
      return gen_name('a')
 
-
 def gen_man_name():
     return gen_name('o')
+
 
 for _ in range(10):
     print gen_woman_name()
