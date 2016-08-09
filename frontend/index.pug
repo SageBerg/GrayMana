@@ -19,16 +19,17 @@ html
     script(src="scripts/jquery.min.js")
     script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
     script(src="angular_gray_mana_app.js")
-    script(src="angular_gray_mana_controller.js")
-    script(src="damage_controller.js")
+    script(src="controllers/angular_gray_mana_controller.js")
+    script(src="controllers/mana_controller.js")
+    script(src="controllers/damage_controller.js")
+    script(src="controllers/actions_controller.js")
+    script(src="controllers/learn_spells_controller.js")
+    script(src="controllers/modal_controller.js")
 
   body
 
     div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController")
 
-      //temporary buttons for testing
-      button(data-ng-click="getMana(1, 'red')") Get Mana
-      button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
       button(class="action-button", onclick="getTreasure()") Get Treasure
 
       h1(class="game-title") Gray Mana
@@ -48,15 +49,17 @@ html
 
       div(id="map")
 
-      div(class="hud-section")
-        div(class="hud-panel")
-          div(class="hud-heading")
-            span(class="hud-title", data-ng-if="switchShowTitles") Mana
-            span(id="notifications-mana")
+      div(data-ng-controller="manaController")
+        div(class="hud-section")
+          div(class="hud-panel")
+            div(class="hud-heading")
+              span(class="hud-title", data-ng-if="switchShowTitles") Mana
+              span(id="notifications-mana")
 
-          div(class="hud-panel-content")
-            div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
-              div(class="white", data-ng-style="manaHeights[color]") {{mana[color]}}
+            div(class="hud-panel-content")
+              div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
+                div(class="white", data-ng-style="manaHeights[color]") {{mana[color]}}
+              button(data-ng-click="getMana(1, 'red')") Get Mana
 
       div(class="hud-section")
         div(class="hud-panel")
@@ -70,96 +73,101 @@ html
               id="spell-slot-{{ $index + 1 }}")
               div(class="spell-logo-empty") Empty Slot
 
-      div(class="hud-section")
-        div(class="hud-panel")
-          div(class="hud-heading")
-            span(class="hud-title", data-ng-if="switchShowTitles") Damage
-            span(id="notifications-damage", data-ng-if="switchShowTitles") &nbsp;- You haven't taken any damage yet.
-          div(class="hud-panel-content")
-            div(id="damage-bar")
-              div(data-ng-repeat="color in colorClasses",
-                class="damage {{ color }}", data-ng-style="widthObj[color]",
-                id="{{ 'damage-' + ($index + 1) + '-' + color }}")
+      div(data-ng-controller="damageController")
+        div(class="hud-section")
+          div(class="hud-panel")
+            div(class="hud-heading")
+              span(class="hud-title", data-ng-if="switchShowTitles") Damage
+              span(id="notifications-damage", data-ng-if="switchShowTitles") &nbsp;- You haven't taken any damage yet.
+            div(class="hud-panel-content")
+              div(id="damage-bar")
+                div(data-ng-repeat="color in colorClasses",
+                  class="damage {{ color }}", data-ng-style="widthObj[color]",
+                  id="{{ 'damage-' + ($index + 1) + '-' + color }}")
+              button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
 
-      div(class="hud-section")
-        div(class="hud-panel")
-          div(class="hud-heading")
-            span(class="hud-title", data-ng-if="switchShowTitles") Actions
-            span(id="notifications-actions")
+      div(data-ng-controller="modalController")
+        div(data-ng-controller="actionsController")
+          div(class="hud-section")
+            div(class="hud-panel")
+              div(class="hud-heading")
+                span(class="hud-title", data-ng-if="switchShowTitles") Actions
+                span(id="notifications-actions")
 
-          div(class="hud-panel-content")
-            div(class="button-group")
-              button(class="action-button", data-ng-click="toggleManatate()") {{getManatateButtonTitle()}}
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{manatateHotKey}})
-              button(class="action-button", data-ng-click="") {{'Switch to Clone'}}
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{cloneHotKey}})
+              div(class="hud-panel-content")
+                div(class="button-group")
+                  button(class="action-button", data-ng-click="toggleManatate()") {{getManatateButtonTitle()}}
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{manatateHotKey}})
+                  button(class="action-button", data-ng-click="") {{'Switch to Clone'}}
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{cloneHotKey}})
 
-            div(class="button-group")
-              button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{interactHotKey}})
-              button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{eatHotKey}})
-              button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{sleepHotKey}})
+                div(class="button-group")
+                  button(class="action-button", disabled="disabled", title="You're not standing in front of anyone or anything you can interact with.") Interact
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{interactHotKey}})
+                  button(class="action-button", disabled="disabled", title="You don't have any food yet.") Eat
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{eatHotKey}})
+                  button(class="action-button", disabled="disabled", title="You're not tired enough yet.") Sleep
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{sleepHotKey}})
 
-            div(class="button-group")
-              button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{castSelectedSpellHotKey}})
-              button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{prepareSpellsHotKey}})
-              button(data-ng-click="openModal('learnSpells')", class="action-button", id="learn-spells") Learn Spells
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{learnSpellsHotKey}})
+                div(class="button-group")
+                  button(class="action-button", disabled="disabled", title="You don't have a spell selected yet.") Cast Selected Spell
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{castSelectedSpellHotKey}})
+                  button(class="action-button", disabled="disabled", title="You haven't learned a spells yet.") Prepare Spells
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{prepareSpellsHotKey}})
+                  button(data-ng-click="openModal('learnSpells')", class="action-button", id="learn-spells") Learn Spells
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{learnSpellsHotKey}})
 
-            div(class="button-group")
+                div(class="button-group")
 
-              button(class="action-button") Talk
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{talkHotKey}})
-              button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{questHotKey}})
-              button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{factionHotKey}})
+                  button(class="action-button") Talk
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{talkHotKey}})
+                  button(class="action-button", disabled="disabled", title="You haven't given or recieved a quest yet.") View Quests
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{questHotKey}})
+                  button(class="action-button", disabled="disabled", title="You haven't joined or founded a faction yet.") View Faction Details
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{factionHotKey}})
 
-            div(class="button-group")
-              button(class="action-button") View Inventory
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{inventoryHotKey}})
-              button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements
-                span(data-ng-show="switchShowHotKeys") &nbsp;({{achievementsHotKey}})
+                div(class="button-group")
+                  button(class="action-button") View Inventory
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{inventoryHotKey}})
+                  button(class="action-button", disabled="disabled", title="You have no achievements :<") Admire Achievements
+                    span(data-ng-show="switchShowHotKeys") &nbsp;({{achievementsHotKey}})
 
-      div(class="modal", data-ng-show="showModal")
-        div(class="modal-content")
-          span(data-ng-click="closeModal()", class="close") &times;
+        div(class="modal", data-ng-show="showModal")
+          div(class="modal-content")
+            span(data-ng-click="closeModal()", class="close") &times;
 
-          div(id="inner-modal-content")
+            div(id="inner-modal-content")
 
-            div(data-ng-show="showEditOptions")
-              h2 Edit Options
-              input(type="checkbox" data-ng-model="switchShowTitles")
-              span Show titles of sections in HUD
-              br
+              div(data-ng-show="showEditOptions")
+                h2 Edit Options
+                input(type="checkbox" data-ng-model="switchShowTitles")
+                span Show titles of sections in HUD
+                br
 
-              input(type="checkbox" data-ng-model="switchShowHotKeys")
-              span Show shortcut keys on buttons
-              br
+                input(type="checkbox" data-ng-model="switchShowHotKeys")
+                span Show shortcut keys on buttons
+                br
 
-            div(data-ng-show="showLearnSpells")
-              h2 Learn Spells
+              div(data-ng-controller="learnSpellsController")
+                div(data-ng-show="showLearnSpells")
+                  h2 Learn Spells
 
-              div(class="hud-section")
-                h3 Spells
-                div(class="learn-spells-pane")
-                  div(id="spell-learn-list")
-                    div(data-ng-repeat="spell in getLearnableSpells() | orderBy") {{spell}}
-                      button() Pay {{runeCost(spell)}} runes to learn
-                    br
-                    div(data-ng-repeat="spell in getUnlearnableSpells() | orderBy") {{spell}}
-                      button() You have not enough runes
+                  div(class="hud-section")
+                    h3 Spells
+                    div(class="learn-spells-pane")
+                      div(id="spell-learn-list")
+                        div(data-ng-repeat="spell in getLearnableSpells() | orderBy") {{spell}}
+                          button() Pay {{runeCost(spell)}} runes to learn
+                        br
+                        div(data-ng-repeat="spell in getUnlearnableSpells() | orderBy") {{spell}}
+                          button() You have not enough runes
 
-              div(class="hud-section")
-                h3 Runes
-                div(id="rune-section")
-                  div(id="runes")
-                    div(data-ng-repeat="letter in alphabet", class="{{ fadedOrClearRune(letter) }}", id="{{'rune-' + letter}}") {{letterOrQuotes(letter)}}
-                      span(data-ng-model="runes[letter]") &nbsp;{{runes[letter]}}
+                  div(class="hud-section")
+                    h3 Runes
+                    div(id="rune-section")
+                      div(id="runes")
+                        div(data-ng-repeat="letter in alphabet", class="{{ fadedOrClearRune(letter) }}", id="{{'rune-' + letter}}") {{letterOrQuotes(letter)}}
+                          span(data-ng-model="runes[letter]") &nbsp;{{runes[letter]}}
 
   script(src="scripts/state_client.js")
   script(src="scripts/globals.js")
