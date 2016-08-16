@@ -20,7 +20,7 @@ app.controller('damageController', function($scope) {
     white: {'width': $scope.damages['white'] + '%'}
   };
 
-  $scope.takeSomeDamage = function(amount, color) {
+  $scope.takeDamage = function(amount, color) {
     $scope.damages[color] += amount;
     $scope.widthObj[color].width = parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
   };
