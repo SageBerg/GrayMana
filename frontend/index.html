@@ -16,6 +16,7 @@
     <script src="scripts/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="angular_gray_mana_app.js"></script>
+    <script src="services/hotkeys.js"></script>
     <script src="controllers/angular_gray_mana_controller.js"></script>
     <script src="controllers/mana_controller.js"></script>
     <script src="controllers/damage_controller.js"></script>
@@ -24,7 +25,7 @@
     <script src="controllers/modal_controller.js"></script>
   </head>
   <body>
-    <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController">
+    <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController" keypress-events="keypress-events">
       <div id="modal-section" data-ng-controller="modalController">
         <button class="action-button" onclick="getTreasure()">Get Treasure</button>
         <h1 class="game-title">Gray Mana</h1>

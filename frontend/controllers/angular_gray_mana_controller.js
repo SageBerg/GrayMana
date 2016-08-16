@@ -5,6 +5,10 @@ app.controller('grayManaController', function($scope) {
     {title: 'Get Game Info', hotKey: 'g', modal: 'getGameInfo'}
   ];
 
+  $scope.$on($scope.metaButtons[1].hotKey, function(event) {
+    $scope.$broadcast('openEditOptionsModal');
+  });
+
   $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   $scope.lastSpellSlot = function(spellSlotNumber) {

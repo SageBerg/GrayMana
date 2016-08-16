@@ -18,7 +18,11 @@ html
 
     script(src="scripts/jquery.min.js")
     script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
+
     script(src="angular_gray_mana_app.js")
+
+    script(src="services/hotkeys.js")
+
     script(src="controllers/angular_gray_mana_controller.js")
     script(src="controllers/mana_controller.js")
     script(src="controllers/damage_controller.js")
@@ -28,7 +32,7 @@ html
 
   body
 
-    div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController")
+    div(data-ng-app="angularFrontEnd", data-ng-controller="grayManaController", keypress-events)
       div(id="modal-section", data-ng-controller="modalController")
 
         button(class="action-button", onclick="getTreasure()") Get Treasure

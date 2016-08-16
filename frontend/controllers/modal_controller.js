@@ -22,4 +22,22 @@ app.controller('modalController', function($scope) {
     }
   }
 
+  $scope.$on('openLearnSpellsModal', function(event) {
+    if ($scope.showModal == false) {
+      $scope.openModal('learnSpells');
+    } else {
+      $scope.closeModal();
+    }
+    $scope.$digest();
+  });
+
+  $scope.$on('openEditOptionsModal', function(event) {
+    if ($scope.showModal == false) {
+      $scope.openModal('editOptions');
+    } else {
+      $scope.closeModal();
+    }
+    $scope.$digest();
+  });
+
 });
