@@ -49,7 +49,7 @@ html
 
       div(id="map")
 
-      div(data-ng-controller="manaController")
+      div(id="mana-section", data-ng-controller="manaController")
         div(class="hud-section")
           div(class="hud-panel")
             div(class="hud-heading")
@@ -59,7 +59,6 @@ html
             div(class="hud-panel-content")
               div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
                 div(class="white", data-ng-style="manaHeights[color]") {{mana[color]}}
-              button(data-ng-click="getMana(1, 'red')") Get Mana
 
       div(class="hud-section")
         div(class="hud-panel")
@@ -73,7 +72,7 @@ html
               id="spell-slot-{{ $index + 1 }}")
               div(class="spell-logo-empty") Empty Slot
 
-      div(data-ng-controller="damageController")
+      div(id="damage-section", data-ng-controller="damageController")
         div(class="hud-section")
           div(class="hud-panel")
             div(class="hud-heading")
@@ -84,7 +83,6 @@ html
                 div(data-ng-repeat="color in colorClasses",
                   class="damage {{ color }}", data-ng-style="widthObj[color]",
                   id="{{ 'damage-' + ($index + 1) + '-' + color }}")
-              button(data-ng-click="takeSomeDamage(4, 'red')") Take Damage
 
       div(data-ng-controller="modalController")
         div(data-ng-controller="actionsController")

@@ -38,7 +38,7 @@
         <button onclick="login()">Log In</button>
       </div>
       <div id="map"></div>
-      <div data-ng-controller="manaController">
+      <div id="mana-section" data-ng-controller="manaController">
         <div class="hud-section">
           <div class="hud-panel">
             <div class="hud-heading"><span class="hud-title" data-ng-if="switchShowTitles">Mana</span><span id="notifications-mana"></span></div>
@@ -46,7 +46,6 @@
               <div class="mana-bar {{color}}" data-ng-repeat="color in colorClasses">
                 <div class="white" data-ng-style="manaHeights[color]">{{mana[color]}}</div>
               </div>
-              <button data-ng-click="getMana(1, 'red')">Get Mana</button>
             </div>
           </div>
         </div>
@@ -61,7 +60,7 @@
           </div>
         </div>
       </div>
-      <div data-ng-controller="damageController">
+      <div id="damage-section" data-ng-controller="damageController">
         <div class="hud-section">
           <div class="hud-panel">
             <div class="hud-heading"><span class="hud-title" data-ng-if="switchShowTitles">Damage</span><span id="notifications-damage" data-ng-if="switchShowTitles">&nbsp;- You haven't taken any damage yet.</span></div>
@@ -69,7 +68,6 @@
               <div id="damage-bar">
                 <div class="damage {{ color }}" data-ng-repeat="color in colorClasses" data-ng-style="widthObj[color]" id="{{ 'damage-' + ($index + 1) + '-' + color }}"></div>
               </div>
-              <button data-ng-click="takeSomeDamage(4, 'red')">Take Damage</button>
             </div>
           </div>
         </div>
