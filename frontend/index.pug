@@ -55,7 +55,6 @@ html
             div(class="hud-panel")
               div(class="hud-heading")
                 span(class="hud-title", data-ng-if="toggleShowTitles") Mana
-                span(id="notifications-mana")
 
               div(class="hud-panel-content")
                 div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
@@ -65,7 +64,6 @@ html
           div(class="hud-panel")
             div(class="hud-heading")
               span(class="hud-title", data-ng-if="toggleShowTitles") Prepared Spells
-              span(id="notifications-prepared-spells", data-ng-if="toggleShowTitles") &nbsp;- You haven't prepared a spell yet.
 
             div(class="hud-panel-content")
               div(data-ng-repeat="_ in spellSlots",
@@ -78,7 +76,7 @@ html
             div(class="hud-panel")
               div(class="hud-heading")
                 span(class="hud-title", data-ng-if="toggleShowTitles") Damage
-                span(id="notifications-damage", data-ng-if="toggleShowTitles") &nbsp;- You haven't taken any damage yet.
+
               div(class="hud-panel-content")
                 div(id="damage-bar")
                   div(data-ng-repeat="color in colorClasses",
@@ -150,14 +148,18 @@ html
                   h2 Learn Spells
 
                   div(class="hud-section")
-                    h3 Spells
                     div(class="learn-spells-pane")
+                      h3(class="spell-title") Spell
+                      h3(class="spell-title") Cost to learn
+
                       div(id="spell-learn-list")
-                        div(data-ng-repeat="spell in getLearnableSpells() | orderBy") {{spell}}
-                          button() Pay {{runeCost(spell)}} runes to learn
+                        div(data-ng-repeat="spell in getLearnableSpells() | orderBy")
+                          div(class="spell-title") {{spell}}
+                          button(class="learn-spell-button") Pay {{runeCost(spell)}} runes to learn
                         br
-                        div(data-ng-repeat="spell in getUnlearnableSpells() | orderBy") {{spell}}
-                          button() You have not enough runes
+                        div(data-ng-repeat="spell in getUnlearnableSpells() | orderBy")
+                          div(class="spell-title") {{spell}}
+                          button(class="learn-spell-button", disabled="true") You have not enough runes
 
                   div(class="hud-section")
                     h3 Runes

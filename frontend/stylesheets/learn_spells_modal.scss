@@ -2,9 +2,9 @@
 
 $rune_size: 30px;
 
-.learn-it {
+.learn-spell-button {
   display: inline-block;
-  margin-left: 20px;
+  width: 190px;
 }
 
 .learn-spells-pane {
@@ -12,6 +12,13 @@ $rune_size: 30px;
   @extend .hud-section;
   height: 85%;
   overflow-y: auto;
+}
+
+.spell-title {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 40%;
 }
 
 .rune {

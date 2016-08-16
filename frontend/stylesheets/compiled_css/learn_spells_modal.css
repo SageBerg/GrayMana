@@ -24,7 +24,7 @@
   background-color: #D9D2E9; }
 
 .white {
-  background-color: #F3F3F3; }
+  background-color: white; }
 
 .yellow {
   background-color: #FEF1CB; }
@@ -90,13 +90,19 @@ button {
   display: block;
   margin: 10px; }
 
-.learn-it {
+.learn-spell-button {
   display: inline-block;
-  margin-left: 20px; }
+  width: 190px; }
 
 .learn-spells-pane {
   height: 85%;
   overflow-y: auto; }
+
+.spell-title {
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  width: 40%; }
 
 .rune, .rune-faded {
   background-color: #B6B6B6;

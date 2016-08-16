@@ -4,7 +4,6 @@ $mana_bar_size: 77px;
 
 .mana-bar {
   @extend .bordered;
-  //border-radius: $mana_bar_size / 2;
   border-color: gray;
   display: inline-block;
   height: $mana_bar_size;
@@ -48,18 +47,7 @@ $mana_bar_size: 77px;
   background-color: $violet;
 }
 
-#mana-bar-8-black {
-  @extend .mana-bar;
-  background-color: $black;
-  color: $white;
-}
-
-#mana-bar-9-gray {
+#mana-bar-8-gray {
   @extend .mana-bar;
   background-color: $gray;
-}
-
-#mana-bar-10-white {
-  @extend .mana-bar;
-  background-color: $white;
 }
