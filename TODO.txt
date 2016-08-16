@@ -63,6 +63,7 @@ Features:
 
 Organization:
   Code Level:
+    Move metabutton logic in with action buttons
     Make blocks an object instead of integer
     Move the CHUNK_SIZE to the server and make client request it
   Data Level:
