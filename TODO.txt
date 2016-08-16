@@ -11,6 +11,7 @@ Aesthetics:
 
 Bugs:
   Add more exception handling to make application more robust
+  Don't show modal for a second before page loads
 
 
 Deployment:
