@@ -30,7 +30,7 @@ app.controller('grayManaController', function($scope) {
   $scope.disableSleep = true;
   $scope.disableCastSelectedSpell = true;
   $scope.disablePrepareSpells = true;
-  $scope.disableLearnSpells = true;
+  $scope.disableLearnSpells = false;
   $scope.disableTalk = false;
   $scope.disableViewQuests = true;
   $scope.disableViewFactionDetails = true;
