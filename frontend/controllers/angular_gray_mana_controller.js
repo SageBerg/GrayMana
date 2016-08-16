@@ -17,7 +17,7 @@ app.controller('grayManaController', function($scope) {
   }
 
   $scope.colorClasses = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
-    'violet', 'black', 'gray', 'white'];
+    'violet', 'gray'];
 
   $scope.switchShowTitles = true;
   $scope.switchShowHotKeys = true;
