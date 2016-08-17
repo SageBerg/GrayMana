@@ -43,7 +43,7 @@ function loadChunk(chunkCoords, callback) {
 }
 
 function move(rowInc, colInc) {
-  refreshToken(); //while the players is active keep the token refreshed
+  //refreshToken(); //while the players is active keep the token refreshed
 
   var chunkY = world.currentChunk.y + rowInc;
   var chunkX = world.currentChunk.x + colInc;
