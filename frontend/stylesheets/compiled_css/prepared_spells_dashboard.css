@@ -39,7 +39,7 @@ body {
 button {
   width: 155px; }
 
-.bordered, .spell-logo-empty {
+.bordered, .spell-logo-frame, .spell-logo {
   border-style: solid;
   border-width: 1px;
   border-color: black; }
@@ -91,21 +91,22 @@ button {
   margin: 10px; }
 
 .selected-spell-slot {
-  border-color: gold;
-  border-style: solid;
-  border-width: 5px; }
+  background-color: gold; }
 
-.spell-logo, .spell-logo-empty {
+.spell-logo-frame {
   display: inline-block;
-  height: 77px;
-  margin: 2px;
+  float: left;
+  height: 80px;
+  margin: 1px;
+  width: 80px; }
+
+.spell-logo {
+  background-color: white;
+  display: inline-block;
+  float: left;
+  height: 70px;
+  margin: 4px;
   text-align: center;
-  width: 77px; }
-
-.spell-logo-empty {
-  background-color: white; }
-
-.spell-slot {
-  display: inline-block; }
+  width: 70px; }
 
 /*# sourceMappingURL=prepared_spells_dashboard.css.map */

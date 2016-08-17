@@ -2,10 +2,9 @@ document.addEventListener('wheel', wheelHandler);
 
 function wheelHandler(e) {
   e.preventDefault();
-  var prev_spell_slot = document.getElementById('spell-slot-' +
-    HUDState.selectedSpellSlot);
+  var prev_spell_slot = document.getElementById('spell-slot-' + HUDState.selectedSpellSlot);
   prev_spell_slot.removeAttribute('class', 'selected-spell-slot');
-  prev_spell_slot.setAttribute('class', 'spell-logo');
+  prev_spell_slot.setAttribute('class', 'spell-logo-frame');
   var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
   if (delta === 1) {
      HUDState.selectedSpellSlot -= 1;
@@ -18,9 +17,8 @@ function wheelHandler(e) {
       HUDState.selectedSpellSlot = 1;
     }
   }
-  var current_spell_slot = document.getElementById("spell-slot-" +
-    HUDState.selectedSpellSlot);
-  current_spell_slot.setAttribute('class', 'selected-spell-slot spell-logo');
+  var current_spell_slot = document.getElementById("spell-slot-" + HUDState.selectedSpellSlot);
+  current_spell_slot.setAttribute('class', 'selected-spell-slot spell-logo-frame');
 }
 
 function bindKeys() {

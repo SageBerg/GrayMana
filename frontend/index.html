@@ -55,9 +55,9 @@
         <div class="hud-section" id="prepared-spells-section">
           <div class="hud-panel">
             <div class="hud-heading"><span class="hud-title" data-ng-if="toggleShowTitles">Prepared Spells</span></div>
-            <div class="hud-panel-content">
-              <div class="{{ lastSpellSlot( $index + 1 ) }} spell-slot" data-ng-repeat="_ in spellSlots" id="spell-slot-{{ $index + 1 }}">
-                <div class="spell-logo-empty">Empty Slot</div>
+            <div class="hud-panel-content" data-ng-repeat="_ in spellSlots">
+              <div class="spell-logo-frame {{lastSpellSlot( $index + 1 )}}" id="spell-slot-{{$index + 1 }}">
+                <div class="spell-logo">Empty Spell Slot</div>
               </div>
             </div>
           </div>
