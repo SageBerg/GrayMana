@@ -23,6 +23,7 @@
     <script src="controllers/actions_controller.js"></script>
     <script src="controllers/learn_spells_controller.js"></script>
     <script src="controllers/modal_controller.js"></script>
+    <script src="controllers/login_controller.js"></script>
   </head>
   <body>
     <div data-ng-app="angularFrontEnd" data-ng-controller="grayManaController" keypress-events="keypress-events">
@@ -48,12 +49,12 @@
             <button class="action-button" data-ng-disabled="disableViewInventory">Manage Inventory<span data-ng-show="toggleShowHotKeys">&nbsp;({{inventoryHotKey}})</span></button>
           </div>
         </div>
-        <div id="login-div">
+        <div id="login-div" data-ng-controller="loginController">
           <h2>Username:</h2>
-          <input class="login-input" id="username" value="person@example.com"/>
+          <input class="login-input" data-ng-model="username"/>
           <h2>Password:</h2>
-          <input class="login-input" id="password" value="not_a_real_password_used_anywhere_else"/>
-          <button onclick="login()">Log In</button>
+          <input class="login-input" type="password" data-ng-model="password"/>
+          <button data-ng-click="login()">Log In</button>
         </div>
         <div id="map"></div>
         <div id="mana-section" data-ng-controller="manaController">
@@ -139,12 +140,12 @@
           </div>
         </div>
         <button class="action-button" onclick="getTreasure()">Get Treasure</button>
+        <button data-ng-controller="loginController" data-ng-click="refreshToken()">Refresh Token</button>
       </div>
     </div>
   </body>
   <script src="scripts/state_client.js"></script>
   <script src="scripts/globals.js"></script>
-  <script src="scripts/auth_client.js"></script>
   <script src="scripts/controls.js"></script>
   <script src="scripts/render.js"></script>
   <script src="scripts/request.js"></script>
