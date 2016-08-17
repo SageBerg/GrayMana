@@ -29,7 +29,7 @@ html
     script(src="controllers/actions_controller.js")
     script(src="controllers/learn_spells_controller.js")
     script(src="controllers/modal_controller.js")
-    script(src="controllers/login_controller.js")
+    script(src="controllers/auth_controller.js")
 
   body
 
@@ -70,7 +70,7 @@ html
             button(class="action-button", data-ng-disabled="disableViewInventory") Manage Inventory
               span(data-ng-show="toggleShowHotKeys") &nbsp;({{inventoryHotKey}})
 
-        div(id="login-div", data-ng-controller="loginController")
+        div(id="login-div", data-ng-controller="authController")
           h2 Username:
           input(class="login-input", data-ng-model="username")
           h2 Password:
