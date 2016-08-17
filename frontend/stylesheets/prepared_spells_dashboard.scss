@@ -8,16 +8,18 @@ $spell_logo_size: 70px;
 
 .spell-logo-frame {
   @extend .bordered;
+  border-radius: 7px;
   display: inline-block;
   float: left;
   height: $spell_logo_size + 10;
-  margin: 1px;
+  margin: 4px;
   width: $spell_logo_size + 10;
 }
 
 .spell-logo {
   @extend .bordered;
   background-color: white;
+  border-radius: 7px;
   display: inline-block;
   float: left;
   height: $spell_logo_size;

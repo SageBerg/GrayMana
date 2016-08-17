@@ -58,6 +58,11 @@ button {
 .inline-block {
   display: inline-block; }
 
+.action-button-container {
+  position: absolute;
+  left: 10px;
+  top: 10px; }
+
 .hud-panel {
   border-radius: 6px;
   background-color: white;
@@ -86,12 +91,8 @@ button {
   right: 10px;
   top: 10px; }
 
-.metabutton {
-  display: block;
-  margin: 10px; }
-
 .action-button {
   display: list-item;
-  margin: 5px; }
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=actions_dashboard.css.map */

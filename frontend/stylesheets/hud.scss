@@ -2,6 +2,12 @@
 
 $hud_section_height: 130px;
 
+.action-button-container {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
 .hud-heading {
 }
 
@@ -36,9 +42,4 @@ $hud_section_height: 130px;
   position: absolute;
   right: 10px;
   top: 10px;
-}
-
-.metabutton {
-  display: block;
-  margin: 10px;
 }

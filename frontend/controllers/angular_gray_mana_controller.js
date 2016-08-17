@@ -1,8 +1,8 @@
 app.controller('grayManaController', function($scope) {
   $scope.metaButtons = [
-    {title: 'Log Out', hotKey: 'x', modal: 'logOut'},
-    {title: 'Edit Options', hotKey: 'o', modal: 'editOptions'},
-    {title: 'Get Game Info', hotKey: 'g', modal: 'getGameInfo'}
+    {title: 'Log Out', hotKey: 'x', modal: 'logOut', disabled: false},
+    {title: 'Edit Options', hotKey: 'o', modal: 'editOptions', disabled: false},
+    {title: 'Get Game Info', hotKey: 'g', modal: 'getGameInfo', disabled: false}
   ];
 
   $scope.$on($scope.metaButtons[1].hotKey, function(event) {

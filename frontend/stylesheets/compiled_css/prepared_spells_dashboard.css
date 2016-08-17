@@ -58,6 +58,11 @@ button {
 .inline-block {
   display: inline-block; }
 
+.action-button-container {
+  position: absolute;
+  left: 10px;
+  top: 10px; }
+
 .hud-panel {
   border-radius: 6px;
   background-color: white;
@@ -86,22 +91,20 @@ button {
   right: 10px;
   top: 10px; }
 
-.metabutton {
-  display: block;
-  margin: 10px; }
-
 .selected-spell-slot {
   background-color: gold; }
 
 .spell-logo-frame {
+  border-radius: 7px;
   display: inline-block;
   float: left;
   height: 80px;
-  margin: 1px;
+  margin: 4px;
   width: 80px; }
 
 .spell-logo {
   background-color: white;
+  border-radius: 7px;
   display: inline-block;
   float: left;
   height: 70px;
