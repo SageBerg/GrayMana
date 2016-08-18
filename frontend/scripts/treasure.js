@@ -6,9 +6,63 @@ try {
 } catch (exception) {
 }
 
+var SPELL_LIST = [
+  'Clean',
+  'Detox',
+  'Dispel Magic',
+  'Organize',
+  'Resist Magic',
+  'Levitate',
+  'Gavity',
+  'Pessure',
+  'Bulid',
+  'Burst',
+  'Shield',
+  'Sentinel',
+  'Heat',
+  'Heat Wall',
+  'Heat Minion',
+  'Weather',
+  'Warm Egg',
+  'Mana Chest',
+  'Clone',
+  'Summon Food',
+  'Toughen',
+  'Increase Mana Maximum',
+  'Quickness',
+  'Flight',
+  'Teleport',
+  'Portal',
+  'Breathing',
+  'Heal',
+  'Sleep',
+  'Stun',
+  'Resurrect',
+  'Regenerate',
+  'Befriend',
+  'Found Faction',
+  'Induct to Faction',
+  'Message',
+  'Storage',
+  'Quest',
+  'Banner',
+  'Market',
+  'Detect Magic',
+  'Light',
+  'Map',
+  'Profile Person',
+  'Alert',
+  'Scry',
+  'Coordinates',
+  'Advertise',
+  'Invisibility',
+  'Hide Magic'
+];
+
+
 var TreasureGen = function() {
   this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
-    'violet', 'black', 'gray', 'white'];
+    'violet', 'gray'];
   this.manaSpread = 2047;
   this.maxRunes = 21;
   this.runeProbability = 0.75;

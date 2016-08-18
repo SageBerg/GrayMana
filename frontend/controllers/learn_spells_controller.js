@@ -6,6 +6,7 @@ app.controller('learnSpellsController', function($scope) {
       return 'rune-faded';
     }
   };
+
   $scope.letterOrQuotes = function(letter) {
     if (letter === ' ') {
       return '\' \''

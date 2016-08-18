@@ -14,9 +14,7 @@ var COLORS = [
   'blue',
   'indigo',
   'violet',
-  'black',
   'gray',
-  'white'
 ];
 
 try {

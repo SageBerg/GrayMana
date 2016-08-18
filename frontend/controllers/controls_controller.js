@@ -36,22 +36,18 @@ app.controller('controlsController', function($scope) {
       switch(event.which) {
         case 37:
           $scope.$broadcast('moveLeft');
-          //move(0, -1);
           break;
 
         case 38:
           $scope.$broadcast('moveUp');
-          //move(-1, 0);
           break;
 
         case 39:
           $scope.$broadcast('moveRight');
-          //move(0, 1)
           break;
 
         case 40:
           $scope.$broadcast('moveDown');
-          //move(1, 0);
           break;
 
         default:
