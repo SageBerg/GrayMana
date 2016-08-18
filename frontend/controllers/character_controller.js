@@ -1,40 +1,24 @@
-app.controller('characterController', function($scope) {
+app.controller('characterController', function($scope, characterStateService) {
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
-
-  $scope.startingBody = {
-    damage: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
-      violet: 0, gray: 0},
-    life: 100,
-    inventory_slots: 16,
-    spell_slots: 8,
-    mana: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
-      violet: 0, gray: 0},
-    runes: {a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0,
-      l: 0, m: 0, n: 0, o: 0, p: 0, q: 0, r: 0, s: 0, t: 0, u: 0, v: 0, w: 0,
-      x: 0, y: 0, z: 0, ' ': 0},
-    state: 'active', //things like 'casting', 'sleeping', 'dead'
-  };
-
-  $scope.character = {
-    name: 'Sage Berg',
-    bodies: [$scope.startingBody],
-    currentBody: $scope.startingBody,
-    spellsKnown: new Set(),
-    spellsPrepared: {},
-    spellsEquipped: [],
-    faction: 'The Founders'
-  };
 
   $scope.getTreasure = function() {
     $scope.getMana();
     $scope.getRunes();
   };
 
+  $scope.getManaAmount = function(color) {
+    return characterStateService.character.currentBody.mana[color];
+  };
+
+  $scope.getRuneAmount = function(letter) {
+    return characterStateService.character.currentBody.runes[letter];
+  };
+
   $scope.getRunes = function() {
     var treasureGen = new TreasureGen();
     var runeDrop = treasureGen.runeDrop();
     for (var i = 0; i < runeDrop.length; i++) {
-      $scope.character.currentBody.runes[runeDrop[i]] += 1;
+      characterStateService.character.currentBody.runes[runeDrop[i]] += 1;
     }
   }
 
@@ -42,8 +26,8 @@ app.controller('characterController', function($scope) {
     var treasureGen = new TreasureGen();
     var manaBundle = treasureGen.manaDrop();
     var color = manaBundle.manaColor;
-    $scope.character.currentBody.mana[color] += manaBundle.manaAmount;
-    var fill = 100 - Math.min(10, $scope.character.currentBody.mana[color]) * 10;
+    characterStateService.character.currentBody.mana[color] += manaBundle.manaAmount;
+    var fill = 100 - Math.min(10, characterStateService.character.currentBody.mana[color]) * 10;
     $scope.manaHeights[color].height = fill + '%';
   }
 
@@ -64,8 +48,8 @@ app.controller('characterController', function($scope) {
 
   $scope.isLearnable = function(spellName) {
     var spellName = spellName.toLowerCase();
-    var runesCopy = $.extend({}, $scope.character.currentBody.runes);
-    if ($scope.character.spellsKnown.has(spellName)) {
+    var runesCopy = $.extend({}, characterStateService.character.currentBody.runes);
+    if (characterStateService.character.spellsKnown.has(spellName)) {
       return false;
     }
     for (var i = 0; i < spellName.length; i++) {
@@ -99,7 +83,7 @@ app.controller('characterController', function($scope) {
   };
 
   $scope.fadedOrClearRune = function(letter) {
-    if ($scope.character.currentBody.runes[letter] > 0) {
+    if (characterStateService.character.currentBody.runes[letter] > 0) {
       return 'rune';
     } else {
       return 'rune-faded';

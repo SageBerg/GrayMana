@@ -20,6 +20,7 @@
     <script src="angular_gray_mana_app.js"></script>
     <script src="scripts/treasure.js"></script>
     <script src="services/hotkeys.js"></script>
+    <script src="services/character.js"></script>
     <script src="controllers/auth_controller.js"></script>
     <!--client state-->
     <script src="controllers/character_controller.js"></script>
@@ -75,7 +76,7 @@
                       <div class="hud-heading"><span class="hud-title" data-ng-show="toggleShowTitles">Mana</span></div>
                       <div class="hud-panel-content">
                         <div class="mana-bar {{color}}" data-ng-repeat="color in colorClasses">
-                          <div class="white" data-ng-style="manaHeights[color]">{{character.currentBody.mana[color]}}</div>
+                          <div class="white" data-ng-style="manaHeights[color]">{{getManaAmount(color)}}</div>
                         </div>
                       </div>
                     </div>
@@ -141,7 +142,7 @@
                           <h3>Runes</h3>
                           <div id="rune-section">
                             <div id="runes">
-                              <div class="{{ fadedOrClearRune(letter) }}" data-ng-repeat="letter in alphabet" id="{{'rune-' + letter}}">{{letterOrQuotes(letter)}}<span data-ng-model="character.runes[letter]">&nbsp;{{character.currentBody.runes[letter]}}</span></div>
+                              <div class="{{ fadedOrClearRune(letter) }}" data-ng-repeat="letter in alphabet" id="{{'rune-' + letter}}">{{letterOrQuotes(letter)}}<span data-ng-model="character.runes[letter]">&nbsp;{{getRuneAmount(letter)}}</span></div>
                             </div>
                           </div>
                         </div>

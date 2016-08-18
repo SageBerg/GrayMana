@@ -1,9 +1,4 @@
 app.controller('HUDController', function($scope) {
-  $scope.HUDState = {
-    selectedManaSlot: 8,
-    selectedSpellSlot: 8
-  };
-
   $scope.metaButtons = [
     {title: 'Log Out', hotKey: 'x', modal: 'logOut', disabled: false},
     {title: 'Edit Options', hotKey: 'o', modal: 'editOptions', disabled: false},
@@ -36,12 +31,11 @@ app.controller('HUDController', function($scope) {
 
   $scope.toggleShowTitles = true;
   $scope.toggleShowHotKeys = true;
-  $scope.toggleShowNotifications = true;
 
   $scope.disableSwitchToClone = true;
   $scope.disableInteract = true;
   $scope.disableEat = true;
-  $scope.disableSleep = true;
+  $scope.disableSleep = false;
   $scope.disableCastSelectedSpell = true;
   $scope.disablePrepareSpells = true;
   $scope.disableLearnSpells = false;
@@ -51,9 +45,27 @@ app.controller('HUDController', function($scope) {
   $scope.disableViewInventory = true;
   $scope.disableAdmireAchievements = true;
 
-  //$scope.runes = character.runes;
+  $scope.sleepButtonTitle = "Sleep"
 
-  $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
+  $scope.sleep = function() {
+    $scope.toggleSleepButtonTitle();
+    $scope.toggleOtherButtonsWhileSleepingOrWakingUp();
+  }
 
-  //$scope.character = character;
+  $scope.toggleSleepButtonTitle = function() {
+    if ($scope.sleepButtonTitle === "Sleep") {
+      $scope.sleepButtonTitle = "Wake Up";
+    } else {
+      $scope.sleepButtonTitle = "Sleep";
+    }
+  }
+
+  $scope.sleepBroadcast = function() {
+    $scope.$broadcast('sleep');
+  };
+
+  $scope.wakeUpBroadcast = function() {
+    $scope.$broadcash('wakeUp');
+  };
+
 });
