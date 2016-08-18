@@ -38,7 +38,6 @@ app.controller('HUDController', function($scope) {
   $scope.toggleShowHotKeys = true;
   $scope.toggleShowNotifications = true;
 
-  $scope.disableManatate = false;
   $scope.disableSwitchToClone = true;
   $scope.disableInteract = true;
   $scope.disableEat = true;
@@ -53,7 +52,7 @@ app.controller('HUDController', function($scope) {
   $scope.disableAdmireAchievements = true;
 
   //$scope.runes = character.runes;
-  
+
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
   //$scope.character = character;

@@ -1,5 +1,4 @@
 app.service('hotKeys', function() {
-  this.manatateHotKey = 'm';
   this.cloneHotKey = 'c';
 
   this.interactHotKey = 'k';

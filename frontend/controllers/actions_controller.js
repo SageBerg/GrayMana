@@ -1,5 +1,4 @@
 app.controller('actionsController', function($scope, hotKeys) {
-  $scope.manatateHotKey = hotKeys.manatateHotKey;
   $scope.cloneHotKey = 'c';
 
   $scope.interactHotKey = 'k';
@@ -17,26 +16,8 @@ app.controller('actionsController', function($scope, hotKeys) {
   $scope.inventoryHotKey = 'i';
   $scope.achievementsHotKey = 'v';
 
-  $scope.isManatating = false;
-
-  $scope.$on($scope.manatateHotKey, function(event) {
-    $scope.toggleManatate();
-    $scope.$digest();
-  });
-
   $scope.$on($scope.learnSpellsHotKey, function(event) {
     $scope.$emit('openLearnSpellsModal');
   });
 
-  $scope.toggleManatate = function() {
-    $scope.isManatating = !$scope.isManatating;
-  }
-
-  $scope.getManatateButtonTitle = function() {
-    if ($scope.isManatating) {
-      return 'Stop Manatating';
-    }
-    return 'Manatate';
-  }
- 
 });
