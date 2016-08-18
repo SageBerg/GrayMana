@@ -45,3 +45,6 @@ brainstorm
 
 # shell scripts (some have sensitive data in them)
 *.sh
+
+# notes
+commands_to_remember.txt
