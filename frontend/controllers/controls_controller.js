@@ -2,8 +2,7 @@ app.controller('controlsController', function($scope) {
 
   //TODO move to HUD controller
   $scope.HUDState = {
-    selectedManaSlot: 10,
-    selectedSpellSlot: 10
+    selectedSpellSlot: 8
   }
 
   $scope.addWheelHandler = function() {
@@ -19,11 +18,11 @@ app.controller('controlsController', function($scope) {
     if (delta === 1) {
        $scope.HUDState.selectedSpellSlot -= 1;
        if ($scope.HUDState.selectedSpellSlot < 1) {
-         $scope.HUDState.selectedSpellSlot = 10;
+         $scope.HUDState.selectedSpellSlot = 8;
        }
     } else {
       $scope.HUDState.selectedSpellSlot += 1;
-      if ($scope.HUDState.selectedSpellSlot > 10) {
+      if ($scope.HUDState.selectedSpellSlot > 8) {
         $scope.HUDState.selectedSpellSlot = 1;
       }
     }

@@ -3,6 +3,8 @@ app.controller('characterController', function($scope) {
     damage: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
       violet: 0, gray: 0},
     life: 100,
+    inventory_slots: 16,
+    spell_slots: 8,
     mana: {red: 0, orange: 0, yellow: 0, green: 0, blue: 0, indigo: 0,
       violet: 0, gray: 0},
     runes: {a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0,

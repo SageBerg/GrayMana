@@ -1,7 +1,7 @@
 app.controller('HUDController', function($scope) {
   $scope.HUDState = {
     selectedManaSlot: 8,
-    selectedSpellSlot: 10
+    selectedSpellSlot: 8
   };
 
   $scope.metaButtons = [
@@ -14,7 +14,7 @@ app.controller('HUDController', function($scope) {
     $scope.$emit('openEditOptionsModal');
   });
 
-  $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8];
 
   $scope.lastSpellSlot = function(spellSlotNumber) {
     if (spellSlotNumber === $scope.spellSlots[$scope.spellSlots.length - 1]) {
