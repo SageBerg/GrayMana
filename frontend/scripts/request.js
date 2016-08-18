@@ -67,6 +67,6 @@ function move(rowInc, colInc) {
       stitchChunksPrep();
     } else {
       console.log('move not permitted');
-    } //end if move allowed
-  }); //end post
+    }
+  });
 }
