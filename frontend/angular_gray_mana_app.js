@@ -49,9 +49,11 @@ directive('keypressEvents', [
   '$rootScope',
   function($document, $rootScope) {
     return {
-      restrict: 'A',
+      //restrict: 'A',
       link: function() {
         $document.bind('keypress', function(e) {
+          e.preventDefault();
+          console.log(e.keyCode);
           $rootScope.$broadcast(String.fromCharCode(e.which));
         });
       }

@@ -14,7 +14,7 @@ app.controller('authController', function($scope, $http) {
   $scope.handleLogin = function(res) {
     window.sessionStorage.accessToken = res.data.token;
     loadChunk(getChunkCoords(), renderInitialChunk);
-    bindKeys();
+    $scope.$emit('bindKeys');
 
     //remove login view
     $('#login-div').html('');
