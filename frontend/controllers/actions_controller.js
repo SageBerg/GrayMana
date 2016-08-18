@@ -38,6 +38,5 @@ app.controller('actionsController', function($scope, hotKeys) {
     }
     return 'Manatate';
   }
-
-   
+ 
 });

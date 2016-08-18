@@ -53,7 +53,6 @@ directive('keypressEvents', [
       link: function() {
         $document.bind('keypress', function(e) {
           e.preventDefault();
-          console.log(e.keyCode);
           $rootScope.$broadcast(String.fromCharCode(e.which));
         });
       }

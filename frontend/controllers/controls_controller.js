@@ -1,27 +1,32 @@
 app.controller('controlsController', function($scope) {
 
+  $scope.HUDState = {
+    selectedManaSlot: 10,
+    selectedSpellSlot: 10
+  }
+
   $scope.addWheelHandler = function() {
     document.addEventListener('wheel', $scope.wheelHandler);
   };
 
   $scope.wheelHandler = function(e) {
     e.preventDefault();
-    var prev_spell_slot = document.getElementById('spell-slot-' + HUDState.selectedSpellSlot);
+    var prev_spell_slot = document.getElementById('spell-slot-' + $scope.HUDState.selectedSpellSlot);
     prev_spell_slot.removeAttribute('class', 'selected-spell-slot');
     prev_spell_slot.setAttribute('class', 'spell-logo-frame');
     var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
     if (delta === 1) {
-       HUDState.selectedSpellSlot -= 1;
-       if (HUDState.selectedSpellSlot < 1) {
-         HUDState.selectedSpellSlot = 10;
+       $scope.HUDState.selectedSpellSlot -= 1;
+       if ($scope.HUDState.selectedSpellSlot < 1) {
+         $scope.HUDState.selectedSpellSlot = 10;
        }
     } else {
-      HUDState.selectedSpellSlot += 1;
-      if (HUDState.selectedSpellSlot > 10) {
-        HUDState.selectedSpellSlot = 1;
+      $scope.HUDState.selectedSpellSlot += 1;
+      if ($scope.HUDState.selectedSpellSlot > 10) {
+        $scope.HUDState.selectedSpellSlot = 1;
       }
     }
-    var current_spell_slot = document.getElementById("spell-slot-" + HUDState.selectedSpellSlot);
+    var current_spell_slot = document.getElementById("spell-slot-" + $scope.HUDState.selectedSpellSlot);
     current_spell_slot.setAttribute('class', 'selected-spell-slot spell-logo-frame');
   };
 

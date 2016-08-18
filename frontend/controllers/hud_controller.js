@@ -52,8 +52,9 @@ app.controller('HUDController', function($scope) {
   $scope.disableViewInventory = true;
   $scope.disableAdmireAchievements = true;
 
-  $scope.runes = character.runes;
+  //$scope.runes = character.runes;
+  
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
-  $scope.character = character;
+  //$scope.character = character;
 });
