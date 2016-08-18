@@ -55,6 +55,7 @@ html
 
                 div(data-ng-show="toggleShowHUD", data-ng-controller="actionsController")
                   div(class="action-button-container")
+
                     //button for testing
                     button(data-ng-show="toggleShowHUD", class="action-button", data-ng-click="getTreasure()") Get Treasure
 
@@ -64,7 +65,7 @@ html
                       span(data-ng-show="toggleShowHotKeys") &nbsp;({{interactHotKey}})
                     button(class="action-button", data-ng-disabled="disableEat", title="You don't have any food yet.") Eat
                       span(data-ng-show="toggleShowHotKeys") &nbsp;({{eatHotKey}})
-                    button(class="action-button", data-ng-disabled="disableSleep", title="You're not tired enough yet.") Sleep
+                    button(class="action-button", data-ng-disabled="disableSleep", data-ng-click="sleep()") {{sleepButtonTitle}}
                       span(data-ng-show="toggleShowHotKeys") &nbsp;({{sleepHotKey}})
                     button(class="action-button", data-ng-disabled="disableCastSelectedSpell", title="You don't have a spell selected yet.") Cast Selected Spell
                       span(data-ng-show="toggleShowHotKeys") &nbsp;({{castSelectedSpellHotKey}})
@@ -104,7 +105,7 @@ html
 
                       div(class="hud-panel-content")
                         div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
-                          div(class="white", data-ng-style="manaHeights[color]") {{character.mana[color]}}
+                          div(class="white", data-ng-style="manaHeights[color]") {{character.currentBody.mana[color]}}
 
                 div(data-ng-show="toggleShowHUD", id="prepared-spells-section", class="hud-section")
                   div(class="hud-panel")
@@ -183,4 +184,4 @@ html
                           div(id="rune-section")
                             div(id="runes")
                               div(data-ng-repeat="letter in alphabet", class="{{ fadedOrClearRune(letter) }}", id="{{'rune-' + letter}}") {{letterOrQuotes(letter)}}
-                                span(data-ng-model="character.runes[letter]") &nbsp;{{character.runes[letter]}}
+                                span(data-ng-model="character.runes[letter]") &nbsp;{{character.currentBody.runes[letter]}}

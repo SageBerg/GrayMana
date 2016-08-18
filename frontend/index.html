@@ -47,7 +47,7 @@
                     <button class="action-button" data-ng-disabled="disableSwitchToClone" data-ng-click="">{{'Switch to Clone'}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{cloneHotKey}})</span></button>
                     <button class="action-button" data-ng-disabled="disableInteract" title="You're not standing in front of anyone or anything you can interact with.">Interact<span data-ng-show="toggleShowHotKeys">&nbsp;({{interactHotKey}})</span></button>
                     <button class="action-button" data-ng-disabled="disableEat" title="You don't have any food yet.">Eat<span data-ng-show="toggleShowHotKeys">&nbsp;({{eatHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableSleep" title="You're not tired enough yet.">Sleep<span data-ng-show="toggleShowHotKeys">&nbsp;({{sleepHotKey}})</span></button>
+                    <button class="action-button" data-ng-disabled="disableSleep" data-ng-click="sleep()">{{sleepButtonTitle}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{sleepHotKey}})</span></button>
                     <button class="action-button" data-ng-disabled="disableCastSelectedSpell" title="You don't have a spell selected yet.">Cast Selected Spell<span data-ng-show="toggleShowHotKeys">&nbsp;({{castSelectedSpellHotKey}})</span></button>
                     <button class="action-button" data-ng-disabled="disablePrepareSpells" title="You haven't learned a spells yet.">Prepare Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{prepareSpellsHotKey}})</span></button>
                     <button class="action-button" data-ng-click="openModal('learnSpells')" data-ng-disabled="disableLearnSpells" id="learn-spells">Learn Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{learnSpellsHotKey}})</span></button>
@@ -75,7 +75,7 @@
                       <div class="hud-heading"><span class="hud-title" data-ng-show="toggleShowTitles">Mana</span></div>
                       <div class="hud-panel-content">
                         <div class="mana-bar {{color}}" data-ng-repeat="color in colorClasses">
-                          <div class="white" data-ng-style="manaHeights[color]">{{character.mana[color]}}</div>
+                          <div class="white" data-ng-style="manaHeights[color]">{{character.currentBody.mana[color]}}</div>
                         </div>
                       </div>
                     </div>
@@ -141,7 +141,7 @@
                           <h3>Runes</h3>
                           <div id="rune-section">
                             <div id="runes">
-                              <div class="{{ fadedOrClearRune(letter) }}" data-ng-repeat="letter in alphabet" id="{{'rune-' + letter}}">{{letterOrQuotes(letter)}}<span data-ng-model="character.runes[letter]">&nbsp;{{character.runes[letter]}}</span></div>
+                              <div class="{{ fadedOrClearRune(letter) }}" data-ng-repeat="letter in alphabet" id="{{'rune-' + letter}}">{{letterOrQuotes(letter)}}<span data-ng-model="character.runes[letter]">&nbsp;{{character.currentBody.runes[letter]}}</span></div>
                             </div>
                           </div>
                         </div>
