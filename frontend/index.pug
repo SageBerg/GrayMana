@@ -30,6 +30,9 @@ html
     //client state
     script(src="controllers/character_controller.js")
     script(src="controllers/world_controller.js")
+    script(src="controllers/mana_controller.js")
+    script(src="controllers/damage_controller.js")
+    script(src="controllers/learn_spells_controller.js")
 
     //see your options
     script(src="controllers/hud_controller.js")
@@ -37,12 +40,6 @@ html
 
     //actions (turn inputs into requests)
     script(src="controllers/controls_controller.js")
-    script(src="controllers/actions_controller.js")
-
-    script(src="controllers/mana_controller.js")
-    script(src="controllers/damage_controller.js")
-    script(src="controllers/learn_spells_controller.js")
-
     script(src="controllers/actions_controller.js")
 
   body
@@ -188,9 +185,3 @@ html
                                 span(data-ng-model="runes[letter]") &nbsp;{{runes[letter]}}
 
               button(data-ng-show="toggleShowHUD", class="action-button", onclick="getTreasure()") Get Treasure
-
-  //script(src="scripts/state_client.js")
-  //script(src="scripts/globals.js")
-  //script(src="scripts/render.js")
-  //script(src="scripts/request.js")
-  //script(src="scripts/treasure.js")

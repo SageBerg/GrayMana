@@ -1,5 +1,6 @@
 app.controller('controlsController', function($scope) {
 
+  //TODO move to HUD controller
   $scope.HUDState = {
     selectedManaSlot: 10,
     selectedSpellSlot: 10
@@ -33,20 +34,24 @@ app.controller('controlsController', function($scope) {
   $scope.bindKeys = function() {
     $(document).keydown(function(event) {
       switch(event.which) {
-        case 37: //left
-          move(0, -1);
+        case 37:
+          $scope.$broadcast('moveLeft');
+          //move(0, -1);
           break;
 
-        case 38: //up
-          move(-1, 0);
+        case 38:
+          $scope.$broadcast('moveUp');
+          //move(-1, 0);
           break;
 
-        case 39: //right
-          move(0, 1)
+        case 39:
+          $scope.$broadcast('moveRight');
+          //move(0, 1)
           break;
 
-        case 40: //down
-          move(1, 0);
+        case 40:
+          $scope.$broadcast('moveDown');
+          //move(1, 0);
           break;
 
         default:

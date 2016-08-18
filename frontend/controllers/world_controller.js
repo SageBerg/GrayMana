@@ -65,16 +65,54 @@ app.controller('worldController', function($scope, $http) {
     var xyPlus = $scope.getIncrementedChunkCoords(1, 1);
 
     if ($scope.world.chunks[current] === undefined) {
-      $scope.loadChunk(current, stitchChunksPrep);
+      $scope.loadChunk(current, $scope.stitchChunksPrep);
     } else if ($scope.world.chunks[yPlus] === undefined) {
-      $scope.loadChunk(yPlus, stitchChunksPrep);
+      $scope.loadChunk(yPlus, $scope.stitchChunksPrep);
     } else if ($scope.world.chunks[xPlus] === undefined) {
-      $scope.loadChunk(xPlus, stitchChunksPrep);
+      $scope.loadChunk(xPlus, $scope.stitchChunksPrep);
     } else if ($scope.world.chunks[xyPlus] === undefined) {
       $scope.loadChunk(xyPlus, $scope.stitchChunksPrep);
     } else {
       $scope.stitchChunks();
     }
+  };
+
+  $scope.stitchChunks = function() {
+    var chunk = $scope.buildBlankChunk();
+    var row = $scope.world.currentBlock.row;
+    var col = $scope.world.currentBlock.col;
+    var currentChunk = $scope.world.chunks[$scope.getChunkCoords()];
+    var downChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(0, 1)];
+    var rightChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(1, 0)];
+    var downRightChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(1, 1)];
+
+    for (var i = 0; i < $scope.world.chunkSize; i++) {
+      for (var j = 0; j < $scope.world.chunkSize; j++) {
+        var adjustedRow = i + row;
+        var adjustedCol = j + col;
+        if (adjustedRow < $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
+          chunk[i][j] = currentChunk[adjustedRow][adjustedCol];
+        } else if (adjustedRow >= $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
+          chunk[i][j] = downChunk[adjustedRow - $scope.world.chunkSize][adjustedCol];
+        } else if (adjustedRow < $scope.world.chunkSize && adjustedCol >= $scope.world.chunkSize) {
+          chunk[i][j] = rightChunk[adjustedRow][adjustedCol - $scope.world.chunkSize];
+        } else if (adjustedRow >= $scope.world.chunkSize && adjustedCol >= $scope.world.chunkSize) {
+          chunk[i][j] = downRightChunk[adjustedRow - $scope.world.chunkSize][adjustedCol - $scope.world.chunkSize];
+        }
+      } //end for i loop
+    } //end for j loop
+    $('#map').html($scope.genChunkHTML(chunk));
+  };
+
+  $scope.buildBlankChunk = function() {
+    var chunk = [];
+    for (var i = 0; i < $scope.world.chunkSize; i++) {
+      chunk.push([]);
+      for (var j = 0; j < $scope.world.chunkSize; j++) {
+        chunk[i].push(null);
+      }
+    }
+    return chunk;
   };
 
   $scope.loadChunk = function(chunkCoords, callback) {
@@ -108,10 +146,18 @@ app.controller('worldController', function($scope, $http) {
       reqCol += $scope.world.chunkSize;
     }
 
-    $.post('move', {chunkCoords: reqChunkCoords, row: reqRow,
-      col: reqCol, token: window.sessionStorage.accessToken},
-      function(res) {
-      if (res) {
+    $http({
+      method: 'POST',
+      url: 'move',
+      data: {
+        token: window.sessionStorage.accessToken,
+        chunkCoords: reqChunkCoords,
+        row: reqRow,
+        col: reqCol
+      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      if (res.data) {
         $scope.changeCurrentBlock(rowInc, colInc);
         $scope.stitchChunksPrep();
       } else {
@@ -150,4 +196,21 @@ app.controller('worldController', function($scope, $http) {
   $scope.$on('loadInitialChunk', function(event) {
     $scope.loadChunk($scope.getChunkCoords(), $scope.renderInitialChunk);
   });
+
+  $scope.$on('moveLeft', function(event) {
+    $scope.move(0, -1);
+  });
+
+  $scope.$on('moveUp', function(event) {
+    $scope.move(-1, 0);
+  });
+
+  $scope.$on('moveRight', function(event) {
+    $scope.move(0, 1);
+  });
+
+  $scope.$on('moveDown', function(event) {
+    $scope.move(1, 0);
+  });
+
 });
