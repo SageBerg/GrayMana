@@ -1,6 +1,8 @@
 app.controller('controlsController', function($scope) {
 
-  document.addEventListener('wheel', $scope.wheelHandler);
+  $scope.addWheelHandler = function() {
+    document.addEventListener('wheel', $scope.wheelHandler);
+  };
 
   $scope.wheelHandler = function(e) {
     e.preventDefault();
@@ -52,4 +54,9 @@ app.controller('controlsController', function($scope) {
   $scope.$on('bindKeys', function(event) {
     $scope.bindKeys();
   });
+
+  $scope.$on('bindWheel', function(event) {
+    $scope.addWheelHandler();
+  });
+
 });

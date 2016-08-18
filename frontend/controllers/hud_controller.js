@@ -1,4 +1,9 @@
-app.controller('grayManaController', function($scope) {
+app.controller('HUDController', function($scope) {
+  $scope.HUDState = {
+    selectedManaSlot: 8,
+    selectedSpellSlot: 10
+  };
+
   $scope.metaButtons = [
     {title: 'Log Out', hotKey: 'x', modal: 'logOut', disabled: false},
     {title: 'Edit Options', hotKey: 'o', modal: 'editOptions', disabled: false},
@@ -6,7 +11,7 @@ app.controller('grayManaController', function($scope) {
   ];
 
   $scope.$on($scope.metaButtons[1].hotKey, function(event) {
-    $scope.$broadcast('openEditOptionsModal');
+    $scope.$emit('openEditOptionsModal');
   });
 
   $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -22,6 +27,12 @@ app.controller('grayManaController', function($scope) {
 
   $scope.colorClasses = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
     'violet', 'gray'];
+
+  $scope.$on('showHUD', function(event) {
+    $scope.toggleShowHUD = true;
+  });
+
+  $scope.toggleShowHUD = false;
 
   $scope.toggleShowTitles = true;
   $scope.toggleShowHotKeys = true;

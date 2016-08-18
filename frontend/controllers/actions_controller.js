@@ -37,5 +37,7 @@ app.controller('actionsController', function($scope, hotKeys) {
       return 'Stop Manatating';
     }
     return 'Manatate';
-  }  
+  }
+
+   
 });

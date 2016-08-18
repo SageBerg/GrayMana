@@ -12,13 +12,21 @@ app.controller('authController', function($scope, $http) {
   };
 
   $scope.handleLogin = function(res) {
-    window.sessionStorage.accessToken = res.data.token;
-    loadChunk(getChunkCoords(), renderInitialChunk);
-    $scope.$emit('bindKeys');
+    if (true) {
+      window.sessionStorage.accessToken = res.data.token;
+      loadChunk(getChunkCoords(), renderInitialChunk);
+      //$scope.$emit('bindKeys');
 
-    //remove login view
-    $('#login-div').html('');
-    $('#login-div').css('height', 0);
+      $scope.$broadcast('showHUD');
+      $scope.$broadcast('bindKeys');
+      $scope.$broadcast('bindWheel');
+
+      //remove login view
+      $('#login-div').html('');
+      $('#login-div').css('height', 0);
+    } else {
+      //TODO handle auth failure case
+    }
   };
 
   $scope.refreshToken = function() {
