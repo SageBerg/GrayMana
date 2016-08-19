@@ -43,23 +43,42 @@
                 <h1 class="game-title">Gray Mana</h1>
                 <div data-ng-show="toggleShowHUD" data-ng-controller="actionsController">
                   <div class="action-button-container">
-                    <!--button for testing-->
-                    <button class="action-button" data-ng-show="toggleShowHUD" data-ng-click="getTreasure()">Get Treasure</button>
-                    <button class="action-button" data-ng-disabled="disableSwitchToClone" data-ng-click="">{{'Switch to Clone'}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{cloneHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableInteract" title="You're not standing in front of anyone or anything you can interact with.">Interact<span data-ng-show="toggleShowHotKeys">&nbsp;({{interactHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableEat" title="You don't have any food yet.">Eat<span data-ng-show="toggleShowHotKeys">&nbsp;({{eatHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableSleep" data-ng-click="sleep()">{{sleepButtonTitle}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{sleepHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableCastSelectedSpell" title="You don't have a spell selected yet.">Cast Selected Spell<span data-ng-show="toggleShowHotKeys">&nbsp;({{castSelectedSpellHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disablePrepareSpells" title="You haven't learned a spells yet.">Prepare Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{prepareSpellsHotKey}})</span></button>
-                    <button class="action-button" data-ng-click="openModal('learnSpells')" data-ng-disabled="disableLearnSpells" id="learn-spells">Learn Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{learnSpellsHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableTalk">Talk<span data-ng-show="toggleShowHotKeys">&nbsp;({{talkHotKey}})</span></button>
+                    <!--button(s) for testing-->
+                    <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getTreasure()">Get Treasure</button>
+                    <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getClone()">Clone Yourself</button>
+                    <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getApple()">Get an Apple</button>
+                    <!--switch to clone-->
+                    <button class="action-button" data-ng-disabled="cannotSwitchToClone()" data-ng-click="">Switch to Clone<span data-ng-show="toggleShowHotKeys">&nbsp;({{getSwitchToCloneHotKey()}})</span></button>
+                    <!--interact-->
+                    <button class="action-button" data-ng-disabled="disableInteract" title="You're not standing in front of anyone or anything you can interact with.">Interact<span data-ng-show="toggleShowHotKeys">&nbsp;({{getInteractHotKey()}})</span></button>
+                    <!--eat-->
+                    <button class="action-button" data-ng-disabled="cannotEat()" data-ng-click="eat()">Eat<span data-ng-show="toggleShowHotKeys">&nbsp;({{getEatHotKey()}})</span></button>
+                    <!--sleep-->
+                    <button class="action-button" data-ng-disabled="disableSleep" data-ng-click="sleep()">{{getSleepButtonTitle()}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{getSleepHotKey()}})</span></button>
+                    <!--cast selected spell-->
+                    <button class="action-button" data-ng-disabled="disableCastSelectedSpell" title="You don't have a spell selected yet.">Cast Selected Spell<span data-ng-show="toggleShowHotKeys">&nbsp;({{getCastSelectedSpellHotKey()}})</span></button>
+                    <!--prepare spells-->
+                    <button class="action-button" data-ng-disabled="disablePrepareSpells" title="You haven't learned a spells yet.">Prepare Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getPrepareSpellsHotKey()}})</span></button>
+                    <!--learn spells-->
+                    <button class="action-button" data-ng-click="openModal('learnSpells')" data-ng-disabled="disableLearnSpells" id="learn-spells">Learn Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLearnSpellsHotKey()}})</span></button>
+                    <!--talk-->
+                    <button class="action-button" data-ng-disabled="cannotTalk()">Talk<span data-ng-show="toggleShowHotKeys">&nbsp;({{getTalkHotKey()}})</span></button>
                   </div>
                   <div class="metabutton-container">
-                    <button class="action-button" data-ng-repeat="button in metaButtons" data-ng-click="openModal(button.modal)">{{button.title}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{button.hotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableAdmireAchievements" title="You have no achievements :&lt;">Admire Achievements<span data-ng-show="toggleShowHotKeys">&nbsp;({{achievementsHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableViewQuests" title="You haven't given or recieved a quest yet.">Manage Quests<span data-ng-show="toggleShowHotKeys">&nbsp;({{questHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableViewFactionDetails" title="You haven't joined or founded a faction yet.">Manage Faction<span data-ng-show="toggleShowHotKeys">&nbsp;({{factionHotKey}})</span></button>
-                    <button class="action-button" data-ng-disabled="disableViewInventory">Manage Inventory<span data-ng-show="toggleShowHotKeys">&nbsp;({{inventoryHotKey}})</span></button>
+                    <!--log out-->
+                    <button class="action-button" data-ng-click="openModal('logOut')">Log Out<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLogOutHotKey()}})</span></button>
+                    <!--edit options-->
+                    <button class="action-button" data-ng-click="openModal('editOptions')">Edit Options<span data-ng-show="toggleShowHotKeys">&nbsp;({{getEditOptionsHotKey()}})</span></button>
+                    <!--get game info-->
+                    <button class="action-button" data-ng-click="openModal('getGameInfo')">Get Game Info<span data-ng-show="toggleShowHotKeys">&nbsp;({{getGetGameInfoHotKey()}})</span></button>
+                    <!--achievements-->
+                    <button class="action-button" data-ng-disabled="disableAdmireAchievements">Admire Achievements<span data-ng-show="toggleShowHotKeys">&nbsp;({{getAdmireAchievementsHotKey()}})</span></button>
+                    <!--quests-->
+                    <button class="action-button" data-ng-disabled="disableViewQuests" title="You haven't given or recieved a quest yet.">Manage Quests<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageQuestsHotKey()}})</span></button>
+                    <!--faction-->
+                    <button class="action-button" data-ng-disabled="disableViewFactionDetails" title="You haven't joined or founded a faction yet.">Manage Faction<span data-ng-show="toggleShowHotKeys">&nbsp;({{getViewFactionDetailsHotKey()}})</span></button>
+                    <!--inventory-->
+                    <button class="action-button" data-ng-disabled="cannotManageInventory()">Manage Inventory<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageInventoryHotKey()}})</span></button>
                   </div>
                 </div>
                 <div id="login-div">

@@ -1,10 +1,40 @@
 app.controller('characterController', function($scope, characterStateService) {
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
+  $scope.$on('eat', function(event) {
+    $scope.eat();
+  });
+
+  $scope.$on('sleep', function(event) {
+    $scope.sleep();
+    $scope.$digest();
+  });
+
   $scope.getTreasure = function() {
     $scope.getMana();
     $scope.getRunes();
   };
+
+  $scope.getClone = function() {
+    characterStateService.character.bodies.push("dummyTestBody");
+  };
+
+  $scope.getApple = function() {
+    characterStateService.character.currentBody.inventory['apple'] += 1;
+  };
+
+  $scope.eat = function() {
+    characterStateService.character.currentBody.inventory['apple'] -= 1;
+    console.log(characterStateService.character.currentBody.inventory['apple'] + ' apples left.');
+  }
+
+  $scope.sleep = function() {
+    if (characterStateService.character.currentBody.state !== 'asleep') {
+      characterStateService.character.currentBody.state = 'asleep';
+    } else {
+      characterStateService.character.currentBody.state = 'active';
+    }
+  }
 
   $scope.getManaAmount = function(color) {
     return characterStateService.character.currentBody.mana[color];

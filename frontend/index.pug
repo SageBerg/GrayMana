@@ -57,37 +57,72 @@ html
                 div(data-ng-show="toggleShowHUD", data-ng-controller="actionsController")
                   div(class="action-button-container")
 
-                    //button for testing
-                    button(data-ng-show="toggleShowHUD", class="action-button", data-ng-click="getTreasure()") Get Treasure
+                    //button(s) for testing
+                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getTreasure()") Get Treasure
+                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getClone()") Clone Yourself
+                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getApple()") Get an Apple
 
-                    button(class="action-button", data-ng-disabled="disableSwitchToClone", data-ng-click="") {{'Switch to Clone'}}
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{cloneHotKey}})
-                    button(class="action-button", data-ng-disabled="disableInteract", title="You're not standing in front of anyone or anything you can interact with.") Interact
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{interactHotKey}})
-                    button(class="action-button", data-ng-disabled="disableEat", title="You don't have any food yet.") Eat
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{eatHotKey}})
-                    button(class="action-button", data-ng-disabled="disableSleep", data-ng-click="sleep()") {{sleepButtonTitle}}
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{sleepHotKey}})
-                    button(class="action-button", data-ng-disabled="disableCastSelectedSpell", title="You don't have a spell selected yet.") Cast Selected Spell
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{castSelectedSpellHotKey}})
-                    button(class="action-button", data-ng-disabled="disablePrepareSpells", title="You haven't learned a spells yet.") Prepare Spells
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{prepareSpellsHotKey}})
-                    button(data-ng-click="openModal('learnSpells')", data-ng-disabled="disableLearnSpells", class="action-button", id="learn-spells") Learn Spells
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{learnSpellsHotKey}})
-                    button(class="action-button", data-ng-disabled="disableTalk") Talk
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{talkHotKey}})
+                    //switch to clone
+                    button(class="action-button", data-ng-disabled="cannotSwitchToClone()", data-ng-click="") Switch to Clone
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSwitchToCloneHotKey()}})
+
+                    //interact
+                    button(class="action-button", data-ng-disabled="disableInteract") Interact
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getInteractHotKey()}})
+
+                    //eat
+                    button(class="action-button", data-ng-disabled="cannotEat()", data-ng-click="eat()") Eat
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEatHotKey()}})
+
+                    //sleep
+                    button(class="action-button", data-ng-disabled="disableSleep", data-ng-click="sleep()") {{getSleepButtonTitle()}}
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSleepHotKey()}})
+
+                    //cast selected spell
+                    button(class="action-button", data-ng-disabled="disableCastSelectedSpell") Cast Selected Spell
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getCastSelectedSpellHotKey()}})
+
+                    //prepare spells
+                    button(class="action-button", data-ng-disabled="disablePrepareSpells") Prepare Spells
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getPrepareSpellsHotKey()}})
+
+                    //learn spells
+                    button(class="action-button", data-ng-click="openModal('learnSpells')", data-ng-disabled="false") Learn Spells
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLearnSpellsHotKey()}})
+
+                    //talk
+                    button(class="action-button", data-ng-disabled="cannotTalk()") Talk
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getTalkHotKey()}})
 
                   div(class="metabutton-container")
-                    button(class="action-button", data-ng-repeat="button in metaButtons", data-ng-click="openModal(button.modal)") {{button.title}}
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{button.hotKey}})
-                    button(class="action-button", data-ng-disabled="disableAdmireAchievements", title="You have no achievements :<") Admire Achievements
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{achievementsHotKey}})
-                    button(class="action-button", data-ng-disabled="disableViewQuests", title="You haven't given or recieved a quest yet.") Manage Quests
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{questHotKey}})
-                    button(class="action-button", data-ng-disabled="disableViewFactionDetails", title="You haven't joined or founded a faction yet.") Manage Faction
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{factionHotKey}})
-                    button(class="action-button", data-ng-disabled="disableViewInventory") Manage Inventory
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{inventoryHotKey}})
+
+                    //log out
+                    button(class="action-button") Log Out
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLogOutHotKey()}})
+
+                    //edit options
+                    button(class="action-button", data-ng-click="openModal('editOptions')") Edit Options
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEditOptionsHotKey()}})
+
+                    //get game info
+                    button(class="action-button", data-ng-click="openModal('getGameInfo')") Get Game Info
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getGetGameInfoHotKey()}})
+
+                    //achievements
+                    button(class="action-button", data-ng-disabled="disableAdmireAchievements") Admire Achievements
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getAdmireAchievementsHotKey()}})
+
+                    //quests
+                    button(class="action-button", data-ng-disabled="disableViewQuests") Manage Quests
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageQuestsHotKey()}})
+
+                    //faction
+                    button(class="action-button", data-ng-disabled="disableViewFactionDetails") View Faction Details
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getViewFactionDetailsHotKey()}})
+
+                    //inventory
+                    button(class="action-button", data-ng-disabled="cannotManageInventory()") Manage Inventory
+                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageInventoryHotKey()}})
 
                 div(id="login-div")
                   h2 Username:
