@@ -25,48 +25,47 @@
     <!--client state-->
     <script src="controllers/character_controller.js"></script>
     <script src="controllers/world_controller.js"></script>
-    <script src="controllers/damage_controller.js"></script>
     <!--see your options-->
     <script src="controllers/hud_controller.js"></script>
     <script src="controllers/modal_controller.js"></script>
     <!--actions (turn inputs into requests)-->
     <script src="controllers/controls_controller.js"></script>
-    <script src="controllers/actions_controller.js"></script>
   </head>
   <body>
     <div data-ng-app="angularFrontEnd" data-ng-controller="authController" keypress-events="keypress-events">
       <div id="modal-section" data-ng-controller="modalController">
-        <div data-ng-controller="controlsController">
-          <div data-ng-controller="characterController">
-            <div data-ng-controller="HUDController">
-              <div data-ng-controller="worldController">
+        <div data-ng-controller="characterController">
+          <div data-ng-controller="HUDController">
+            <div data-ng-controller="worldController">
+              <div data-ng-controller="controlsController">
                 <h1 class="game-title">Gray Mana</h1>
-                <div data-ng-show="toggleShowHUD" data-ng-controller="actionsController">
+                <div data-ng-show="toggleShowHUD">
                   <div class="action-button-container">
                     <!--button(s) for testing-->
                     <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getTreasure()">Get Treasure</button>
+                    <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="takeDamage(5, 'green')">Take Damage</button>
                     <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getClone()">Clone Yourself</button>
                     <button class="action-button black" data-ng-show="toggleShowHUD" data-ng-click="getApple()">Get an Apple</button>
                     <!--switch to clone-->
                     <button class="action-button" data-ng-disabled="cannotSwitchToClone()" data-ng-click="">Switch to Clone<span data-ng-show="toggleShowHotKeys">&nbsp;({{getSwitchToCloneHotKey()}})</span></button>
                     <!--interact-->
-                    <button class="action-button" data-ng-disabled="disableInteract" title="You're not standing in front of anyone or anything you can interact with.">Interact<span data-ng-show="toggleShowHotKeys">&nbsp;({{getInteractHotKey()}})</span></button>
+                    <button class="action-button" data-ng-disabled="disableInteract">Interact<span data-ng-show="toggleShowHotKeys">&nbsp;({{getInteractHotKey()}})</span></button>
                     <!--eat-->
                     <button class="action-button" data-ng-disabled="cannotEat()" data-ng-click="eat()">Eat<span data-ng-show="toggleShowHotKeys">&nbsp;({{getEatHotKey()}})</span></button>
                     <!--sleep-->
                     <button class="action-button" data-ng-disabled="disableSleep" data-ng-click="sleep()">{{getSleepButtonTitle()}}<span data-ng-show="toggleShowHotKeys">&nbsp;({{getSleepHotKey()}})</span></button>
                     <!--cast selected spell-->
-                    <button class="action-button" data-ng-disabled="disableCastSelectedSpell" title="You don't have a spell selected yet.">Cast Selected Spell<span data-ng-show="toggleShowHotKeys">&nbsp;({{getCastSelectedSpellHotKey()}})</span></button>
+                    <button class="action-button" data-ng-disabled="disableCastSelectedSpell">Cast Selected Spell<span data-ng-show="toggleShowHotKeys">&nbsp;({{getCastSelectedSpellHotKey()}})</span></button>
                     <!--prepare spells-->
-                    <button class="action-button" data-ng-disabled="disablePrepareSpells" title="You haven't learned a spells yet.">Prepare Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getPrepareSpellsHotKey()}})</span></button>
+                    <button class="action-button" data-ng-disabled="disablePrepareSpells">Prepare Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getPrepareSpellsHotKey()}})</span></button>
                     <!--learn spells-->
-                    <button class="action-button" data-ng-click="openModal('learnSpells')" data-ng-disabled="disableLearnSpells" id="learn-spells">Learn Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLearnSpellsHotKey()}})</span></button>
+                    <button class="action-button" data-ng-click="openModal('learnSpells')" data-ng-disabled="false">Learn Spells<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLearnSpellsHotKey()}})</span></button>
                     <!--talk-->
                     <button class="action-button" data-ng-disabled="cannotTalk()">Talk<span data-ng-show="toggleShowHotKeys">&nbsp;({{getTalkHotKey()}})</span></button>
                   </div>
                   <div class="metabutton-container">
                     <!--log out-->
-                    <button class="action-button" data-ng-click="openModal('logOut')">Log Out<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLogOutHotKey()}})</span></button>
+                    <button class="action-button">Log Out<span data-ng-show="toggleShowHotKeys">&nbsp;({{getLogOutHotKey()}})</span></button>
                     <!--edit options-->
                     <button class="action-button" data-ng-click="openModal('editOptions')">Edit Options<span data-ng-show="toggleShowHotKeys">&nbsp;({{getEditOptionsHotKey()}})</span></button>
                     <!--get game info-->
@@ -74,9 +73,9 @@
                     <!--achievements-->
                     <button class="action-button" data-ng-disabled="disableAdmireAchievements">Admire Achievements<span data-ng-show="toggleShowHotKeys">&nbsp;({{getAdmireAchievementsHotKey()}})</span></button>
                     <!--quests-->
-                    <button class="action-button" data-ng-disabled="disableViewQuests" title="You haven't given or recieved a quest yet.">Manage Quests<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageQuestsHotKey()}})</span></button>
+                    <button class="action-button" data-ng-disabled="disableViewQuests">Manage Quests<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageQuestsHotKey()}})</span></button>
                     <!--faction-->
-                    <button class="action-button" data-ng-disabled="disableViewFactionDetails" title="You haven't joined or founded a faction yet.">Manage Faction<span data-ng-show="toggleShowHotKeys">&nbsp;({{getViewFactionDetailsHotKey()}})</span></button>
+                    <button class="action-button" data-ng-disabled="disableViewFactionDetails">View Faction Details<span data-ng-show="toggleShowHotKeys">&nbsp;({{getViewFactionDetailsHotKey()}})</span></button>
                     <!--inventory-->
                     <button class="action-button" data-ng-disabled="cannotManageInventory()">Manage Inventory<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageInventoryHotKey()}})</span></button>
                   </div>
@@ -111,7 +110,7 @@
                     </div>
                   </div>
                 </div>
-                <div data-ng-show="toggleShowHUD" id="damage-section" data-ng-controller="damageController">
+                <div data-ng-show="toggleShowHUD" id="damage-section">
                   <div class="hud-section">
                     <div class="hud-panel">
                       <div class="hud-heading"><span class="hud-title" data-ng-show="toggleShowTitles">Damage</span></div>

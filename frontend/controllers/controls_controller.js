@@ -1,4 +1,4 @@
-app.controller('controlsController', function($scope) {
+app.controller('controlsController', function($scope, hotKeyService) {
 
   //TODO move to HUD controller
   $scope.HUDState = {
@@ -34,19 +34,19 @@ app.controller('controlsController', function($scope) {
     $(document).keydown(function(event) {
       switch(event.which) {
         case 37:
-          $scope.$broadcast('moveLeft');
+          $scope.$emit('moveLeft');
           break;
 
         case 38:
-          $scope.$broadcast('moveUp');
+          $scope.$emit('moveUp');
           break;
 
         case 39:
-          $scope.$broadcast('moveRight');
+          $scope.$emit('moveRight');
           break;
 
         case 40:
-          $scope.$broadcast('moveDown');
+          $scope.$emit('moveDown');
           break;
 
         default:
@@ -62,6 +62,129 @@ app.controller('controlsController', function($scope) {
 
   $scope.$on('bindWheel', function(event) {
     $scope.addWheelHandler();
+  });
+
+  $scope.getSwitchToCloneHotKey = function() {
+    return hotKeyService.switchToCloneHotKey;
+  };
+
+  $scope.getInteractHotKey = function() {
+    return hotKeyService.interactHotKey;
+  };
+
+  $scope.getEatHotKey = function() {
+    return hotKeyService.eatHotKey;
+  };
+
+  $scope.getSleepHotKey = function() {
+    return hotKeyService.sleepHotKey;
+  };
+
+  $scope.getCastSelectedSpellHotKey = function() {
+    return hotKeyService.castSelectedSpellHotKey;
+  };
+
+  $scope.getPrepareSpellsHotKey = function() {
+    return hotKeyService.prepareSpellsHotKey;
+  };
+
+  $scope.getLearnSpellsHotKey = function() {
+    return hotKeyService.learnSpellsHotKey;
+  };
+
+  $scope.getTalkHotKey = function() {
+    return hotKeyService.talkHotKey;
+  };
+
+  $scope.getLogOutHotKey = function() {
+    return hotKeyService.logOutHotKey;
+  };
+
+  $scope.getEditOptionsHotKey = function() {
+    return hotKeyService.editOptionsHotKey;
+  };
+
+  $scope.getGetGameInfoHotKey = function() {
+    return hotKeyService.getGameInfoHotKey;
+  };
+
+  $scope.getAdmireAchievementsHotKey = function() {
+    return hotKeyService.admireAchievementsHotKey;
+  };
+
+  $scope.getManageQuestsHotKey = function() {
+    return hotKeyService.manageQuestsHotKey;
+  };
+
+  $scope.getViewFactionDetailsHotKey = function() {
+    return hotKeyService.viewFactionDetailsHotKey;
+  };
+
+  $scope.getManageInventoryHotKey = function() {
+    return hotKeyService.manageInventoryHotKey;
+  };
+
+
+  //listen for hot keys
+
+  $scope.$on(hotKeyService.switchToCloneHotKey, function(event) {
+    console.log("switch to clone option chosen");
+  });
+
+  $scope.$on(hotKeyService.interactHotKey, function(event) {
+    console.log("interact option chosen");
+  });
+
+  $scope.$on(hotKeyService.eatHotKey, function(event) {
+    $scope.$emit('eat');
+  });
+
+  $scope.$on(hotKeyService.sleepHotKey, function(event) {
+    $scope.$emit('sleep');
+  });
+
+  $scope.$on(hotKeyService.castSelectedSpellHotKey, function(event) {
+    console.log("cast selected spell option chosen");
+  });
+
+  $scope.$on(hotKeyService.prepareSpellsHotKey, function(event) {
+    console.log("prepare spells option chosen");
+  });
+
+  $scope.$on(hotKeyService.learnSpellsHotKey, function(event) {
+    $scope.$emit('openLearnSpellsModal');
+  });
+
+  $scope.$on(hotKeyService.talkHotKey, function(event) {
+    console.log("talk option chosen");
+  });
+
+  $scope.$on(hotKeyService.logOutHotKey, function(event) {
+    console.log("log out option chosen");
+  });
+
+  $scope.$on(hotKeyService.editOptionsHotKey, function(event) {
+    $scope.$emit('openEditOptionsModal');
+  });
+
+  $scope.$on(hotKeyService.getGameInfoHotKey, function(event) {
+    console.log("get game info option chosen");
+  });
+
+  $scope.$on(hotKeyService.admireAchievementsHotKey, function(event) {
+    console.log("admire achievements option chosen");
+  });
+
+  $scope.$on(hotKeyService.viewFactionDetailsHotKey, function(event) {
+    console.log("view faction details option chosen");
+  });
+
+  $scope.$on(hotKeyService.manageQuestsHotKey, function(event) {
+    console.log("manage quests option chosen");
+  });
+
+  $scope.$on(hotKeyService.manageInventoryHotKey, function(event) {
+    console.log("manage inventory option chosen");
   });
 
 });

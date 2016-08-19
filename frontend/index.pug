@@ -33,7 +33,6 @@ html
     //client state
     script(src="controllers/character_controller.js")
     script(src="controllers/world_controller.js")
-    script(src="controllers/damage_controller.js")
 
     //see your options
     script(src="controllers/hud_controller.js")
@@ -41,24 +40,24 @@ html
 
     //actions (turn inputs into requests)
     script(src="controllers/controls_controller.js")
-    script(src="controllers/actions_controller.js")
 
   body
 
     div(data-ng-app="angularFrontEnd", data-ng-controller="authController", keypress-events)
       div(id="modal-section", data-ng-controller="modalController")
-        div(data-ng-controller="controlsController")
-          div(data-ng-controller="characterController")
-            div(data-ng-controller="HUDController")
-              div(data-ng-controller="worldController")
+        div(data-ng-controller="characterController")
+          div(data-ng-controller="HUDController")
+            div(data-ng-controller="worldController")
+              div(data-ng-controller="controlsController")
 
                 h1(class="game-title") Gray Mana
 
-                div(data-ng-show="toggleShowHUD", data-ng-controller="actionsController")
+                div(data-ng-show="toggleShowHUD")
                   div(class="action-button-container")
 
                     //button(s) for testing
                     button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getTreasure()") Get Treasure
+                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="takeDamage(5, 'green')") Take Damage
                     button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getClone()") Clone Yourself
                     button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getApple()") Get an Apple
 
@@ -152,7 +151,7 @@ html
                       div(class="spell-logo-frame {{lastSpellSlot( $index + 1 )}}", id="spell-slot-{{$index + 1 }}")
                         div(class="spell-logo") Empty Spell Slot
 
-                div(data-ng-show="toggleShowHUD", id="damage-section", data-ng-controller="damageController")
+                div(data-ng-show="toggleShowHUD", id="damage-section")
                   div(class="hud-section")
                     div(class="hud-panel")
                       div(class="hud-heading")

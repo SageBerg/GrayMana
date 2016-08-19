@@ -1,4 +1,4 @@
-app.controller('HUDController', function($scope, characterStateService, hotKeyService) {
+app.controller('HUDController', function($scope, characterStateService) {
 
   $scope.colorClasses = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
     'violet', 'gray'];
@@ -16,66 +16,6 @@ app.controller('HUDController', function($scope, characterStateService, hotKeySe
 
   $scope.$on('showHUD', function(event) {
     $scope.toggleShowHUD = true;
-  });
-
-  $scope.$on(hotKeyService.switchToCloneHotKey, function(event) {
-    console.log("switch to clone option chosen");
-  });
-
-  $scope.$on(hotKeyService.interactHotKey, function(event) {
-    console.log("interact option chosen");
-  });
-
-  $scope.$on(hotKeyService.eatHotKey, function(event) {
-    $scope.$emit('eat');
-  });
-
-  $scope.$on(hotKeyService.sleepHotKey, function(event) {
-    $scope.$emit('sleep');
-  });
-
-  $scope.$on(hotKeyService.castSelectedSpellHotKey, function(event) {
-    console.log("cast selected spell option chosen");
-  });
-
-  $scope.$on(hotKeyService.prepareSpellsHotKey, function(event) {
-    console.log("prepare spells option chosen");
-  });
-
-  $scope.$on(hotKeyService.learnSpellsHotKey, function(event) {
-    $scope.$emit('openLearnSpellsModal');
-  });
-
-  $scope.$on(hotKeyService.talkHotKey, function(event) {
-    console.log("talk option chosen");
-  });
-
-  $scope.$on(hotKeyService.logOutHotKey, function(event) {
-    console.log("log out option chosen");
-  });
-
-  $scope.$on(hotKeyService.editOptionsHotKey, function(event) {
-    $scope.$emit('openEditOptionsModal');
-  });
-
-  $scope.$on(hotKeyService.getGameInfoHotKey, function(event) {
-    console.log("get game info option chosen");
-  });
-
-  $scope.$on(hotKeyService.admireAchievementsHotKey, function(event) {
-    console.log("admire achievements option chosen");
-  });
-
-  $scope.$on(hotKeyService.viewFactionDetailsHotKey, function(event) {
-    console.log("view faction details option chosen");
-  });
-
-  $scope.$on(hotKeyService.manageQuestsHotKey, function(event) {
-    console.log("manage quests option chosen");
-  });
-
-  $scope.$on(hotKeyService.manageInventoryHotKey, function(event) {
-    console.log("manage inventory option chosen");
   });
 
   $scope.cannotSwitchToClone = function() {

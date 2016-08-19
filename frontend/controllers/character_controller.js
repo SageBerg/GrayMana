@@ -180,4 +180,21 @@ app.controller('characterController', function($scope, characterStateService) {
     'Hide Magic'
   ];
 
+  $scope.widthObj = {
+    red: {'width': characterStateService.character.currentBody.damage['red'] + '%'},
+    orange: {'width': characterStateService.character.currentBody.damage['orange'] + '%'},
+    yellow: {'width': characterStateService.character.currentBody.damage['yellow'] + '%'},
+    green: {'width': characterStateService.character.currentBody.damage['green'] + '%'},
+    blue: {'width': characterStateService.character.currentBody.damage['blue'] + '%'},
+    indigo: {'width': characterStateService.character.currentBody.damage['indigo'] + '%'},
+    violet: {'width': characterStateService.character.currentBody.damage['violet'] + '%'},
+    gray: {'width': characterStateService.character.currentBody.damage['gray'] + '%'},
+  };
+
+  $scope.takeDamage = function(amount, color) {
+    characterStateService.character.currentBody.damage[color] += amount;
+    console.log(characterStateService.character.currentBody.damage)
+    $scope.widthObj[color].width = parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
+  };
+
 });
