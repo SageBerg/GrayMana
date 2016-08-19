@@ -63,24 +63,20 @@ button {
   left: 10px;
   top: 10px; }
 
-.hud-panel {
-  border-radius: 6px;
-  background-color: white;
-  min-height: 130px;
-  margin: auto;
-  padding-bottom: 10px;
-  width: 98%; }
-
-.hud-panel-content {
+.hud-sections {
   text-align: center; }
 
 .hud-section, .learn-spells-pane {
+  border-radius: 6px;
+  background-color: white;
   display: inline-block;
-  float: left;
-  min-height: 120px;
+  margin-top: 10px;
+  min-height: 130px;
+  padding-bottom: 10px;
   padding-top: 10px;
+  text-align: center;
   vertical-align: middle;
-  width: 50%; }
+  width: 48%; }
 
 .hud-title {
   font-size: 200%;

@@ -8,29 +8,21 @@ $hud_section_height: 130px;
   top: 10px;
 }
 
-.hud-heading {
-}
-
-.hud-panel {
-  border-radius: 6px;
-  background-color: white;
-  min-height: $hud_section_height;
-  margin: auto;
-  padding-bottom: 10px;
-  width: 98%
-}
-
-.hud-panel-content {
+.hud-sections {
   text-align: center;
 }
 
 .hud-section {
+  border-radius: 6px;
+  background-color: white;
   display: inline-block;
-  float: left;
-  min-height: 120px;
+  margin-top: 10px;
+  min-height: $hud_section_height;
+  padding-bottom: 10px;
   padding-top: 10px;
+  text-align: center;
   vertical-align: middle;
-  width: 50%;
+  width: 48%;
 }
 
 .hud-title {

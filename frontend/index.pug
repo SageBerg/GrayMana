@@ -5,21 +5,22 @@ html
 
     title Gray Mana 0.1.0
 
-    link(href="stylesheets/compiled_css/actions_dashboard.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/colors.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/damage_dashboard.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/hud.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/learn_spells_modal.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/login.css", rel="stylesheet", )
-    link(href="stylesheets/compiled_css/mana_dashboard.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/map.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/modal.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/prepared_spells_dashboard.css", rel="stylesheet")
-    link(href="stylesheets/compiled_css/style.css", rel="stylesheet")
+    link(href="stylesheets/compiled_css/actions_dashboard.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/colors.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/damage_dashboard.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/hud.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/learn_spells_modal.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/login.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/mana_dashboard.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/map.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/modal.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/prepared_spells_dashboard.css", rel="stylesheet", type='text/css')
+    link(href="stylesheets/compiled_css/style.css", rel="stylesheet", type='text/css')
+
     link(href='https://fonts.googleapis.com/css?family=Josefin+Sans', rel='stylesheet', type='text/css')
 
     //3rd party libraries
-    script(src="scripts/jquery.min.js")
+    script(src="vendor/jquery.min.js")
     script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js")
 
     //AngularJS stuff
@@ -45,82 +46,81 @@ html
     div(data-ng-app="angularFrontEnd", data-ng-controller="authController", keypress-events)
       div(id="modal-section", data-ng-controller="modalController")
         div(data-ng-controller="characterController")
-          div(data-ng-controller="HUDController")
-            div(data-ng-controller="worldController")
+          div(data-ng-controller="worldController")
+            div(data-ng-controller="HUDController")
               div(data-ng-controller="controlsController")
 
                 h1(class="game-title") Gray Mana
 
-                div(data-ng-show="toggleShowHUD")
-                  div(class="action-button-container")
+                div(class="action-button-container", data-ng-show="toggleShowHUD")
 
-                    //button(s) for testing
-                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getTreasure()") Get Treasure
-                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="takeDamage(5, 'green')") Take Damage
-                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getClone()") Clone Yourself
-                    button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getApple()") Get an Apple
+                  //button(s) for testing
+                  button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getTreasure()") Get Treasure
+                  button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="takeDamage(5, 'green')") Take Damage
+                  button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getClone()") Clone Yourself
+                  button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getApple()") Get an Apple
 
-                    //switch to clone
-                    button(class="action-button", data-ng-disabled="cannotSwitchToClone()", data-ng-click="") Switch to Clone
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSwitchToCloneHotKey()}})
+                  //switch to clone
+                  button(class="action-button", data-ng-disabled="cannotSwitchToClone()", data-ng-click="") Switch to Clone
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSwitchToCloneHotKey()}})
 
-                    //interact
-                    button(class="action-button", data-ng-disabled="disableInteract") Interact
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getInteractHotKey()}})
+                  //interact
+                  button(class="action-button", data-ng-disabled="disableInteract") Interact
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getInteractHotKey()}})
 
-                    //eat
-                    button(class="action-button", data-ng-disabled="cannotEat()", data-ng-click="eat()") Eat
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEatHotKey()}})
+                  //eat
+                  button(class="action-button", data-ng-disabled="cannotEat()", data-ng-click="eat()") Eat
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEatHotKey()}})
 
-                    //sleep
-                    button(class="action-button", data-ng-disabled="disableSleep", data-ng-click="sleep()") {{getSleepButtonTitle()}}
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSleepHotKey()}})
+                  //sleep
+                  button(class="action-button", data-ng-disabled="disableSleep", data-ng-click="sleep()") {{getSleepButtonTitle()}}
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSleepHotKey()}})
 
-                    //cast selected spell
-                    button(class="action-button", data-ng-disabled="disableCastSelectedSpell") Cast Selected Spell
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getCastSelectedSpellHotKey()}})
+                  //cast selected spell
+                  button(class="action-button", data-ng-disabled="disableCastSelectedSpell") Cast Selected Spell
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getCastSelectedSpellHotKey()}})
 
-                    //prepare spells
-                    button(class="action-button", data-ng-disabled="disablePrepareSpells") Prepare Spells
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getPrepareSpellsHotKey()}})
+                  //prepare spells
+                  button(class="action-button", data-ng-disabled="disablePrepareSpells") Prepare Spells
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getPrepareSpellsHotKey()}})
 
-                    //learn spells
-                    button(class="action-button", data-ng-click="openModal('learnSpells')", data-ng-disabled="false") Learn Spells
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLearnSpellsHotKey()}})
+                  //learn spells
+                  button(class="action-button", data-ng-click="openModal('learnSpells')", data-ng-disabled="false") Learn Spells
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLearnSpellsHotKey()}})
 
-                    //talk
-                    button(class="action-button", data-ng-disabled="cannotTalk()") Talk
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getTalkHotKey()}})
+                  //talk
+                  button(class="action-button", data-ng-disabled="cannotTalk()") Talk
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getTalkHotKey()}})
 
-                  div(class="metabutton-container")
+                div(class="metabutton-container", , data-ng-show="toggleShowHUD")
 
-                    //log out
-                    button(class="action-button") Log Out
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLogOutHotKey()}})
+                  //log out
+                  button(class="action-button") Log Out
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLogOutHotKey()}})
 
-                    //edit options
-                    button(class="action-button", data-ng-click="openModal('editOptions')") Edit Options
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEditOptionsHotKey()}})
+                  //edit options
+                  button(class="action-button", data-ng-click="openModal('editOptions')") Edit Options
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getEditOptionsHotKey()}})
 
-                    //get game info
-                    button(class="action-button", data-ng-click="openModal('getGameInfo')") Get Game Info
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getGetGameInfoHotKey()}})
+                  //get game info
+                  button(class="action-button", data-ng-click="openModal('getGameInfo')") Get Game Info
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getGetGameInfoHotKey()}})
 
-                    //achievements
-                    button(class="action-button", data-ng-disabled="disableAdmireAchievements") Admire Achievements
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getAdmireAchievementsHotKey()}})
+                  //achievements
+                  button(class="action-button", data-ng-disabled="disableAdmireAchievements") Admire Achievements
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getAdmireAchievementsHotKey()}})
 
-                    //quests
-                    button(class="action-button", data-ng-disabled="disableViewQuests") Manage Quests
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageQuestsHotKey()}})
+                  //quests
+                  button(class="action-button", data-ng-disabled="disableViewQuests") Manage Quests
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageQuestsHotKey()}})
 
-                    //faction
-                    button(class="action-button", data-ng-disabled="disableViewFactionDetails") View Faction Details
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getViewFactionDetailsHotKey()}})
+                  //faction
+                  button(class="action-button", data-ng-disabled="disableViewFactionDetails") View Faction Details
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getViewFactionDetailsHotKey()}})
 
-                    //inventory
-                    button(class="action-button", data-ng-disabled="cannotManageInventory()") Manage Inventory
-                      span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageInventoryHotKey()}})
+                  //inventory
+                  button(class="action-button", data-ng-disabled="cannotManageInventory()") Manage Inventory
+                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageInventoryHotKey()}})
 
                 div(id="login-div")
                   h2 Username:
@@ -131,55 +131,42 @@ html
 
                 div(id="map")
 
-                div(data-ng-show="toggleShowHUD", id="mana-section")
-                  div(class="hud-section")
-                    div(class="hud-panel")
-                      div(class="hud-heading")
-                        span(class="hud-title", data-ng-show="toggleShowTitles") Mana
+                div(class="hud-sections")
+                  //Mana section
+                  div(class="hud-section", data-ng-show="toggleShowHUD", id="mana-section")
+                    div(class="hud-title", data-ng-show="toggleShowTitles") Mana
 
-                      div(class="hud-panel-content")
-                        div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
-                          div(class="white", data-ng-style="manaHeights[color]") {{getManaAmount(color)}}
+                    div(class="mana-bar {{color}}", data-ng-repeat="color in colorClasses")
+                      div(class="white", data-ng-style="manaHeights[color]") {{getManaAmount(color)}}
 
-                div(data-ng-show="toggleShowHUD", id="prepared-spells-section", class="hud-section")
-                  div(class="hud-panel")
-                    div(class="hud-heading")
-                      span(class="hud-title", data-ng-show="toggleShowTitles") Prepared Spells
+                  //Equipped Spells section
+                  div(class="hud-section", data-ng-show="toggleShowHUD", id="prepared-spells-section")
+                    div(class="hud-title", data-ng-show="toggleShowTitles") Equipped Spells
 
-                    div(class="hud-panel-content", data-ng-repeat="_ in spellSlots")
-                      div(class="spell-logo-frame {{lastSpellSlot( $index + 1 )}}", id="spell-slot-{{$index + 1 }}")
-                        div(class="spell-logo") Empty Spell Slot
+                    div(data-ng-repeat="_ in spellSlots", class="spell-logo-frame {{lastSpellSlot( $index + 1 )}}", id="spell-slot-{{$index + 1 }}")
+                      div(class="spell-logo") Empty Spell Slot
 
-                div(data-ng-show="toggleShowHUD", id="damage-section")
-                  div(class="hud-section")
-                    div(class="hud-panel")
-                      div(class="hud-heading")
-                        span(class="hud-title", data-ng-show="toggleShowTitles") Damage
+                  div(class="hud-section", data-ng-show="toggleShowHUD", id="damage-section")
+                    span(class="hud-title", data-ng-show="toggleShowTitles") Damage
 
-                      div(class="hud-panel-content")
-                        span() Toxicity
-                        span(style="margin-left: 30px") Pressure
-                        span(style="margin-left: 30px") Heat
-                        span(style="margin-left: 30px") Hunger
-                        span(style="margin-left: 30px") Suffocation
-                        span(style="margin-left: 30px") Fatigue
-                        span(style="margin-left: 30px") Loniness
-                        span(style="margin-left: 30px") Stress
+                    div(id="damage-bar")
+                      div(data-ng-repeat="color in colorClasses",
+                        class="damage {{ color }}", data-ng-style="widthObj[color]",
+                        id="{{ 'damage-' + ($index + 1) + '-' + color }}")
 
-                        div(id="damage-bar")
-                          div(data-ng-repeat="color in colorClasses",
-                            class="damage {{ color }}", data-ng-style="widthObj[color]",
-                            id="{{ 'damage-' + ($index + 1) + '-' + color }}")
+                    span() Toxicity
+                    span(style="margin-left: 30px") Pressure
+                    span(style="margin-left: 30px") Heat
+                    span(style="margin-left: 30px") Hunger
+                    span(style="margin-left: 30px") Suffocation
+                    span(style="margin-left: 30px") Fatigue
+                    span(style="margin-left: 30px") Loniness
+                    span(style="margin-left: 30px") Stress
 
-                div(data-ng-show="toggleShowHUD", id="ongoing-spells-section")
-                  div(class="hud-section")
-                    div(class="hud-panel")
-                      div(class="hud-heading")
-                        span(class="hud-title", data-ng-show="toggleShowTitles") Ongoing Spells
+                  div(class="hud-section", data-ng-show="toggleShowHUD", id="ongoing-spells-section")
+                    span(class="hud-title", data-ng-show="toggleShowTitles") Ongoing Spells
 
-                      div(class="hud-panel-content")
-
-
+                //modal
                 div(class="modal", data-ng-show="showModal")
                   div(class="modal-content")
                     span(data-ng-click="closeModal()", class="close") &times;
