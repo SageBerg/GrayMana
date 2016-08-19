@@ -33,7 +33,7 @@ app.controller('authController', function($scope, $http) {
     $http({
       method: 'POST',
       url: 'refresh_token.json',
-      data: {'token': window.sessionStorage.accessToken},
+      data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       window.sessionStorage.accessToken = res.data.token;

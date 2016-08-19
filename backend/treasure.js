@@ -59,7 +59,6 @@ var SPELL_LIST = [
   'Hide Magic'
 ];
 
-
 var TreasureGen = function() {
   this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
     'violet', 'gray'];

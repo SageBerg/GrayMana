@@ -1,4 +1,4 @@
-app.controller('characterController', function($scope, characterStateService) {
+app.controller('characterController', function($scope, $http, characterStateService) {
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
   $scope.$on('eat', function(event) {
@@ -11,8 +11,15 @@ app.controller('characterController', function($scope, characterStateService) {
   });
 
   $scope.getTreasure = function() {
-    $scope.getMana();
-    $scope.getRunes();
+    $http({
+      method: 'POST',
+      url: 'get_treasure.json',
+      data: {token: window.sessionStorage.accessToken},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      $scope.getMana(res.data.treasureDrop.manaDrop);
+      $scope.getRunes(res.data.treasureDrop.runeDrop)
+    });
   };
 
   $scope.getClone = function() {
@@ -44,19 +51,16 @@ app.controller('characterController', function($scope, characterStateService) {
     return characterStateService.character.currentBody.runes[letter];
   };
 
-  $scope.getRunes = function() {
-    var treasureGen = new TreasureGen();
-    var runeDrop = treasureGen.runeDrop();
+  $scope.getRunes = function(runeDrop) {
     for (var i = 0; i < runeDrop.length; i++) {
       characterStateService.character.currentBody.runes[runeDrop[i]] += 1;
     }
   }
 
-  $scope.getMana = function() {
-    var treasureGen = new TreasureGen();
-    var manaBundle = treasureGen.manaDrop();
-    var color = manaBundle.manaColor;
-    characterStateService.character.currentBody.mana[color] += manaBundle.manaAmount;
+  $scope.getMana = function(manaDrop) {
+    var color = manaDrop.manaColor;
+    characterStateService.character.currentBody.mana[color] += manaDrop.manaAmount;
+
     var fill = 100 - Math.min(10, characterStateService.character.currentBody.mana[color]) * 10;
     $scope.manaHeights[color].height = fill + '%';
   }
