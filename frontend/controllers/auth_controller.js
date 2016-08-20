@@ -15,7 +15,6 @@ app.controller('authController', function($scope, $http) {
     if (true) {
       window.sessionStorage.accessToken = res.data.token;
       $scope.$broadcast('loadInitialChunk');
-      //loadChunk(getChunkCoords(), renderInitialChunk);
 
       $scope.$broadcast('showHUD');
       $scope.$broadcast('bindKeys');

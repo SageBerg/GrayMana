@@ -4,7 +4,7 @@ app.controller('worldController', function($scope, $http) {
     chunks: {},
 
     //represent the player's view, not necessarily where their character is
-    currentBlock: {row: 0, col: 0},
+    currentBlock: {row: 20, col: 20},
     currentChunk: {x: 0, y: 0}
   };
 
@@ -79,8 +79,6 @@ app.controller('worldController', function($scope, $http) {
 
   $scope.stitchChunks = function() {
     var chunk = $scope.buildBlankChunk();
-    var row = $scope.world.currentBlock.row;
-    var col = $scope.world.currentBlock.col;
     var currentChunk = $scope.world.chunks[$scope.getChunkCoords()];
     var downChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(0, 1)];
     var rightChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(1, 0)];
@@ -88,8 +86,8 @@ app.controller('worldController', function($scope, $http) {
 
     for (var i = 0; i < $scope.world.chunkSize; i++) {
       for (var j = 0; j < $scope.world.chunkSize; j++) {
-        var adjustedRow = i + row;
-        var adjustedCol = j + col;
+        var adjustedRow = i + $scope.world.currentBlock.row;
+        var adjustedCol = j + $scope.world.currentBlock.col;
         if (adjustedRow < $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
           chunk[i][j] = currentChunk[adjustedRow][adjustedCol];
         } else if (adjustedRow >= $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
@@ -198,19 +196,25 @@ app.controller('worldController', function($scope, $http) {
   });
 
   $scope.$on('moveLeft', function(event) {
+    $scope.printPlayerLocation();
     $scope.move(0, -1);
   });
 
   $scope.$on('moveUp', function(event) {
+    $scope.printPlayerLocation();
     $scope.move(-1, 0);
   });
 
   $scope.$on('moveRight', function(event) {
+    $scope.printPlayerLocation();
     $scope.move(0, 1);
   });
 
   $scope.$on('moveDown', function(event) {
+    $scope.printPlayerLocation();
     $scope.move(1, 0);
   });
+
+  $scope.printPlayerLocation = function() {};
 
 });
