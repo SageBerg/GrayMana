@@ -78,7 +78,7 @@
                   <!--inventory-->
                   <button class="action-button" data-ng-disabled="cannotManageInventory()">Manage Inventory<span data-ng-show="toggleShowHotKeys">&nbsp;({{getManageInventoryHotKey()}})</span></button>
                 </div>
-                <div id="login-div">
+                <div id="login-div" data-ng-show="toggleShowLogin">
                   <h2>Username:</h2>
                   <input class="login-input" data-ng-model="username"/>
                   <h2>Password:</h2>

@@ -16,13 +16,10 @@ app.controller('authController', function($scope, $http) {
       window.sessionStorage.accessToken = res.data.token;
       $scope.$broadcast('loadInitialChunk');
 
+      $scope.$broadcast('hideLogin');
       $scope.$broadcast('showHUD');
       $scope.$broadcast('bindKeys');
       $scope.$broadcast('bindWheel');
-
-      //remove login view
-      $('#login-div').html('');
-      $('#login-div').css('height', 0);
     } else {
       //TODO handle auth failure case
     }

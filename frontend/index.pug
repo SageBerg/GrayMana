@@ -122,7 +122,7 @@ html
                   button(class="action-button", data-ng-disabled="cannotManageInventory()") Manage Inventory
                     span(data-ng-show="toggleShowHotKeys") &nbsp;({{getManageInventoryHotKey()}})
 
-                div(id="login-div")
+                div(id="login-div", data-ng-show="toggleShowLogin")
                   h2 Username:
                   input(class="login-input", data-ng-model="username")
                   h2 Password:

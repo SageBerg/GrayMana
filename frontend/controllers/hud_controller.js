@@ -18,6 +18,10 @@ app.controller('HUDController', function($scope, characterStateService) {
     $scope.toggleShowHUD = true;
   });
 
+  $scope.$on('hideLogin', function(event) {
+    $scope.toggleShowLogin = false;
+  });
+
   $scope.cannotSwitchToClone = function() {
     return characterStateService.character.bodies.length < 2;
   };
@@ -45,6 +49,7 @@ app.controller('HUDController', function($scope, characterStateService) {
     return characterStateService.character.currentBody.state === 'asleep';
   };
 
+  $scope.toggleShowLogin = true;
   $scope.toggleShowHUD = false;
 
   $scope.toggleShowTitles = true;
