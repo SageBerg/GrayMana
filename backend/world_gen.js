@@ -4,9 +4,8 @@ var WorldGen = function(chunkSize, chunks, database) {
   this.database = database;
 };
 
-WorldGen.prototype.genChunk = function(chunkCoords) {
+WorldGen.prototype.genChunk = function(chunkCoords, chunkSize) {
   var presetPotentialTiles = this.getPresetPotentialTiles(chunkCoords);
-  var chunkSize = 40;
   var chunk = this.build_chunk(chunkSize);
 
   var filled = new Set();

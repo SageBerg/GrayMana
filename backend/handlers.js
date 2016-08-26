@@ -27,10 +27,17 @@ Handlers.prototype.respondWithChunk = function(req, res) {
     if (this.state.chunks[req.body.chunkCoords] !== undefined) {
       res.json(this.state.chunks[req.body.chunkCoords]);
     } else {
-      var chunk = this.state.worldGen.genChunk(req.body.chunkCoords);
+      var chunk = this.state.worldGen.genChunk(req.body.chunkCoords,
+        this.state.chunkSize);
       this.state.chunks[req.body.chunkCoords] = chunk;
       res.json(chunk);
     }
+  } //end isAuth
+}
+
+Handlers.prototype.respondWithChunkSize = function(req, res) {
+  if (this.state.auth.isAuth(req.body.token)) {
+    res.json(this.state.chunkSize);
   } //end isAuth
 }
 

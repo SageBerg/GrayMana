@@ -1,15 +1,26 @@
 app.controller('worldController', function($scope, $http) {
+
   $scope.world = {
-    chunkSize: 40,
+    chunkSize: 0,
     chunks: {},
     currentLocation: {x: 0, y: 0}
   };
 
-  try {
-    $scope.MID = Math.floor($scope.world.chunkSize / 2);
-  } catch (exception) {
-    console.log(exception);
-  }
+  $scope.requestAndSetChunkSize = function(callback) {
+    $http({
+      method: 'POST',
+      url: 'chunkSize.json',
+      data: {'token': window.sessionStorage.accessToken},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      $scope.world.chunkSize = res.data;
+      callback();
+    });
+  };
+
+  $scope.requestAndSetChunkSize(function() {
+    $scope.mid = Math.ceil($scope.world.chunkSize / 2);
+  });
 
   $scope.getCurrentChunkCoords = function() {
     return $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
@@ -85,8 +96,8 @@ app.controller('worldController', function($scope, $http) {
     var chunk = $scope.buildBlankChunk();
     for (var i = 0; i < $scope.world.chunkSize; i++) {
       for (var j = 0; j < $scope.world.chunkSize; j++) {
-        chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - 20,
-                                      j + $scope.world.currentLocation.y - 20);
+        chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - ($scope.mid -1),
+                                      j + $scope.world.currentLocation.y - ($scope.mid -1));
       }
     }
     $('#map').html($scope.genChunkHTML(chunk));
@@ -141,18 +152,13 @@ app.controller('worldController', function($scope, $http) {
     });
   };
 
-  $scope.renderInitialChunk = function() {
-    $('#map').css('width', $scope.world.chunkSize * 10);
-    $('#map').html($scope.genChunkHTML($scope.world.chunks[$scope.getCurrentChunkCoords()]));
-  };
-
   $scope.genChunkHTML = function(chunk) {
     chunkHTML = '';
     var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
     for (var row = 0; row < $scope.world.chunkSize; row++) {
       for (var col = 0; col < $scope.world.chunkSize; col++) {
         var terrain = terrainCodesToNames[chunk[row][col]];
-        if (row === $scope.MID && col === $scope.MID) { //draw player in center of map
+        if (row === ($scope.mid - 1) && col === ($scope.mid - 1) ) { //draw player in center of map
           chunkHTML += '<div class=\"player-character\"></div>';
         } else {
           chunkHTML += '<div class=' + terrain + '></div>';
@@ -163,7 +169,7 @@ app.controller('worldController', function($scope, $http) {
   };
 
   $scope.$on('loadInitialChunk', function(event) {
-    $scope.loadChunk($scope.getCurrentChunkCoords(), $scope.renderInitialChunk);
+    $('#map').css('width', $scope.world.chunkSize * 10);
     $scope.loadNearbyChunks();
   });
 
