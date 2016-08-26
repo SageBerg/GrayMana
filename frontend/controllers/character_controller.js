@@ -12,6 +12,19 @@ app.controller('characterController', function($scope, $http, characterStateServ
     });
   });
 
+/*
+  $scope.requestNewItem(item, quantity) {
+    $http({
+      method: 'POST',
+      url: 'new_item.json',
+      data: {token: window.sessionStorage.accessToken, item: item, quantity: quanity},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      characterStateService.character.currentBody.inventory[item] += res.data[item];
+    });
+  }
+*/
+
   $scope.$on('eat', function(event) {
     $scope.eat();
   });

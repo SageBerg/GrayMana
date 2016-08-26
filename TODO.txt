@@ -21,6 +21,7 @@ Deployment:
 
 Docs:
   Developer Docs:
+    Automate setting up the Postgres tables
     Walk through instructions on another computer
     Walk through instructions with another person on another computer
   Player Docs:
