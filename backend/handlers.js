@@ -41,6 +41,20 @@ Handlers.prototype.respondWithChunkSize = function(req, res) {
   } //end isAuth
 }
 
+Handlers.prototype.respondWithCharacter = function(req, res) {
+  if (this.state.auth.isAuth(req.body.token)) {
+    var email = this.state.auth.getEmailFromToken(req.body.token);
+    var queryResult = this.state.database.getCharacter(email);
+    queryResult.on('row', function(row) {
+      if (row.apples !== undefined) {
+        res.json({'apple': row['apples']});
+      } else {
+        res.send();
+      }
+    });
+  } //end isAuth
+}
+
 Handlers.prototype.respondWithMove = function(req, res) {
   if (this.state.auth.isAuth(req.body.token)) {
 

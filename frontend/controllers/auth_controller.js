@@ -1,4 +1,4 @@
-app.controller('authController', function($scope, $http) {
+app.controller('authController', function($scope, $http, characterStateService) {
   $scope.username = 'person@example.com';
   $scope.password = 'not_a_real_password_used_anywhere_else';
 
@@ -20,6 +20,7 @@ app.controller('authController', function($scope, $http) {
       $scope.$broadcast('showHUD');
       $scope.$broadcast('bindKeys');
       $scope.$broadcast('bindWheel');
+      $scope.$broadcast('loadCharacter');
     } else {
       //TODO handle auth failure case
     }

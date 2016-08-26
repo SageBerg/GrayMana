@@ -22,6 +22,10 @@ DB.prototype.parseJavaScriptChunkToPostgresChunk = function(chunk) {
   return postgresChunk;
 }
 
+DB.prototype.getCharacter = function(email) {
+  return this.psqlClient.query('SELECT apples FROM users WHERE email = $1', [email]);
+}
+
 DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
   var psqlChunk = this.parseJavaScriptChunkToPostgresChunk(chunk);
   this.psqlClient.query('INSERT INTO chunks (chunk, world_id, coords) VALUES ' +

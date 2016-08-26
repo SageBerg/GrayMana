@@ -26,6 +26,7 @@ Promise.all(
 app.post('/login.json', handlers.respondWithLogin);
 app.post('/chunk.json', handlers.respondWithChunk);
 app.post('/chunkSize.json', handlers.respondWithChunkSize);
+app.post('/load_character.json', handlers.respondWithCharacter);
 app.post('/move', handlers.respondWithMove);
 app.post('/refresh_token.json', handlers.respondWithNewToken);
 app.post('/get_treasure.json', handlers.respondWithTreasureDrop);

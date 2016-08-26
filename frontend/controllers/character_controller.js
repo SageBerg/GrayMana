@@ -1,6 +1,17 @@
 app.controller('characterController', function($scope, $http, characterStateService) {
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
+  $scope.$on('loadCharacter', function(event) {
+    $http({
+      method: 'POST',
+      url: 'load_character.json',
+      data: {token: window.sessionStorage.accessToken},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      characterStateService.character.currentBody.inventory['apple'] += res.data.apple;
+    });
+  });
+
   $scope.$on('eat', function(event) {
     $scope.eat();
   });
