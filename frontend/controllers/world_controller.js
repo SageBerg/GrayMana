@@ -2,105 +2,95 @@ app.controller('worldController', function($scope, $http) {
   $scope.world = {
     chunkSize: 40,
     chunks: {},
-
-    //represent the player's view, not necessarily where their character is
-    currentBlock: {row: 20, col: 20},
-    currentChunk: {x: 0, y: 0}
+    currentLocation: {x: 0, y: 0}
   };
 
-  $scope.getChunkCoords = function() {
-    return $scope.world.currentChunk.x + ' ' + $scope.world.currentChunk.y;
+  try {
+    $scope.MID = Math.floor($scope.world.chunkSize / 2);
+  } catch (exception) {
+    console.log(exception);
+  }
+
+  $scope.getCurrentChunkCoords = function() {
+    return $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
   };
 
-  $scope.getIncrementedChunkCoords = function(xInc, yInc) {
-    return ($scope.world.currentChunk.x + xInc) + ' ' +
-      ($scope.world.currentChunk.y + yInc);
-  };
+  $scope.loadNearbyChunks = function() {
+    var current = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
+    var xPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
+    var yPlus = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
+    var xyPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
 
-  $scope.changeCurrentBlock = function(row, col) {
-    $scope.world.currentBlock.row += row;
-    $scope.world.currentBlock.col += col;
-    $scope.changeCurrentChunkY();
-    $scope.changeCurrentChunkX();
-  };
+    var xMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
+    var yMinus = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' +  ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
+    var xyMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
 
-  $scope.changeCurrentChunkY = function() {
-    if ($scope.world.currentBlock.row < 0) {
-      $scope.world.currentChunk.y -= 1;
-      $scope.world.currentBlock.row = $scope.world.chunkSize - 1;
-    } else if ($scope.world.currentBlock.row > $scope.world.chunkSize - 1) {
-      $scope.world.currentChunk.y += 1;
-      $scope.world.currentBlock.row = 0;
-    }
-  };
 
-  $scope.changeCurrentChunkX = function() {
-    if ($scope.world.currentBlock.col < 0) {
-      $scope.world.currentChunk.x -= 1;
-      $scope.world.currentBlock.col = $scope.world.chunkSize - 1;
-    } else if ($scope.world.currentBlock.col > $scope.world.chunkSize - 1) {
-      $scope.world.currentChunk.x += 1;
-      $scope.world.currentBlock.col = 0;
-    }
-  };
-
-  $scope.getRequestedChunkCoords = function(rowInc, colInc) {
-    if ($scope.world.currentBlock.row + rowInc < 0) {
-      return $scope.getIncrementedChunkCoords(colInc, rowInc);
-    } else if ($scope.world.currentBlock.row + rowInc >= $scope.world.chunkSize) {
-      return $scope.getIncrementedChunkCoords(colInc, rowInc);
-    } else if ($scope.world.currentBlock.col + colInc < 0) {
-      return $scope.getIncrementedChunkCoords(colInc, rowInc);
-    } else if ($scope.world.currentBlock.col + colInc >= $scope.world.chunkSize) {
-      return $scope.getIncrementedChunkCoords(colInc, rowInc);
-    } else {
-      return $scope.getChunkCoords();
-    }
-  };
-
-  $scope.stitchChunksPrep = function() {
-    var current = $scope.getChunkCoords();
-    var xPlus = $scope.getIncrementedChunkCoords(1, 0);
-    var yPlus = $scope.getIncrementedChunkCoords(0, 1);
-    var xyPlus = $scope.getIncrementedChunkCoords(1, 1);
+    var xMinusYPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
+    var xPlusYMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
 
     if ($scope.world.chunks[current] === undefined) {
-      $scope.loadChunk(current, $scope.stitchChunksPrep);
+      $scope.loadChunk(current, $scope.loadNearbyChunks);
+
     } else if ($scope.world.chunks[yPlus] === undefined) {
-      $scope.loadChunk(yPlus, $scope.stitchChunksPrep);
+      $scope.loadChunk(yPlus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xPlus] === undefined) {
-      $scope.loadChunk(xPlus, $scope.stitchChunksPrep);
+      $scope.loadChunk(xPlus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xyPlus] === undefined) {
-      $scope.loadChunk(xyPlus, $scope.stitchChunksPrep);
+      $scope.loadChunk(xyPlus, $scope.loadNearbyChunks);
+
+    } else if ($scope.world.chunks[yMinus] === undefined) {
+      $scope.loadChunk(yMinus, $scope.loadNearbyChunks);
+    } else if ($scope.world.chunks[xMinus] === undefined) {
+      $scope.loadChunk(xMinus, $scope.loadNearbyChunks);
+    } else if ($scope.world.chunks[xyMinus] === undefined) {
+      $scope.loadChunk(xyMinus, $scope.loadNearbyChunks);
+
+    } else if ($scope.world.chunks[xPlusYMinus] === undefined) {
+      $scope.loadChunk(xPlusYMinus, $scope.loadNearbyChunks);
+    } else if ($scope.world.chunks[xMinusYPlus] === undefined) {
+      $scope.loadChunk(xMinusYPlus, $scope.loadNearbyChunks);
+
     } else {
-      $scope.stitchChunks();
+      $scope.getMapView();
     }
   };
 
-  $scope.stitchChunks = function() {
-    var chunk = $scope.buildBlankChunk();
-    var currentChunk = $scope.world.chunks[$scope.getChunkCoords()];
-    var downChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(0, 1)];
-    var rightChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(1, 0)];
-    var downRightChunk = $scope.world.chunks[$scope.getIncrementedChunkCoords(1, 1)];
+  $scope.getPixel = function (x, y) {
+    var chunkX = Math.floor(x / $scope.world.chunkSize);
+    var chunkY = Math.floor(y / $scope.world.chunkSize);
 
+    var row = y % $scope.world.chunkSize;
+    var col = x % $scope.world.chunkSize;
+
+    if (row < 0) {
+      row += $scope.world.chunkSize;
+    }
+    if (col < 0) {
+      col += $scope.world.chunkSize;
+    }
+
+    return $scope.world.chunks[chunkX + ' ' + chunkY][row][col];
+  };
+
+  $scope.getChunkXCoordFromBlockCoord = function(x) {
+    return Math.floor(x / $scope.world.chunkSize);
+  }
+
+  $scope.getChunkYCoordFromBlockCoord = function(y) {
+    return Math.floor(y / $scope.world.chunkSize);
+  }
+
+  $scope.getMapView = function() {
+    var chunk = $scope.buildBlankChunk();
     for (var i = 0; i < $scope.world.chunkSize; i++) {
       for (var j = 0; j < $scope.world.chunkSize; j++) {
-        var adjustedRow = i + $scope.world.currentBlock.row;
-        var adjustedCol = j + $scope.world.currentBlock.col;
-        if (adjustedRow < $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
-          chunk[i][j] = currentChunk[adjustedRow][adjustedCol];
-        } else if (adjustedRow >= $scope.world.chunkSize && adjustedCol < $scope.world.chunkSize) {
-          chunk[i][j] = downChunk[adjustedRow - $scope.world.chunkSize][adjustedCol];
-        } else if (adjustedRow < $scope.world.chunkSize && adjustedCol >= $scope.world.chunkSize) {
-          chunk[i][j] = rightChunk[adjustedRow][adjustedCol - $scope.world.chunkSize];
-        } else if (adjustedRow >= $scope.world.chunkSize && adjustedCol >= $scope.world.chunkSize) {
-          chunk[i][j] = downRightChunk[adjustedRow - $scope.world.chunkSize][adjustedCol - $scope.world.chunkSize];
-        }
-      } //end for i loop
-    } //end for j loop
+        chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - 20,
+                                      j + $scope.world.currentLocation.y - 20);
+      }
+    }
     $('#map').html($scope.genChunkHTML(chunk));
-  };
+  }
 
   $scope.buildBlankChunk = function() {
     var chunk = [];
@@ -128,36 +118,23 @@ app.controller('worldController', function($scope, $http) {
   };
 
   $scope.move = function(rowInc, colInc) {
-    //refreshToken(); //while the players is active keep the token refreshed
 
-    var chunkY = $scope.world.currentChunk.y + rowInc;
-    var chunkX = $scope.world.currentChunk.x + colInc;
-    var reqChunkCoords = $scope.getRequestedChunkCoords();
-
-    var reqRow = ($scope.world.currentBlock.row + rowInc) % $scope.world.chunkSize;
-    var reqCol = ($scope.world.currentBlock.col + colInc) % $scope.world.chunkSize;
-
-    if (reqRow < 0) {
-      reqRow += $scope.world.chunkSize;
-    }
-    if (reqCol < 0) {
-      reqCol += $scope.world.chunkSize;
-    }
+    $scope.world.currentLocation.x += colInc;
+    $scope.world.currentLocation.y += rowInc;
 
     $http({
       method: 'POST',
       url: 'move',
       data: {
         token: window.sessionStorage.accessToken,
-        chunkCoords: reqChunkCoords,
-        row: reqRow,
-        col: reqCol
+        chunkCoords: '',
+        row: 0,
+        col: 0
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       if (res.data) {
-        $scope.changeCurrentBlock(rowInc, colInc);
-        $scope.stitchChunksPrep();
+        $scope.loadNearbyChunks();
       } else {
         console.log('move not permitted');
       }
@@ -166,7 +143,7 @@ app.controller('worldController', function($scope, $http) {
 
   $scope.renderInitialChunk = function() {
     $('#map').css('width', $scope.world.chunkSize * 10);
-    $('#map').html($scope.genChunkHTML($scope.world.chunks[$scope.getChunkCoords()]));
+    $('#map').html($scope.genChunkHTML($scope.world.chunks[$scope.getCurrentChunkCoords()]));
   };
 
   $scope.genChunkHTML = function(chunk) {
@@ -185,36 +162,25 @@ app.controller('worldController', function($scope, $http) {
     return chunkHTML;
   };
 
-  try {
-    $scope.MID = Math.floor($scope.world.chunkSize / 2);
-  } catch (exception) {
-    console.log(exception);
-  }
-
   $scope.$on('loadInitialChunk', function(event) {
-    $scope.loadChunk($scope.getChunkCoords(), $scope.renderInitialChunk);
+    $scope.loadChunk($scope.getCurrentChunkCoords(), $scope.renderInitialChunk);
+    $scope.loadNearbyChunks();
   });
 
   $scope.$on('moveLeft', function(event) {
-    $scope.printPlayerLocation();
-    $scope.move(0, -1);
-  });
-
-  $scope.$on('moveUp', function(event) {
-    $scope.printPlayerLocation();
     $scope.move(-1, 0);
   });
 
-  $scope.$on('moveRight', function(event) {
-    $scope.printPlayerLocation();
-    $scope.move(0, 1);
+  $scope.$on('moveUp', function(event) {
+    $scope.move(0, -1);
   });
 
-  $scope.$on('moveDown', function(event) {
-    $scope.printPlayerLocation();
+  $scope.$on('moveRight', function(event) {
     $scope.move(1, 0);
   });
 
-  $scope.printPlayerLocation = function() {};
+  $scope.$on('moveDown', function(event) {
+    $scope.move(0, 1);
+  });
 
 });
