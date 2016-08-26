@@ -22,46 +22,41 @@ app.controller('worldController', function($scope, $http) {
     $scope.mid = Math.ceil($scope.world.chunkSize / 2);
   });
 
-  $scope.getCurrentChunkCoords = function() {
-    return $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
+  $scope.getCurrentChunkCoords = function(xInc, yInc) {
+    var chunkX = Math.floor($scope.world.currentLocation.x / $scope.world.chunkSize) + xInc;
+    var chunkY = Math.floor($scope.world.currentLocation.y / $scope.world.chunkSize) + yInc;
+    return chunkX + ' ' + chunkY;
   };
 
   $scope.loadNearbyChunks = function() {
-    var current = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
-    var xPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
-    var yPlus = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
-    var xyPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
-
-    var xMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + $scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y);
-    var yMinus = $scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + ' ' +  ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
-    var xyMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
-
-
-    var xMinusYPlus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) - 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) + 1);
-    var xPlusYMinus = ($scope.getChunkXCoordFromBlockCoord($scope.world.currentLocation.x) + 1) + ' ' + ($scope.getChunkYCoordFromBlockCoord($scope.world.currentLocation.y) - 1);
+    var current = $scope.getCurrentChunkCoords(0, 0);
+    var xPlus = $scope.getCurrentChunkCoords(1, 0);
+    var yPlus = $scope.getCurrentChunkCoords(0, 1);
+    var xyPlus = $scope.getCurrentChunkCoords(1, 1);
+    var xMinus = $scope.getCurrentChunkCoords(-1, 0);
+    var yMinus = $scope.getCurrentChunkCoords(0, -1);
+    var xyMinus = $scope.getCurrentChunkCoords(-1, -1);
+    var xMinusYPlus = $scope.getCurrentChunkCoords(-1, 1);
+    var xPlusYMinus = $scope.getCurrentChunkCoords(1, -1);
 
     if ($scope.world.chunks[current] === undefined) {
       $scope.loadChunk(current, $scope.loadNearbyChunks);
-
     } else if ($scope.world.chunks[yPlus] === undefined) {
       $scope.loadChunk(yPlus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xPlus] === undefined) {
       $scope.loadChunk(xPlus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xyPlus] === undefined) {
       $scope.loadChunk(xyPlus, $scope.loadNearbyChunks);
-
     } else if ($scope.world.chunks[yMinus] === undefined) {
       $scope.loadChunk(yMinus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xMinus] === undefined) {
       $scope.loadChunk(xMinus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xyMinus] === undefined) {
       $scope.loadChunk(xyMinus, $scope.loadNearbyChunks);
-
     } else if ($scope.world.chunks[xPlusYMinus] === undefined) {
       $scope.loadChunk(xPlusYMinus, $scope.loadNearbyChunks);
     } else if ($scope.world.chunks[xMinusYPlus] === undefined) {
       $scope.loadChunk(xMinusYPlus, $scope.loadNearbyChunks);
-
     } else {
       $scope.getMapView();
     }
@@ -81,16 +76,9 @@ app.controller('worldController', function($scope, $http) {
       col += $scope.world.chunkSize;
     }
 
+    console.log(chunkX + ' ' + chunkY);
     return $scope.world.chunks[chunkX + ' ' + chunkY][row][col];
   };
-
-  $scope.getChunkXCoordFromBlockCoord = function(x) {
-    return Math.floor(x / $scope.world.chunkSize);
-  }
-
-  $scope.getChunkYCoordFromBlockCoord = function(y) {
-    return Math.floor(y / $scope.world.chunkSize);
-  }
 
   $scope.getMapView = function() {
     var chunk = $scope.buildBlankChunk();
@@ -123,7 +111,7 @@ app.controller('worldController', function($scope, $http) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(res) {
         $scope.world.chunks[chunkCoords] = res.data;
-        callback(); //can use to render chunk
+        callback();
       });
     }
   };
