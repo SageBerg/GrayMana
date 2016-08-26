@@ -22,12 +22,6 @@ app.controller('worldController', function($scope, $http) {
     $scope.mid = Math.ceil($scope.world.chunkSize / 2);
   });
 
-  $scope.getCurrentChunkCoords = function(xInc, yInc) {
-    var chunkX = Math.floor($scope.world.currentLocation.x / $scope.world.chunkSize) + xInc;
-    var chunkY = Math.floor($scope.world.currentLocation.y / $scope.world.chunkSize) + yInc;
-    return chunkX + ' ' + chunkY;
-  };
-
   $scope.loadNearbyChunks = function() {
     var current = $scope.getCurrentChunkCoords(0, 0);
     var xPlus = $scope.getCurrentChunkCoords(1, 0);
@@ -62,22 +56,24 @@ app.controller('worldController', function($scope, $http) {
     }
   };
 
-  $scope.getPixel = function (x, y) {
-    var chunkX = Math.floor(x / $scope.world.chunkSize);
-    var chunkY = Math.floor(y / $scope.world.chunkSize);
+  $scope.getCurrentChunkCoords = function(xInc, yInc) {
+    var chunkX = Math.floor($scope.world.currentLocation.x / $scope.world.chunkSize) + xInc;
+    var chunkY = Math.floor($scope.world.currentLocation.y / $scope.world.chunkSize) + yInc;
+    return chunkX + ' ' + chunkY;
+  };
 
-    var row = y % $scope.world.chunkSize;
-    var col = x % $scope.world.chunkSize;
-
-    if (row < 0) {
-      row += $scope.world.chunkSize;
+  $scope.loadChunk = function(chunkCoords, callback) {
+    if ($scope.world.chunks[chunkCoords] === undefined) {
+      $http({
+        method: 'POST',
+        url: 'chunk.json',
+        data: {'token': window.sessionStorage.accessToken, 'chunkCoords': chunkCoords},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).then(function(res) {
+        $scope.world.chunks[chunkCoords] = res.data;
+        callback();
+      });
     }
-    if (col < 0) {
-      col += $scope.world.chunkSize;
-    }
-
-    console.log(chunkX + ' ' + chunkY);
-    return $scope.world.chunks[chunkX + ' ' + chunkY][row][col];
   };
 
   $scope.getMapView = function() {
@@ -102,18 +98,37 @@ app.controller('worldController', function($scope, $http) {
     return chunk;
   };
 
-  $scope.loadChunk = function(chunkCoords, callback) {
-    if ($scope.world.chunks[chunkCoords] === undefined) {
-      $http({
-        method: 'POST',
-        url: 'chunk.json',
-        data: {'token': window.sessionStorage.accessToken, 'chunkCoords': chunkCoords},
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then(function(res) {
-        $scope.world.chunks[chunkCoords] = res.data;
-        callback();
-      });
+  $scope.getPixel = function (x, y) {
+    var chunkX = Math.floor(x / $scope.world.chunkSize);
+    var chunkY = Math.floor(y / $scope.world.chunkSize);
+
+    var row = y % $scope.world.chunkSize;
+    var col = x % $scope.world.chunkSize;
+
+    if (row < 0) {
+      row += $scope.world.chunkSize;
     }
+    if (col < 0) {
+      col += $scope.world.chunkSize;
+    }
+
+    return $scope.world.chunks[chunkX + ' ' + chunkY][row][col];
+  };
+
+  $scope.genChunkHTML = function(chunk) {
+    chunkHTML = '';
+    var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
+    for (var row = 0; row < $scope.world.chunkSize; row++) {
+      for (var col = 0; col < $scope.world.chunkSize; col++) {
+        var terrain = terrainCodesToNames[chunk[row][col]];
+        if (row === ($scope.mid - 1) && col === ($scope.mid - 1) ) { //draw player in center of map
+          chunkHTML += '<div class=\"player-character\"></div>';
+        } else {
+          chunkHTML += '<div class=' + terrain + '></div>';
+        } //end if player or terrain
+      } //end for col
+    } //end for row
+    return chunkHTML;
   };
 
   $scope.move = function(rowInc, colInc) {
@@ -138,22 +153,6 @@ app.controller('worldController', function($scope, $http) {
         console.log('move not permitted');
       }
     });
-  };
-
-  $scope.genChunkHTML = function(chunk) {
-    chunkHTML = '';
-    var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
-    for (var row = 0; row < $scope.world.chunkSize; row++) {
-      for (var col = 0; col < $scope.world.chunkSize; col++) {
-        var terrain = terrainCodesToNames[chunk[row][col]];
-        if (row === ($scope.mid - 1) && col === ($scope.mid - 1) ) { //draw player in center of map
-          chunkHTML += '<div class=\"player-character\"></div>';
-        } else {
-          chunkHTML += '<div class=' + terrain + '></div>';
-        } //end if player or terrain
-      } //end for col
-    } //end for row
-    return chunkHTML;
   };
 
   $scope.$on('loadInitialChunk', function(event) {
