@@ -1,6 +1,5 @@
 Aesthetics:
   Figure out placement for text console
-  Make spells boxes not slide around when selecting spells
   Modals Wireframes:
     Achievements
     Death
@@ -11,7 +10,7 @@ Aesthetics:
 
 Bugs:
   Add more exception handling to make application more robust
-  Don't show modal for a second before page loads
+  Don't show modal for a second while the page is loading
 
 
 Deployment:
@@ -30,7 +29,6 @@ Docs:
 
 Features:
   Abilities:
-    Treasure Button (Temporary)
     Light spell
     Learn spell system
     Prepare spells system
@@ -43,9 +41,7 @@ Features:
   Damage:
     Damage system with eating
   Leader Board:
-    Richest character
     Richest faction
-    Most quest effort?
   Movement:
     No walking on water
     Slow walking on sand
@@ -63,19 +59,14 @@ Features:
 
 Organization:
   Code Level:
-    Move metabutton logic in with action buttons
     Make blocks an object instead of integer
-    Move the CHUNK_SIZE to the server and make client request it
   Data Level:
     Get the spell data in one place, preferably Postgres
   File Level:
     Continue breaking up the SCSS/CSS files by concern
-    Move the Pug/HTML, SCSS/SCSS, and JavaScript into their own directories
-    Break up Angular controller
 
 
 Performance:
-  Try out React to speed up rendering
   Minify everything sent to the client
 
 
@@ -90,13 +81,10 @@ Security:
 
 Style:
   Add 'use strict' to all JavaScript files
-  Change all JavaScript files to not use strings as keys in objects
   Remove all whitespace from ends of lines
-  Rename render.js so as not to confuse it with the official library Render.js
   Standardize one line of whitespace at ends of files
-  Reduce nesting in DOM
   Change modal to an id in the Pug, SCSS, and Angular controller
-  Try out TypeScript to replace some of the JavaScript
+  Try out TypeScript to replace some of the back end JavaScript
 
 
 Testing:
