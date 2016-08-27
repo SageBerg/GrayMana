@@ -6,7 +6,7 @@ app.controller('worldController', function($scope, $http) {
     currentLocation: {x: 0, y: 0}
   };
 
-  $scope.requestAndSetChunkSize = function(callback) {
+  $scope.requestAndSetChunkSize = function() {
     $http({
       method: 'POST',
       url: 'chunkSize.json',
@@ -14,13 +14,13 @@ app.controller('worldController', function($scope, $http) {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $scope.world.chunkSize = res.data;
-      callback();
+      $scope.mid = Math.ceil($scope.world.chunkSize / 2);
+      $('#map').css('width', $scope.world.chunkSize * 10);
+      $scope.loadNearbyChunks();
     });
   };
 
-  $scope.requestAndSetChunkSize(function() {
-    $scope.mid = Math.ceil($scope.world.chunkSize / 2);
-  });
+  $scope.requestAndSetChunkSize();
 
   $scope.loadNearbyChunks = function() {
     var current = $scope.getCurrentChunkCoords(0, 0);
@@ -154,11 +154,6 @@ app.controller('worldController', function($scope, $http) {
       }
     });
   };
-
-  $scope.$on('loadInitialChunk', function(event) {
-    $('#map').css('width', $scope.world.chunkSize * 10);
-    $scope.loadNearbyChunks();
-  });
 
   $scope.$on('moveLeft', function(event) {
     $scope.move(-1, 0);

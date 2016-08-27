@@ -56,13 +56,13 @@ app.controller('controlsController', function($scope, hotKeyService) {
     });
   };
 
-  $scope.$on('bindKeys', function(event) {
+  //$scope.$on('bindKeys', function(event) {
     $scope.bindKeys();
-  });
+  //});
 
-  $scope.$on('bindWheel', function(event) {
+  //$scope.$on('bindWheel', function(event) {
     $scope.addWheelHandler();
-  });
+  //});
 
   $scope.getSwitchToCloneHotKey = function() {
     return hotKeyService.switchToCloneHotKey;
