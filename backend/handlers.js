@@ -22,6 +22,22 @@ Handlers.prototype.respondWithLogin = function(req, res) {
   });
 }
 
+Handlers.prototype.newAccount = function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  if (this.state.auth.validateEmail(username) === false) {
+    //log invalid email
+  } else if (password.length < 8) {
+    //log password too short
+  } else {
+    Promise.all([
+      this.state.database.createNewAccount(username, password)
+    ]).then(
+      res.json({'token': jwt.sign({'username': username}, process.env.TOKEN_SECRET, {expiresIn: this.sessionLength})})
+    );
+  }
+}
+
 Handlers.prototype.respondWithChunk = function(req, res) {
   if (this.state.auth.isAuth(req.body.token)) {
     if (this.state.chunks[req.body.chunkCoords] !== undefined) {
