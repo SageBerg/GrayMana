@@ -29,6 +29,30 @@
 .yellow {
   background-color: #FEF1CB; }
 
+.blue-text {
+  color: #C9DAF8; }
+
+.gray-text {
+  color: #B6B6B6; }
+
+.green-text {
+  color: #D9EAD3; }
+
+.indigo-text {
+  color: #9FC5E8; }
+
+.orange-text {
+  color: #FCE5CD; }
+
+.red-text {
+  color: #F4CCCC; }
+
+.violet-text {
+  color: #D9D2E9; }
+
+.yellow-text {
+  color: #FEF1CB; }
+
 * {
   margin: 0;
   padding: 0; }
@@ -57,6 +81,17 @@ button {
 
 .inline-block {
   display: inline-block; }
+
+.start-menu-section {
+  background-color: white;
+  border-color: #B6B6B6;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 5px;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 300px; }
 
 .action-button-container {
   position: absolute;

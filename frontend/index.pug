@@ -3,7 +3,7 @@ html
 
   head
 
-    title Gray Mana Login
+    title Login
 
     link(href="stylesheets/compiled_css/colors.css", rel="stylesheet", type='text/css')
     link(href="stylesheets/compiled_css/login.css", rel="stylesheet", type='text/css')
@@ -24,14 +24,14 @@ html
 
       h1(class="game-title") Gray Mana
 
-      div(class="creds-input", data-ng-show="toggleShowLogin")
+      div(class="start-menu-section", data-ng-show="toggleShowLogin")
         p Email Address
         input(class="login-input", data-ng-model="username")
         p Password
         input(class="login-input", type="password", data-ng-model="password")
         button(data-ng-click="login()") Log In
 
-      div(class="creds-input", data-ng-show="toggleShowLogin")
+      div(class="start-menu-section", data-ng-show="toggleShowLogin")
         p Email Address
         input(class="login-input", data-ng-model="newUsername")
         p Password

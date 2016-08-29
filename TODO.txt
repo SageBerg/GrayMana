@@ -61,6 +61,7 @@ Features:
 Organization:
   Code Level:
     Make blocks an object instead of integer
+    Use AngularJS to inject content into a standard GrayMana template
   Data Level:
     Get the spell data in one place, preferably Postgres
   File Level:

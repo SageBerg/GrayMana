@@ -1,0 +1,37 @@
+<!DOCTYPE html5>
+<html>
+  <head>
+    <title>Character Menu</title>
+    <link href="stylesheets/compiled_css/colors.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/compiled_css/character_menu.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/compiled_css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"/>
+    <!--3rd party libraries-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!--AngularJS stuff-->
+    <script src="angular_gray_mana_app.js"></script>
+    <script src="controllers/auth_controller.js"></script>
+    <script src="controllers/character_menu_controller.js"></script>
+  </head>
+  <body>
+    <div data-ng-app="angularFrontEnd" data-ng-controller="authController">
+      <h1 class="game-title">Gray Mana</h1>
+      <div data-ng-controller="characterMenuController">
+        <div class="start-menu-section">
+          <div id="play-as-existing-character" data-ng-repeat="character in getCharacterList()">
+            <button class="play_as_character" data-ng-click="startPlayingAs(character)">Play as {{character}}</button>
+          </div>
+        </div>
+        <div class="start-menu-section" id="create-new-character"><span>Enter a name</span>
+          <input id="new-character-name" data-ng-model="newCharacterName"/>
+          <p>Select a school of magic</p>
+          <div id="schools" data-ng-repeat="currentSchool in schools">
+            <input type="radio" name="school" value="currentSchool.schoolName" data-ng-model="selectedSchool"/><span class="{{currentSchool.textColor}}">{{currentSchool.schoolName}}</span>
+          </div>
+          <button data-ng-click="createNewCharacter()" disabled="cannotCreateNewCharacter()">Play as {{newCharacterName}}</button>
+          <h1 data-ng-bind="selectedSchool"></h1>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

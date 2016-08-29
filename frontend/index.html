@@ -1,7 +1,7 @@
 <!DOCTYPE html5>
 <html>
   <head>
-    <title>Gray Mana Login</title>
+    <title>Login</title>
     <link href="stylesheets/compiled_css/colors.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheets/compiled_css/login.css" rel="stylesheet" type="text/css"/>
     <link href="stylesheets/compiled_css/style.css" rel="stylesheet" type="text/css"/>
@@ -15,14 +15,14 @@
   <body>
     <div data-ng-app="angularFrontEnd" data-ng-controller="authController">
       <h1 class="game-title">Gray Mana</h1>
-      <div class="creds-input" data-ng-show="toggleShowLogin">
+      <div class="start-menu-section" data-ng-show="toggleShowLogin">
         <p>Email Address</p>
         <input class="login-input" data-ng-model="username"/>
         <p>Password</p>
         <input class="login-input" type="password" data-ng-model="password"/>
         <button data-ng-click="login()">Log In</button>
       </div>
-      <div class="creds-input" data-ng-show="toggleShowLogin">
+      <div class="start-menu-section" data-ng-show="toggleShowLogin">
         <p>Email Address</p>
         <input class="login-input" data-ng-model="newUsername"/>
         <p>Password</p>

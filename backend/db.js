@@ -7,6 +7,18 @@ var DB = function() {
   this.psqlClient.connect();
 };
 
+DB.prototype.getCharacter = function(email) {
+  return this.psqlClient.query('SELECT apples FROM users WHERE email = $1',
+    [email]);
+}
+
+DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
+  var psqlChunk = this.parseJavaScriptChunkToPostgresChunk(chunk);
+  this.psqlClient.query('INSERT INTO chunks (chunk, world_id, coords) VALUES ' +
+    '($1, 1, $2)', [psqlChunk, chunkCoords]
+  );
+}
+
 DB.prototype.parseJavaScriptChunkToPostgresChunk = function(chunk) {
   var postgresChunk = '\{';
   for (var i = 0; i < chunk.length; i++) {
@@ -20,17 +32,6 @@ DB.prototype.parseJavaScriptChunkToPostgresChunk = function(chunk) {
   postgresChunk = postgresChunk.slice(0,-1); //remove that last comma
   postgresChunk += '}';
   return postgresChunk;
-}
-
-DB.prototype.getCharacter = function(email) {
-  return this.psqlClient.query('SELECT apples FROM users WHERE email = $1', [email]);
-}
-
-DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
-  var psqlChunk = this.parseJavaScriptChunkToPostgresChunk(chunk);
-  this.psqlClient.query('INSERT INTO chunks (chunk, world_id, coords) VALUES ' +
-    '($1, 1, $2)', [psqlChunk, chunkCoords]
-  );
 }
 
 DB.prototype.loadAllChunksFromDB = function(chunks) {

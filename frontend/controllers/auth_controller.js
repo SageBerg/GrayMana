@@ -54,7 +54,7 @@ app.controller('authController', function($scope, $http, $window) {
 
   $scope.handleLogin = function(res) {
     $window.sessionStorage.accessToken = res.data.token;
-    $window.location.href = '/game.html';
+    $window.location.href = '/character.html';
   }
 
   $scope.refreshToken = function() {
