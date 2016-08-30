@@ -12,6 +12,7 @@ const port = process.env.PORT || 3002;
 server.listen(port);
 
 //configure server
+app.use(express.static(__dirname + '/../frontend/views'));
 app.use(express.static(__dirname + '/../frontend'));
 app.use(bodyParser.urlencoded({extended: false}));
 

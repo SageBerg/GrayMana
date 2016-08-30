@@ -85,8 +85,8 @@ Style:
   Add 'use strict' to all JavaScript files
   Remove all whitespace from ends of lines
   Standardize one line of whitespace at ends of files
-  Change modal to an id in the Pug, SCSS, and Angular controller
   Try out TypeScript to replace some of the back end JavaScript
+  Find a good naming convention for endpoints
 
 
 Testing:
