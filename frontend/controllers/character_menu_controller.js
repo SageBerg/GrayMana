@@ -1,5 +1,9 @@
-app.controller('characterMenuController', function($scope) {
+app.controller('characterMenuController', function($scope, $http, $window) {
   $scope.characterList = ['alice', 'bob'];
+
+  $scope.getCharacterList = function() {
+    return $scope.characterList;
+  };
 
   $scope.newCharacter = {characterName: '', characterSchool: ''};
 
@@ -38,7 +42,15 @@ app.controller('characterMenuController', function($scope) {
     return false;
   };
 
-  $scope.getCharacterList = function() {
-    return $scope.characterList;
-  };
+  $scope.createNewCharacter = function() {
+    $http({
+      method: 'POST',
+      url: 'create_new_character.json',
+      data: {token: window.sessionStorage.accessToken, characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      $window.location.href = '/game.html';
+    });
+  }
+
 });

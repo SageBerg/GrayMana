@@ -38,6 +38,18 @@ Handlers.prototype.newAccount = function(req, res) {
   }
 }
 
+Handlers.prototype.newCharacter = function(req, res) {
+  if (this.state.auth.isAuth(req.body.token)) {
+    var email = this.state.auth.getEmailFromToken(req.body.token);
+    var queryResult = this.state.database.getUserIdQuery(email);
+    var ref = this.state.database; //this 'this' is out of scope in queryResult's callback
+    queryResult.on('row', function(row) {
+      ref.createNewCharacter(req.body.characterName, req.body.characterSchool, row['id']);
+      res.send();
+    });
+  } //end isAuth
+}
+
 Handlers.prototype.respondWithChunk = function(req, res) {
   if (this.state.auth.isAuth(req.body.token)) {
     if (this.state.chunks[req.body.chunkCoords] !== undefined) {

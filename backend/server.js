@@ -25,6 +25,7 @@ Promise.all(
 //set up endpoints
 app.post('/login.json', handlers.respondWithLogin);
 app.post('/create_new_account.json', handlers.newAccount);
+app.post('/create_new_character.json', handlers.newCharacter);
 app.post('/chunk.json', handlers.respondWithChunk);
 app.post('/chunkSize.json', handlers.respondWithChunkSize);
 app.post('/load_character.json', handlers.respondWithCharacter);
