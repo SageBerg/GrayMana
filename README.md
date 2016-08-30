@@ -3,7 +3,7 @@ An MMO where you play as a spell caster
 
 ## Features
 1. Highly configurable spells
-2. Endless procedurally generated worlds
+2. Procedurally generated worlds
 3. A building system, so you can make castles and stuff
 4. Factions that you can create or join
 5. Mobs with interesting strategies
