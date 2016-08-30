@@ -93,4 +93,70 @@ button {
   padding: 10px;
   width: 300px; }
 
+.black {
+  background-color: #434343;
+  color: #F3F3F3; }
+
+.blue {
+  background-color: #C9DAF8; }
+
+.gray {
+  background-color: #B6B6B6; }
+
+.green {
+  background-color: #D9EAD3; }
+
+.indigo {
+  background-color: #9FC5E8; }
+
+.orange {
+  background-color: #FCE5CD; }
+
+.red {
+  background-color: #F4CCCC; }
+
+.violet {
+  background-color: #D9D2E9; }
+
+.white {
+  background-color: white; }
+
+.yellow {
+  background-color: #FEF1CB; }
+
+.blue-text {
+  color: #C9DAF8; }
+
+.gray-text {
+  color: #B6B6B6; }
+
+.green-text {
+  color: #D9EAD3; }
+
+.indigo-text {
+  color: #9FC5E8; }
+
+.orange-text {
+  color: #FCE5CD; }
+
+.red-text {
+  color: #F4CCCC; }
+
+.violet-text {
+  color: #D9D2E9; }
+
+.yellow-text {
+  color: #FEF1CB; }
+
+input[type='radio'] {
+  margin: 10px; }
+
+button {
+  margin: 10 0 10 0px; }
+
+.school-name-container {
+  border-radius: 5px;
+  background-color: #434343;
+  padding: 5px; }
+
 /*# sourceMappingURL=character_menu.css.map */

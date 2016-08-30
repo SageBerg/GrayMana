@@ -27,15 +27,22 @@ html
 
       div(data-ng-controller="characterMenuController")
         div(class="start-menu-section")
+          h2 Play as an existing character
           div(id="play-as-existing-character", data-ng-repeat="character in getCharacterList()")
-            button(class="play_as_character", data-ng-click="startPlayingAs(character)") Play as {{character}}
+            button(class="play_as_character", data-ng-click="startPlayingAs(character)") {{character}}
 
         div(class="start-menu-section", id="create-new-character")
+          h2 Create a new character
           span Enter a name
-          input(id="new-character-name", data-ng-model="newCharacterName")
+          input(id="new-character-name", data-ng-model="newCharacter.characterName")
+
           p Select a school of magic
           div(id="schools", data-ng-repeat="currentSchool in schools")
-            input(type="radio", name="school", value="currentSchool.schoolName", data-ng-model="selectedSchool")
-            span(class="{{currentSchool.textColor}}") {{currentSchool.schoolName}}
-          button(data-ng-click="createNewCharacter()", disabled="cannotCreateNewCharacter()") Play as {{newCharacterName}}
-          h1(data-ng-bind="selectedSchool")
+            input(type="radio", name="school", value="{{currentSchool.schoolName}}", data-ng-model="newCharacter.characterSchool")
+            span(class="{{currentSchool.textColor}} school-name-container")
+              strong {{currentSchool.schoolName}}
+
+          //p Selected School:
+            span(class="school-name-container") {{newCharacter.characterSchool}}
+          //p Description: {{}}
+          button(data-ng-click="createNewCharacter()", data-ng-disabled="cannotCreateNewCharacter()") Play as {{newCharacter.characterName}}

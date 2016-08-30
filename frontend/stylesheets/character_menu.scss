@@ -1,1 +1,16 @@
 @import 'style';
+@import 'colors';
+
+input[type='radio'] {
+  margin: 10px;
+}
+
+button {
+  margin: 10 0 10 0px;
+}
+
+.school-name-container {
+  border-radius: 5px;
+  background-color: $black;
+  padding: 5px;
+}
