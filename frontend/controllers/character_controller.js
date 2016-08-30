@@ -8,7 +8,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
       data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
-      characterStateService.character.currentBody.inventory['apple'] += res.data.apple;
+      characterStateService.character.inventory['apple'] += res.data.apple;
     });
   });
 
@@ -20,7 +20,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
       data: {token: window.sessionStorage.accessToken, item: item, quantity: quanity},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
-      characterStateService.character.currentBody.inventory[item] += res.data[item];
+      characterStateService.character.inventory[item] += res.data[item];
     });
   }
 */
@@ -46,46 +46,42 @@ app.controller('characterController', function($scope, $http, characterStateServ
     });
   };
 
-  $scope.getClone = function() {
-    characterStateService.character.bodies.push("dummyTestBody");
-  };
-
   $scope.getApple = function() {
-    characterStateService.character.currentBody.inventory['apple'] += 1;
+    characterStateService.character.inventory['apple'] += 1;
   };
 
   $scope.eat = function() {
-    characterStateService.character.currentBody.inventory['apple'] -= 1;
-    console.log(characterStateService.character.currentBody.inventory['apple'] + ' apples left.');
+    characterStateService.character.inventory['apple'] -= 1;
+    console.log(characterStateService.character.inventory['apple'] + ' apples left.');
   }
 
   $scope.sleep = function() {
-    if (characterStateService.character.currentBody.state !== 'asleep') {
-      characterStateService.character.currentBody.state = 'asleep';
+    if (characterStateService.character.state !== 'asleep') {
+      characterStateService.character.state = 'asleep';
     } else {
-      characterStateService.character.currentBody.state = 'active';
+      characterStateService.character.state = 'active';
     }
   }
 
   $scope.getManaAmount = function(color) {
-    return characterStateService.character.currentBody.mana[color];
+    return characterStateService.character.mana[color];
   };
 
   $scope.getRuneAmount = function(letter) {
-    return characterStateService.character.currentBody.runes[letter];
+    return characterStateService.character.runes[letter];
   };
 
   $scope.getRunes = function(runeDrop) {
     for (var i = 0; i < runeDrop.length; i++) {
-      characterStateService.character.currentBody.runes[runeDrop[i]] += 1;
+      characterStateService.character.runes[runeDrop[i]] += 1;
     }
   }
 
   $scope.getMana = function(manaDrop) {
     var color = manaDrop.manaColor;
-    characterStateService.character.currentBody.mana[color] += manaDrop.manaAmount;
+    characterStateService.character.mana[color] += manaDrop.manaAmount;
 
-    var fill = 100 - Math.min(10, characterStateService.character.currentBody.mana[color]) * 10;
+    var fill = 100 - Math.min(10, characterStateService.character.mana[color]) * 10;
     $scope.manaHeights[color].height = fill + '%';
   }
 
@@ -106,7 +102,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
 
   $scope.isLearnable = function(spellName) {
     var spellName = spellName.toLowerCase();
-    var runesCopy = $.extend({}, characterStateService.character.currentBody.runes);
+    var runesCopy = $.extend({}, characterStateService.character.runes);
     if (characterStateService.character.spellsKnown.has(spellName)) {
       return false;
     }
@@ -141,7 +137,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
   };
 
   $scope.fadedOrClearRune = function(letter) {
-    if (characterStateService.character.currentBody.runes[letter] > 0) {
+    if (characterStateService.character.runes[letter] > 0) {
       return 'rune';
     } else {
       return 'rune-faded';
@@ -174,7 +170,6 @@ app.controller('characterController', function($scope, $http, characterStateServ
     'Weather',
     'Warm Egg',
     'Mana Chest',
-    'Clone',
     'Summon Food',
     'Toughen',
     'Increase Mana Maximum',
@@ -209,19 +204,19 @@ app.controller('characterController', function($scope, $http, characterStateServ
   ];
 
   $scope.widthObj = {
-    red: {'width': characterStateService.character.currentBody.damage['red'] + '%'},
-    orange: {'width': characterStateService.character.currentBody.damage['orange'] + '%'},
-    yellow: {'width': characterStateService.character.currentBody.damage['yellow'] + '%'},
-    green: {'width': characterStateService.character.currentBody.damage['green'] + '%'},
-    blue: {'width': characterStateService.character.currentBody.damage['blue'] + '%'},
-    indigo: {'width': characterStateService.character.currentBody.damage['indigo'] + '%'},
-    violet: {'width': characterStateService.character.currentBody.damage['violet'] + '%'},
-    gray: {'width': characterStateService.character.currentBody.damage['gray'] + '%'},
+    red: {'width': characterStateService.character.damage['red'] + '%'},
+    orange: {'width': characterStateService.character.damage['orange'] + '%'},
+    yellow: {'width': characterStateService.character.damage['yellow'] + '%'},
+    green: {'width': characterStateService.character.damage['green'] + '%'},
+    blue: {'width': characterStateService.character.damage['blue'] + '%'},
+    indigo: {'width': characterStateService.character.damage['indigo'] + '%'},
+    violet: {'width': characterStateService.character.damage['violet'] + '%'},
+    gray: {'width': characterStateService.character.damage['gray'] + '%'},
   };
 
   $scope.takeDamage = function(amount, color) {
-    characterStateService.character.currentBody.damage[color] += amount;
-    console.log(characterStateService.character.currentBody.damage)
+    characterStateService.character.damage[color] += amount;
+    console.log(characterStateService.character.damage)
     $scope.widthObj[color].width = parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
   };
 

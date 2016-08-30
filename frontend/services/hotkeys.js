@@ -1,5 +1,4 @@
 app.service('hotKeyService', function() {
-  this.switchToCloneHotKey = 'c';
   this.interactHotKey = 'k';
   this.eatHotKey = 'e';
   this.sleepHotKey = 'z';

@@ -2,8 +2,7 @@ app.controller('HUDController', function($scope, characterStateService) {
 
   $scope.toggleShowHUD = true;
 
-  $scope.colorClasses = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
-    'violet', 'gray'];
+  $scope.colorClasses = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'gray'];
 
   $scope.spellSlots = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -16,22 +15,18 @@ app.controller('HUDController', function($scope, characterStateService) {
     }
   }
 
-  $scope.cannotSwitchToClone = function() {
-    return characterStateService.character.bodies.length < 2;
-  };
-
   $scope.cannotEat = function() {
-    return characterStateService.character.currentBody.inventory['apple'] < 1 ||
-           characterStateService.character.currentBody.state === 'asleep';
+    return characterStateService.character.inventory['apple'] < 1 ||
+           characterStateService.character.state === 'asleep';
   };
 
   $scope.cannotManageInventory = function() {
-    if (characterStateService.character.currentBody.state === 'asleep') {
+    if (characterStateService.character.state === 'asleep') {
       return true;
     }
-    for (var key in characterStateService.character.currentBody.inventory) {
-      if (characterStateService.character.currentBody.inventory.hasOwnProperty(key)) {
-        if (characterStateService.character.currentBody.inventory[key] > 0) {
+    for (var key in characterStateService.character.inventory) {
+      if (characterStateService.character.inventory.hasOwnProperty(key)) {
+        if (characterStateService.character.inventory[key] > 0) {
           return false;
         }
       }
@@ -40,7 +35,7 @@ app.controller('HUDController', function($scope, characterStateService) {
   };
 
   $scope.cannotTalk = function() {
-    return characterStateService.character.currentBody.state === 'asleep';
+    return characterStateService.character.state === 'asleep';
   };
 
   $scope.toggleShowTitles = true;
@@ -55,7 +50,7 @@ app.controller('HUDController', function($scope, characterStateService) {
   $scope.disableAdmireAchievements = true;
 
   $scope.getSleepButtonTitle = function() {
-    if (characterStateService.character.currentBody.state === 'asleep') {
+    if (characterStateService.character.state === 'asleep') {
       return "Wake Up";
     } else {
       return "Sleep";

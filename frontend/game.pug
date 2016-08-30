@@ -3,7 +3,7 @@ html
 
   head
 
-    title Gray Mana 0.1.0
+    title Gray Mana 0.2.0
 
     link(href="stylesheets/compiled_css/actions_dashboard.css", rel="stylesheet", type='text/css')
     link(href="stylesheets/compiled_css/colors.css", rel="stylesheet", type='text/css')
@@ -55,12 +55,7 @@ html
                   //button(s) for testing
                   button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getTreasure()") Get Treasure
                   button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="takeDamage(5, 'green')") Take Damage
-                  button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getClone()") Clone Yourself
                   button(data-ng-show="toggleShowHUD", class="action-button black", data-ng-click="getApple()") Get an Apple
-
-                  //switch to clone
-                  button(class="action-button", data-ng-disabled="cannotSwitchToClone()", data-ng-click="") Switch to Clone
-                    span(data-ng-show="toggleShowHotKeys") &nbsp;({{getSwitchToCloneHotKey()}})
 
                   //interact
                   button(class="action-button", data-ng-disabled="disableInteract") Interact
