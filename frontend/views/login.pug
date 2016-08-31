@@ -1,0 +1,20 @@
+div(data-ng-controller="authController")
+  div(class="start-menu-section", data-ng-show="toggleShowLogin")
+    p Email Address
+    input(class="login-input", data-ng-model="username")
+    p Password
+    input(class="login-input", type="password", data-ng-model="password")
+    button(data-ng-click="login()") Log In
+
+  div(class="start-menu-section")
+    div(data-ng-show="toggleShowLogin")
+      p Email Address
+      input(class="login-input", data-ng-model="newUsername")
+      p Password
+      input(class="login-input", type="password", data-ng-model="newPassword")
+      p Confirm Password
+      input(class="login-input", type="password", data-ng-model="confirmPassword")
+      button(data-ng-click="createNewAccount()") Create New Account
+      p(class="input-error-message", data-ng-show="showInvaildEmailMessage") Please enter a valid email address.
+      p(class="input-error-message", data-ng-show="showPasswordTooShortMessage") Please enter a password with 8 or more characters.
+      p(class="input-error-message", data-ng-show="showPasswordMissmatchMessage") The two passwords you entered did not match.

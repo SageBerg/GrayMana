@@ -72,13 +72,6 @@ button {
   display: inline-block;
   margin: 5px; }
 
-.game-title {
-  color: #B6B6B6;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 500%;
-  margin-top: 20px;
-  text-align: center; }
-
 .inline-block {
   display: inline-block; }
 
@@ -92,5 +85,12 @@ button {
   margin-bottom: 10px;
   padding: 10px;
   width: 300px; }
+
+#game-title {
+  color: #B6B6B6;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 500%;
+  margin-top: 20px;
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

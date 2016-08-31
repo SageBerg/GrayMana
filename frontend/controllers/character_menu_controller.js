@@ -1,6 +1,10 @@
 app.controller('characterMenuController', function($scope, $http, $window) {
   $scope.characterList = ['alice', 'bob'];
 
+  $scope.startPlayingAs = function(character) {
+    $scope.$emit('changeToGameTemplate');
+  }
+
   $scope.getCharacterList = function() {
     return $scope.characterList;
   };

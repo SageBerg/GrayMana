@@ -9,6 +9,7 @@ Aesthetics:
 
 
 Bugs:
+  Eating with the e hotkey doesn't gray out the button when you run out of food
   Add more exception handling to make application more robust
   Don't show modal for a second while the page is loading
 
@@ -61,15 +62,15 @@ Features:
 Organization:
   Code Level:
     Make blocks an object instead of integer
-    Use AngularJS to inject content into a standard GrayMana template
   Data Level:
     Get the spell data in one place, preferably Postgres
   File Level:
     Continue breaking up the SCSS/CSS files by concern
+    Vendor in AngularJS and font dependencies
 
 
 Performance:
-  Minify everything sent to the client
+  Minify everything sent to client (& make Angular controllers minify friendly)
 
 
 Security:
@@ -87,6 +88,7 @@ Style:
   Standardize one line of whitespace at ends of files
   Try out TypeScript to replace some of the back end JavaScript
   Find a good naming convention for endpoints
+  Set a fallback font for any non-standard fonts
 
 
 Testing:
