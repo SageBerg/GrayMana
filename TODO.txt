@@ -46,7 +46,6 @@ Features:
     Richest faction
   Movement:
     No walking on water
-    Slow walking on sand
   Options:
     Sound settings
     Display settings
@@ -66,7 +65,7 @@ Organization:
     Get the spell data in one place, preferably Postgres
   File Level:
     Continue breaking up the SCSS/CSS files by concern
-    Vendor in AngularJS and font dependencies
+    Vendor in font dependencies
 
 
 Performance:
@@ -95,7 +94,7 @@ Testing:
   Increase unit test coverage
   Write integration tests
   Set up test coverage widget on GitHub
-  Test on IE, Edge, Firefox, Safari, and Opera browsers
+  Also test on IE, Edge, Firefox, Safari, and Opera browsers
 
 
 User Testing:
