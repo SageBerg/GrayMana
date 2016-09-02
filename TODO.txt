@@ -9,6 +9,7 @@ Aesthetics:
 
 
 Bugs:
+  Fix CSS on Learn Spells modal
   Eating with the e hotkey doesn't gray out the button when you run out of food
   Add more exception handling to make application more robust
   Don't show modal for a second while the page is loading
@@ -37,7 +38,6 @@ Features:
     Cast spells with no effect
   Account System:
     Saving character
-    Register user with email
     Delete user
     Logout and kill session
   Damage:
