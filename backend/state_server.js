@@ -7,7 +7,7 @@ var State = function() {
   this.database = new DB();
 
   this.chunks = {};
-  this.chunkSize = 21;
+  this.chunkSize = 39;
 
   this.players = {};
   this.time = {};
