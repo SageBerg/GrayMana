@@ -1,4 +1,5 @@
 const postgres = require('pg');
+var Promise = require('promise-polyfill');
 
 var DB = function() {
   var conParam = 'postgres://' + process.env.PSQL_USER + ':' +
@@ -6,6 +7,10 @@ var DB = function() {
   this.psqlClient = new postgres.Client(conParam);
   this.psqlClient.connect();
 };
+
+DB.prototype.updateCharacter = function(character, address) {
+  this.psqlClient.query('UPDATE characters AS c SET x_coord = $1, y_coord = $2 WHERE c.account_name LIKE $3', [character.x_coord, character.y_coord, address]);
+}
 
 DB.prototype.getUserIdQuery = function(email) {
   return this.psqlClient.query('SELECT id FROM users WHERE email LIKE $1', [email]);
@@ -16,8 +21,7 @@ DB.prototype.createNewCharacter = function(name, school, userId) {
 };
 
 DB.prototype.getCharacter = function(email) {
-  return this.psqlClient.query('SELECT apples FROM users WHERE email = $1',
-    [email]);
+  return this.psqlClient.query('select x_coord, y_coord from users as u join characters as c on u.id = c.user_id where email like $1', [email]);
 };
 
 DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {

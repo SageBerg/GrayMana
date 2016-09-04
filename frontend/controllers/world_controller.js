@@ -16,7 +16,17 @@ app.controller('worldController', function($scope, $http) {
       $scope.world.chunkSize = res.data;
       $scope.mid = Math.ceil($scope.world.chunkSize / 2);
       $('#map').css('width', $scope.world.chunkSize * 10);
-      $scope.loadNearbyChunks();
+    }).then(function(resp) {
+      $http({
+        method: 'POST',
+        url: 'load_character.json',
+        data: {token: window.sessionStorage.accessToken},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).then(function(response) {
+        $scope.world.currentLocation.x = response.data.x_coord;
+        $scope.world.currentLocation.y = response.data.y_coord;
+        $scope.loadNearbyChunks();
+      });
     });
   };
 
@@ -131,23 +141,20 @@ app.controller('worldController', function($scope, $http) {
     return chunkHTML;
   };
 
-  $scope.move = function(rowInc, colInc) {
-
-    $scope.world.currentLocation.x += colInc;
-    $scope.world.currentLocation.y += rowInc;
-
+  $scope.move = function(xInc, yInc) {
     $http({
       method: 'POST',
-      url: 'move',
+      url: 'move.json',
       data: {
         token: window.sessionStorage.accessToken,
-        chunkCoords: '',
-        row: 0,
-        col: 0
+        x: $scope.world.currentLocation.x + xInc,
+        y: $scope.world.currentLocation.y + yInc
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       if (res.data) {
+        $scope.world.currentLocation.x += xInc;
+        $scope.world.currentLocation.y += yInc;
         $scope.loadNearbyChunks();
       } else {
         console.log('move not permitted');
@@ -155,20 +162,21 @@ app.controller('worldController', function($scope, $http) {
     });
   };
 
+  //these are all backwards but, I haven't been able to figure out where the problem is
   $scope.$on('moveLeft', function(event) {
-    $scope.move(-1, 0);
-  });
-
-  $scope.$on('moveUp', function(event) {
     $scope.move(0, -1);
   });
 
+  $scope.$on('moveUp', function(event) {
+    $scope.move(-1, 0);
+  });
+
   $scope.$on('moveRight', function(event) {
-    $scope.move(1, 0);
+    $scope.move(0, 1);
   });
 
   $scope.$on('moveDown', function(event) {
-    $scope.move(0, 1);
+    $scope.move(1, 0);
   });
 
 });

@@ -8,7 +8,8 @@ app.controller('characterController', function($scope, $http, characterStateServ
       data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
-      characterStateService.character.inventory['apple'] += res.data.apple;
+      characterStateService.character.x_coord += res.data.x_coord;
+      characterStateService.character.y_coord += res.data.y_coord;
     });
   });
 
