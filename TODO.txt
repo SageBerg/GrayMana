@@ -11,6 +11,10 @@ Aesthetics:
 Bugs:
   Fix CSS on Learn Spells modal
   Eating with the e hotkey doesn't gray out the button when you run out of food
+  Enforce clients not jumping in water
+  Server crashing (looks like chunking error)
+  Users without sessions are crashing server, handle gracefully
+  Off by one error on damage rendering
   Add more exception handling to make application more robust
   Don't show modal for a second while the page is loading
 
