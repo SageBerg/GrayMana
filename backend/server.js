@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const Handlers = require('./handlers').Handlers;
 const GameHandlers = require('./game_handlers').GameHandlers;
+const logging = require('./logging');
 
 //start server
 const app = express();
@@ -22,6 +23,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
+
+app.use(logging.middleware);
 
 //start game
 handlers = new Handlers();
