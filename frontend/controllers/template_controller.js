@@ -1,4 +1,4 @@
-app.controller('templateController', function($scope) {
+app.controller('templateController', function($scope, $http) {
   $scope.currentTemplate = 'login.html';
 
   $scope.$on('changeToCharacterTemplate', function() {
