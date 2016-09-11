@@ -144,9 +144,10 @@ app.controller('worldController', function($scope, $http) {
   $scope.move = function(xInc, yInc) {
     $http({
       method: 'POST',
-      url: 'move',
+      url: 'command',
       data: {
         token: window.sessionStorage.accessToken,
+        command: 'move',
         x: $scope.world.currentLocation.x + xInc,
         y: $scope.world.currentLocation.y + yInc
       },

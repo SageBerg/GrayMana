@@ -32,3 +32,5 @@ app.post('/chunk_size', handlers.authMiddleware, gameHandlers.respondWithChunkSi
 app.post('/load_character', handlers.authMiddleware, gameHandlers.respondWithCharacter);
 app.post('/move', handlers.authMiddleware, gameHandlers.respondWithMove);
 app.post('/get_treasure', handlers.authMiddleware, gameHandlers.respondWithTreasureDrop);
+
+app.post('/command', handlers.authMiddleware, gameHandlers.command);
