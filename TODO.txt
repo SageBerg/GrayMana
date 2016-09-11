@@ -17,6 +17,7 @@ Bugs:
   Off by one error on damage rendering
   Add more exception handling to make application more robust
   Don't show modal for a second while the page is loading
+  Firefox bug: scrolling through spells only 
 
 
 Database:
