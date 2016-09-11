@@ -1,12 +1,20 @@
 app.controller('characterMenuController', function($scope, $http, $window) {
-  $scope.characterList = ['alice', 'bob'];
+
+  $scope.characters = [];
+
+  $http({
+    method: 'POST',
+    url: 'characters',
+    data: {token: window.sessionStorage.accessToken},
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+  }).then(function(res) {
+    for (character of res.data) {
+      $scope.characters.push(character.name);
+    }
+  });
 
   $scope.startPlayingAs = function(character) {
     $scope.$emit('changeToGameTemplate');
-  }
-
-  $scope.getCharacterList = function() {
-    return $scope.characterList;
   };
 
   $scope.newCharacter = {characterName: '', characterSchool: ''};

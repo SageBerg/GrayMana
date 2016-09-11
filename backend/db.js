@@ -1,5 +1,4 @@
 const postgres = require('pg');
-var Promise = require('promise-polyfill');
 
 var DB = function() {
   var conParam = 'postgres://' + process.env.PSQL_USER + ':' +
@@ -55,7 +54,7 @@ DB.prototype.loadAllChunksFromDB = function(chunks) {
 
 DB.prototype.auth = function(username, password) {
   return this.psqlClient.query(
-    'SELECT count(*) FROM users WHERE email = $1 AND password = $2',
+    'SELECT id FROM users WHERE email = $1 AND password = $2',
     [username, password]
   );
 };
@@ -63,6 +62,12 @@ DB.prototype.auth = function(username, password) {
 DB.prototype.createNewAccount = function(username, password) {
   this.psqlClient.query(
     'INSERT INTO users (email, password) VALUES ($1, $2)', [username, password]
+  );
+};
+
+DB.prototype.getCharacters = function(userId) {
+  return this.psqlClient.query(
+    'SELECT name, id FROM characters WHERE user_id = $1', [userId]
   );
 };
 

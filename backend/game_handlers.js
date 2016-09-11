@@ -21,8 +21,8 @@ var syncState = function() {
     if (state.characters.hasOwnProperty(email)) {
       database.updateCharacter(state.characters[email], email);
     };
-  }
-}
+  };
+};
 
 setInterval(syncState, 1000);
 

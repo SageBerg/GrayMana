@@ -25,16 +25,35 @@ Handlers.prototype.respondWithLogin = function(req, res) {
   var password = req.body.password;
 
   var queryResult = database.auth(username, password);
-  queryResult.on('row', function(row) {
-    if (row.count === '1') {
-      var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
-        {expiresIn: this.sessionLength});
-      res.json({'token': token});
+  queryResult.on('end', function(result) {
+    if (result.rowCount === 1) {
+      req.session.regenerate(function(err) {
+        if (err) {
+          res.status(500);
+          res.send();
+        }
+        req.session.userId = result.rows[0].id
+        var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
+          {expiresIn: this.sessionLength});
+        res.json({'token': token});
+      });
     } else {
+      res.status(401);
       res.send();
     }
   });
-}
+};
+
+Handlers.prototype.getCharacters = function(req, res) {
+  var queryResult = database.getCharacters(req.session.userId);
+  var characters = [];
+  queryResult.on('end', function(result) {
+    for (row of result.rows) {
+      characters.push({name: row.name, id: row.id});
+    }
+    res.json(characters);
+  });
+};
 
 Handlers.prototype.newAccount = function(req, res) {
   var username = req.body.username;
