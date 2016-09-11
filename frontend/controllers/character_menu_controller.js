@@ -5,7 +5,6 @@ app.controller('characterMenuController', function($scope, $http, $window) {
   $http({
     method: 'POST',
     url: 'characters',
-    data: {token: window.sessionStorage.accessToken},
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   }).then(function(res) {
     for (character of res.data) {
@@ -17,7 +16,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
     $http({
       method: 'POST',
       url: 'start_game',
-      data: {token: window.sessionStorage.accessToken, characterId: characterId},
+      data: {characterId: characterId},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       if (res.status === 200) {
@@ -70,7 +69,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
     $http({
       method: 'POST',
       url: 'create_new_character',
-      data: {token: window.sessionStorage.accessToken, characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
+      data: {characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $window.location.href = '/game.html';

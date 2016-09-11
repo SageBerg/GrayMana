@@ -10,7 +10,6 @@ app.controller('worldController', function($scope, $http) {
     $http({
       method: 'POST',
       url: 'chunk_size',
-      data: {'token': window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $scope.world.chunkSize = res.data;
@@ -20,7 +19,6 @@ app.controller('worldController', function($scope, $http) {
       $http({
         method: 'POST',
         url: 'load_character',
-        data: {token: window.sessionStorage.accessToken},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(response) {
         $scope.world.currentLocation.x = response.data.x_coord;
@@ -77,7 +75,7 @@ app.controller('worldController', function($scope, $http) {
       $http({
         method: 'POST',
         url: 'chunk',
-        data: {'token': window.sessionStorage.accessToken, 'chunkCoords': chunkCoords},
+        data: {'chunkCoords': chunkCoords},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(res) {
         $scope.world.chunks[chunkCoords] = res.data;
@@ -146,7 +144,6 @@ app.controller('worldController', function($scope, $http) {
       method: 'POST',
       url: 'command',
       data: {
-        token: window.sessionStorage.accessToken,
         command: 'move',
         x: $scope.world.currentLocation.x + xInc,
         y: $scope.world.currentLocation.y + yInc

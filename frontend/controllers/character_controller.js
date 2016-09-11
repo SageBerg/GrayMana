@@ -5,7 +5,6 @@ app.controller('characterController', function($scope, $http, characterStateServ
     $http({
       method: 'POST',
       url: 'load_character',
-      data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       characterStateService.character.x_coord += res.data.x_coord;
@@ -18,7 +17,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
     $http({
       method: 'POST',
       url: 'new_item',
-      data: {token: window.sessionStorage.accessToken, item: item, quantity: quanity},
+      data: {item: item, quantity: quanity},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       characterStateService.character.inventory[item] += res.data[item];
@@ -39,7 +38,6 @@ app.controller('characterController', function($scope, $http, characterStateServ
     $http({
       method: 'POST',
       url: 'get_treasure',
-      data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $scope.getMana(res.data.treasureDrop.manaDrop);

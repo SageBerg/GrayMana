@@ -53,18 +53,6 @@ app.controller('authController', function($scope, $http, $window) {
   }
 
   $scope.handleLogin = function(res) {
-    $window.sessionStorage.accessToken = res.data.token;
     $scope.$emit("changeToCharacterTemplate");
   }
-
-  $scope.refreshToken = function() {
-    $http({
-      method: 'POST',
-      url: 'refresh_token',
-      data: {token: window.sessionStorage.accessToken},
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then(function(res) {
-      $window.sessionStorage.accessToken = res.data.token;
-    });
-  };
 });
