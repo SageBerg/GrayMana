@@ -42,7 +42,7 @@ div(id="modal-section", data-ng-controller="modalController", keypress-events)
           div(class="metabutton-container", , data-ng-show="toggleShowHUD")
 
             //log out
-            button(class="action-button") Log Out
+            button(class="action-button", data-ng-click="logout()") Log Out
               span(data-ng-show="toggleShowHotKeys") &nbsp;({{getLogOutHotKey()}})
 
             //edit options

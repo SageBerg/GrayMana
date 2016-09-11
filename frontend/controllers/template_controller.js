@@ -9,4 +9,13 @@ app.controller('templateController', function($scope) {
     $scope.currentTemplate = 'game.html';
   });
 
+  $scope.logout = function() {
+    $http({
+      method: 'POST',
+      url: 'logout',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      $scope.currentTemplate = 'login.html';
+    });
+  };
 });
