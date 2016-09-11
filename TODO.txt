@@ -17,7 +17,7 @@ Bugs:
   Off by one error on damage rendering
   Add more exception handling to make application more robust
   Don't show modal for a second while the page is loading
-  Firefox bug: scrolling through spells only 
+  Firefox bug: scrolling through spells only
 
 
 Database:
@@ -25,6 +25,7 @@ Database:
 
 
 Deployment:
+  Add a build script to make the game work out of the box
   Put limits on the growth of the database tables (handle limits gracefully)
   Deploy on AWS
   Set up a "Let's Encrypt" certificate
