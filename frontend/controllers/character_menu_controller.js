@@ -49,7 +49,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
   $scope.createNewCharacter = function() {
     $http({
       method: 'POST',
-      url: 'create_new_character.json',
+      url: 'create_new_character',
       data: {token: window.sessionStorage.accessToken, characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {

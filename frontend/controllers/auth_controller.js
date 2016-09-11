@@ -22,7 +22,7 @@ app.controller('authController', function($scope, $http, $window) {
   $scope.login = function() {
     $http({
       method: 'POST',
-      url: 'login.json',
+      url: 'login',
       data: {username: $scope.username, password: $scope.password},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then($scope.handleLogin);
@@ -39,7 +39,7 @@ app.controller('authController', function($scope, $http, $window) {
     } else {
       $http({
         method: 'POST',
-        url: 'create_new_account.json',
+        url: 'create_new_account',
         data: {username: $scope.newUsername, password: $scope.newPassword},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then($scope.handleLogin);
@@ -60,7 +60,7 @@ app.controller('authController', function($scope, $http, $window) {
   $scope.refreshToken = function() {
     $http({
       method: 'POST',
-      url: 'refresh_token.json',
+      url: 'refresh_token',
       data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {

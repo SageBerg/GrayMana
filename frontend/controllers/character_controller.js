@@ -4,7 +4,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.$on('loadCharacter', function(event) {
     $http({
       method: 'POST',
-      url: 'load_character.json',
+      url: 'load_character',
       data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
@@ -17,7 +17,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.requestNewItem(item, quantity) {
     $http({
       method: 'POST',
-      url: 'new_item.json',
+      url: 'new_item',
       data: {token: window.sessionStorage.accessToken, item: item, quantity: quanity},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
@@ -38,7 +38,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.getTreasure = function() {
     $http({
       method: 'POST',
-      url: 'get_treasure.json',
+      url: 'get_treasure',
       data: {token: window.sessionStorage.accessToken},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
