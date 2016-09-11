@@ -15,6 +15,10 @@ Bugs:
   Don't show modal for a second while the page is loading
 
 
+Database:
+  Disallow multiple accounts with same 
+
+
 Deployment:
   Put limits on the growth of the database tables (handle limits gracefully)
   Deploy on AWS
