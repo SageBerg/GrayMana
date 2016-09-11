@@ -3,7 +3,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
   $scope.characters = [];
 
   $http({
-    method: 'POST',
+    method: 'GET',
     url: 'characters',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   }).then(function(res) {
@@ -25,7 +25,6 @@ app.controller('characterMenuController', function($scope, $http, $window) {
         //TODO prompt user with Error message
       }
     });
-
   };
 
   $scope.newCharacter = {characterName: '', characterSchool: ''};

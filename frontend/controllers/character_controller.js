@@ -3,7 +3,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
 
   $scope.$on('loadCharacter', function(event) {
     $http({
-      method: 'POST',
+      method: 'get',
       url: 'load_character',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
@@ -36,7 +36,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
 
   $scope.getTreasure = function() {
     $http({
-      method: 'POST',
+      method: 'GET',
       url: 'get_treasure',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {

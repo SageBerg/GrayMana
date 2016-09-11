@@ -60,11 +60,11 @@ GameHandlers.prototype.startGame = function(req, res) {
 }
 
 GameHandlers.prototype.respondWithChunk = function(req, res) {
-  if (state.chunks[req.body.chunkCoords] !== undefined) {
-    res.json(state.chunks[req.body.chunkCoords]);
+  if (state.chunks[req.params.coords] !== undefined) {
+    res.json(state.chunks[req.params.coords]);
   } else {
-    var chunk = worldGen.genChunk(req.body.chunkCoords, state.chunkSize);
-    state.chunks[req.body.chunkCoords] = chunk;
+    var chunk = worldGen.genChunk(req.params.coords, state.chunkSize);
+    state.chunks[req.params.coords] = chunk;
     res.json(chunk);
   }
 }

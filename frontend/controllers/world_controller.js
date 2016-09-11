@@ -8,7 +8,7 @@ app.controller('worldController', function($scope, $http) {
 
   $scope.startGame = function() {
     $http({
-      method: 'POST',
+      method: 'GET',
       url: 'chunk_size',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
@@ -17,8 +17,8 @@ app.controller('worldController', function($scope, $http) {
       $('#map').css('width', $scope.world.chunkSize * 10);
     }).then(function(resp) {
       $http({
-        method: 'POST',
-        url: 'load_character',
+        method: 'GET',
+        url: 'character',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(response) {
         $scope.world.currentLocation.x = response.data.x_coord;
@@ -73,9 +73,8 @@ app.controller('worldController', function($scope, $http) {
   $scope.loadChunk = function(chunkCoords, callback) {
     if ($scope.world.chunks[chunkCoords] === undefined) {
       $http({
-        method: 'POST',
-        url: 'chunk',
-        data: {'chunkCoords': chunkCoords},
+        method: 'GET',
+        url: 'chunks/' + chunkCoords,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(res) {
         $scope.world.chunks[chunkCoords] = res.data;
