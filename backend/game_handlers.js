@@ -1,5 +1,3 @@
-var Promise = require('promise-polyfill');
-
 const TreasureGen = require('./treasure').TreasureGen;
 const WorldGen = require('./world_gen').WorldGen;
 const DB = require('./db').DB;
