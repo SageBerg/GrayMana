@@ -56,16 +56,16 @@ DB.prototype.loadAllChunksFromDB = function(chunks) {
   });
 };
 
-DB.prototype.auth = function(username, password) {
+DB.prototype.auth = function(email, password) {
   return this.psqlClient.query(
     'SELECT id FROM users WHERE email = $1 AND password = $2',
-    [username, password]
+    [email, password]
   );
 };
 
-DB.prototype.createNewAccount = function(username, password) {
-  this.psqlClient.query(
-    'INSERT INTO users (email, password) VALUES ($1, $2)', [username, password]
+DB.prototype.createNewAccount = function(email, password) {
+  return this.psqlClient.query(
+    'INSERT INTO users (email, password) VALUES ($1, $2)', [email, password]
   );
 };
 

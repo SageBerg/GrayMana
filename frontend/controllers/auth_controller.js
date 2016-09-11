@@ -1,9 +1,9 @@
 app.controller('authController', function($scope, $http, $window) {
-  $scope.username = 'person@example.com';
+  $scope.email = 'person@example.com';
   $scope.password = 'not_a_real_password_used_anywhere_else';
-  $scope.newUsername = '';
-  $scope.newPassword = '';
-  $scope.confirmPassword = '';
+  $scope.newEmail = 'testuser@example.com';
+  $scope.newPassword = 'moremore';
+  $scope.confirmPassword = 'moremore';
 
   $scope.toggleShowLogin = true;
 
@@ -19,18 +19,18 @@ app.controller('authController', function($scope, $http, $window) {
     $scope.showPasswordTooShortMessage = false;
   };
 
-  $scope.login = function() {
+  $scope.login = function(email, password) {
     $http({
       method: 'POST',
       url: 'login',
-      data: {username: $scope.username, password: $scope.password},
+      data: {email: email, password: password},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then($scope.handleLogin);
+    }).then($scope.changeToCharacterTemplate);
   };
 
   $scope.createNewAccount = function() {
     $scope.clearInputErrorMessages();
-    if ($scope.validateEmail($scope.newUsername) === false) {
+    if ($scope.validateEmail($scope.newEmail) === false) {
       $scope.showInvaildEmailMessage = true;
     } else if ($scope.newPassword.length < $scope.minimumPasswordLengthAllowed) {
       $scope.showPasswordTooShortMessage = true;
@@ -39,10 +39,10 @@ app.controller('authController', function($scope, $http, $window) {
     } else {
       $http({
         method: 'POST',
-        url: 'create_new_account',
-        data: {username: $scope.newUsername, password: $scope.newPassword},
+        url: 'accounts',
+        data: {email: $scope.newEmail, password: $scope.newPassword},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then($scope.handleLogin);
+      }).then($scope.changeToCharacterTemplate);
     }
   }
 
@@ -52,7 +52,7 @@ app.controller('authController', function($scope, $http, $window) {
     return re.test(email);
   }
 
-  $scope.handleLogin = function(res) {
+  $scope.changeToCharacterTemplate = function(res) {
     $scope.$emit("changeToCharacterTemplate");
   }
 });

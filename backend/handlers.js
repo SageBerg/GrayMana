@@ -18,10 +18,10 @@ Handlers.prototype.authMiddleware = function(req, res, next) {
 };
 
 Handlers.prototype.login = function(req, res) {
-  var username = req.body.username;
+  var email = req.body.email;
   var password = req.body.password;
 
-  var queryResult = database.auth(username, password);
+  var queryResult = database.auth(email, password);
   queryResult.on('end', function(result) {
     if (result.rowCount === 1) {
       req.session.regenerate(function(err) {
@@ -61,17 +61,17 @@ Handlers.prototype.getCharacters = function(req, res) {
   });
 };
 
-Handlers.prototype.newAccount = function(req, res) {
-  var username = req.body.username;
+Handlers.prototype.newAccount = function(req, res, next) {
+  var email = req.body.email;
   var password = req.body.password;
-  if (auth.validateEmail(username) === false) {
-    //log invalid email
+  if (auth.validateEmail(email) === false) {
+    //log invalid emai
   } else if (password.length < 8) {
     //log password too short
   } else {
-    var queryResult = database.createNewAccount(username, password);
+    var queryResult = database.createNewAccount(email, password);
     queryResult.on('end', function(result) {
-      res.send();
+      next(); //log in with the new account
       //TODO alert client of failure
     });
   }
