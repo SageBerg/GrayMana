@@ -6,7 +6,7 @@ app.controller('worldController', function($scope, $http) {
     currentLocation: {x: 0, y: 0}
   };
 
-  $scope.requestAndSetChunkSize = function() {
+  $scope.startGame = function() {
     $http({
       method: 'POST',
       url: 'chunk_size',
@@ -30,7 +30,7 @@ app.controller('worldController', function($scope, $http) {
     });
   };
 
-  $scope.requestAndSetChunkSize();
+  $scope.startGame();
 
   $scope.loadNearbyChunks = function() {
     var current = $scope.getCurrentChunkCoords(0, 0);

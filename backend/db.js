@@ -7,20 +7,24 @@ var DB = function() {
   this.psqlClient.connect();
 };
 
-DB.prototype.updateCharacter = function(character, address) {
-  this.psqlClient.query('UPDATE characters AS c SET x_coord = $1, y_coord = $2 WHERE c.account_name LIKE $3', [character.x_coord, character.y_coord, address]);
-}
+DB.prototype.allowedToPlayAsCharacter = function(characterId, userId) {
+  return this.psqlClient.query('SELECT id FROM characters WHERE id = $1 AND user_id = $2', [characterId, userId]);
+};
+
+DB.prototype.updateCharacter = function(character, characterId) {
+  this.psqlClient.query('UPDATE characters SET x_coord = $1, y_coord = $2 WHERE id = $3', [character.x_coord, character.y_coord, characterId]);
+};
 
 DB.prototype.getUserIdQuery = function(email) {
   return this.psqlClient.query('SELECT id FROM users WHERE email LIKE $1', [email]);
-}
+};
 
 DB.prototype.createNewCharacter = function(name, school, userId) {
   this.psqlClient.query('INSERT INTO characters (name, school, user_id, world_id, x_coord, y_coord) VALUES ($1, $2, $3, 1, 0, 0)', [name, school, userId]);
 };
 
-DB.prototype.getCharacter = function(email) {
-  return this.psqlClient.query('SELECT x_coord, y_coord FROM characters WHERE account_name LIKE $1', [email]);
+DB.prototype.getCharacter = function(characterId) {
+  return this.psqlClient.query('SELECT x_coord, y_coord FROM characters WHERE id = $1', [characterId]);
 };
 
 DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
@@ -67,7 +71,7 @@ DB.prototype.createNewAccount = function(username, password) {
 
 DB.prototype.getCharacters = function(userId) {
   return this.psqlClient.query(
-    'SELECT name, id FROM characters WHERE user_id = $1', [userId]
+    'SELECT name, id FROM characters WHERE user_id = $1 ORDER BY id', [userId]
   );
 };
 

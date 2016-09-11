@@ -35,6 +35,7 @@ app.post('/create_new_character', handlers.authMiddleware, handlers.newCharacter
 app.post('/refresh_token', handlers.authMiddleware, handlers.respondWithNewToken);
 
 //set up game routes
+app.post('/start_game', handlers.authMiddleware, gameHandlers.startGame);
 app.post('/chunk', handlers.authMiddleware, gameHandlers.respondWithChunk);
 app.post('/chunk_size', handlers.authMiddleware, gameHandlers.respondWithChunkSize);
 app.post('/load_character', handlers.authMiddleware, gameHandlers.respondWithCharacter);

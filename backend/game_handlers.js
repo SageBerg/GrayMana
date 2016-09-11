@@ -17,9 +17,9 @@ Promise.all(
 );
 
 var syncState = function() {
-  for (email in state.characters) {
-    if (state.characters.hasOwnProperty(email)) {
-      database.updateCharacter(state.characters[email], email);
+  for (characterId in state.characters) {
+    if (state.characters.hasOwnProperty(characterId)) {
+      database.updateCharacter(state.characters[characterId], characterId);
     };
   };
 };
@@ -45,6 +45,20 @@ var getPixel = function (x, y) {
 
 var GameHandlers = function() {}
 
+GameHandlers.prototype.startGame = function(req, res) {
+  var queryResult = database.allowedToPlayAsCharacter(req.body.characterId, req.session.userId);
+  queryResult.on('end', function(result) {
+    if (result.rowCount === 1) {
+      req.session.characterId = req.body.characterId;
+      res.status(200);
+      res.send();
+    } else {
+      res.status(401);
+      res.send();
+    }
+  });
+}
+
 GameHandlers.prototype.respondWithChunk = function(req, res) {
   if (state.chunks[req.body.chunkCoords] !== undefined) {
     res.json(state.chunks[req.body.chunkCoords]);
@@ -60,29 +74,28 @@ GameHandlers.prototype.respondWithChunkSize = function(req, res) {
 }
 
 GameHandlers.prototype.respondWithCharacter = function(req, res) {
-  var email = auth.getEmailFromToken(req.body.token);
-  if (state[email] === undefined) {
-    var queryResult = database.getCharacter(email);
+  var characterId = req.session.characterId;
+  if (state[characterId] === undefined) {
+    var queryResult = database.getCharacter(characterId);
     queryResult.on('row', function(row) {
       if (row.x_coord !== undefined && row.y_coord !== undefined) {
-        state.characters[email] = {x_coord: row.x_coord, y_coord: row.y_coord};
+        state.characters[characterId] = {x_coord: row.x_coord, y_coord: row.y_coord};
         res.json({'x_coord': row.x_coord, 'y_coord': row.y_coord});
       } else {
         res.send();
       }
     });
   } else {
-    console.log('the character was already in local memory')
-    res.json(state[email]);
+    res.json(state[characterId]);
   }
 }
 
 GameHandlers.prototype.respondWithMove = function(req, res) {
-  var email = auth.getEmailFromToken(req.body.token);
+  var characterId = req.session.characterId;
   var terrain_code = getPixel(req.body.x, req.body.y);
   if (terrain_code > 0) { //means its not water
-    state.characters[email].x_coord = parseInt(req.body.x);
-    state.characters[email].y_coord = parseInt(req.body.y);
+    state.characters[characterId].x_coord = parseInt(req.body.x);
+    state.characters[characterId].y_coord = parseInt(req.body.y);
     res.send(true);
   } else {
     res.send(false);
@@ -98,15 +111,14 @@ GameHandlers.prototype.respondWithTreasureDrop = function(req, res) {
 }
 
 GameHandlers.prototype.command = function(req, res) {
-  //var characterId =
-  var email = auth.getEmailFromToken(req.body.token);
+  var characterId = req.session.characterId;
 
   switch (req.body.command) {
     case 'move':
       var terrain_code = getPixel(req.body.x, req.body.y);
       if (terrain_code > 0) { //means its not water
-        state.characters[email].x_coord = parseInt(req.body.x);
-        state.characters[email].y_coord = parseInt(req.body.y);
+        state.characters[characterId].x_coord = parseInt(req.body.x);
+        state.characters[characterId].y_coord = parseInt(req.body.y);
         res.send(true);
       } else {
         res.send(false);

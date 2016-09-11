@@ -2,7 +2,7 @@ div(data-ng-controller="characterMenuController")
   div(class="start-menu-section")
     h2 Play as an existing character
     div(id="play-as-existing-character", data-ng-repeat="character in characters")
-      button(class="play_as_character", data-ng-click="startPlayingAs(character)") {{character}}
+      button(class="play_as_character", data-ng-click="startPlayingAs(character.id)") {{character.name}}
 
   div(class="start-menu-section")
     h2 Create a new character

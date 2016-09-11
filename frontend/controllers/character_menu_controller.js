@@ -9,12 +9,24 @@ app.controller('characterMenuController', function($scope, $http, $window) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   }).then(function(res) {
     for (character of res.data) {
-      $scope.characters.push(character.name);
+      $scope.characters.push(character);
     }
   });
 
-  $scope.startPlayingAs = function(character) {
-    $scope.$emit('changeToGameTemplate');
+  $scope.startPlayingAs = function(characterId) {
+    $http({
+      method: 'POST',
+      url: 'start_game',
+      data: {token: window.sessionStorage.accessToken, characterId: characterId},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      if (res.status === 200) {
+        $scope.$emit('changeToGameTemplate');
+      } else {
+        //TODO prompt user with Error message
+      }
+    });
+
   };
 
   $scope.newCharacter = {characterName: '', characterSchool: ''};
