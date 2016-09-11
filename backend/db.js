@@ -21,7 +21,7 @@ DB.prototype.createNewCharacter = function(name, school, userId) {
 };
 
 DB.prototype.getCharacter = function(email) {
-  return this.psqlClient.query('select x_coord, y_coord from users as u join characters as c on u.id = c.user_id where email like $1', [email]);
+  return this.psqlClient.query('SELECT x_coord, y_coord FROM characters WHERE account_name LIKE $1', [email]);
 };
 
 DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
