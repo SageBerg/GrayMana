@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
 const DB = require('./db').DB;
@@ -7,12 +6,10 @@ const Auth = require('./auth_server').Auth;
 const database = new DB();
 const auth = new Auth();
 
-var Handlers = function() {
-  this.sessionLength = '600s'; //argument in seconds for jwt constructor
-}
+var Handlers = function() {};
 
 Handlers.prototype.authMiddleware = function(req, res, next) {
-  if (auth.isAuth(req.body.token)) {
+  if (auth.isAuth(req)) {
     next();
   } else {
     res.status(401);
@@ -33,9 +30,7 @@ Handlers.prototype.respondWithLogin = function(req, res) {
           res.send();
         }
         req.session.userId = result.rows[0].id
-        var token = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
-          {expiresIn: this.sessionLength});
-        res.json({'token': token});
+        res.send();
       });
     } else {
       res.status(401);
@@ -63,30 +58,19 @@ Handlers.prototype.newAccount = function(req, res) {
   } else if (password.length < 8) {
     //log password too short
   } else {
-    Promise.all([
-      database.createNewAccount(username, password)
-    ]).then(
-      res.json({'token': jwt.sign({'username': username},
-        process.env.TOKEN_SECRET, {expiresIn: this.sessionLength})})
-    );
+    var queryResult = database.createNewAccount(username, password);
+    queryResult.on('end', function(result) {
+      res.send();
+      //TODO alert client of failure
+    });
   }
-}
+};
 
 Handlers.prototype.newCharacter = function(req, res) {
-  var email = auth.getEmailFromToken(req.body.token);
-  var queryResult = database.getUserIdQuery(email);
-  queryResult.on('row', function(row) {
-    database.createNewCharacter(req.body.characterName, req.body.characterSchool, row['id']);
+  var queryResult = database.createNewCharacter(req.body.characterName, req.body.characterSchool, req.session.userId);
+  queryResult.on('end', function(result) {
     res.send();
-  });
-}
-
-Handlers.prototype.respondWithNewToken = function(req, res) {
-  var decodedToken = jwt.decode(req.body.token, {complete: true});
-  var username = decodedToken.payload.username;
-  var newToken = jwt.sign({'username': username}, process.env.TOKEN_SECRET,
-    {expiresIn: this.sessionLength});
-  res.json({'token': newToken});
+  })
 }
 
 exports.Handlers = Handlers;

@@ -20,7 +20,7 @@ DB.prototype.getUserIdQuery = function(email) {
 };
 
 DB.prototype.createNewCharacter = function(name, school, userId) {
-  this.psqlClient.query('INSERT INTO characters (name, school, user_id, world_id, x_coord, y_coord) VALUES ($1, $2, $3, 1, 0, 0)', [name, school, userId]);
+  return this.psqlClient.query('INSERT INTO characters (name, school, user_id, world_id, x_coord, y_coord) VALUES ($1, $2, $3, 1, 0, 0)', [name, school, userId]);
 };
 
 DB.prototype.getCharacter = function(characterId) {
