@@ -17,7 +17,7 @@ Handlers.prototype.authMiddleware = function(req, res, next) {
   }
 };
 
-Handlers.prototype.respondWithLogin = function(req, res) {
+Handlers.prototype.login = function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
@@ -38,6 +38,17 @@ Handlers.prototype.respondWithLogin = function(req, res) {
     }
   });
 };
+
+Handlers.prototype.logout = function(req, res) {
+  req.session.destroy(function(err) {
+    if (err) {
+      res.status(500);
+      res.send();
+    } else {
+      res.send();
+    }
+  });
+}
 
 Handlers.prototype.getCharacters = function(req, res) {
   var queryResult = database.getCharacters(req.session.userId);

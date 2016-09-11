@@ -28,10 +28,11 @@ handlers = new Handlers();
 gameHandlers = new GameHandlers();
 
 //set up account and character creation routes
-app.post('/login', handlers.respondWithLogin);
+app.post('/login', handlers.login);
 app.get('/characters', handlers.authMiddleware, handlers.getCharacters);
 app.post('/create_new_account', handlers.newAccount);
 app.post('/create_new_character', handlers.authMiddleware, handlers.newCharacter);
+app.post('/logout', handlers.authMiddleware, handlers.logout);
 
 //set up game routes
 app.post('/start_game', handlers.authMiddleware, gameHandlers.startGame);
