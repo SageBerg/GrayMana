@@ -16,7 +16,7 @@ Bugs:
 
 
 Database:
-  Disallow multiple accounts with same 
+  Disallow multiple accounts with same email
 
 
 Deployment:
@@ -63,11 +63,13 @@ Features:
 
 
 Organization:
-  Code Level:
+  API:
+    Pass token in cookie so not everything is a POST request
+  Code:
     Make blocks an object instead of integer
-  Data Level:
+  Data:
     Get the spell data in one place, preferably Postgres
-  File Level:
+  File:
     Continue breaking up the SCSS/CSS files by concern
     Vendor in font dependencies
 
