@@ -144,17 +144,19 @@ app.controller('worldController', function($scope, $http) {
       url: 'command',
       data: {
         command: 'move',
-        x: $scope.world.currentLocation.x + xInc,
-        y: $scope.world.currentLocation.y + yInc
+        x: xInc,
+        y: yInc
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
-      if (res.data) {
-        $scope.world.currentLocation.x += xInc;
-        $scope.world.currentLocation.y += yInc;
+      if (res.data.error)
+      {
+        console.log(res.data.error);
+      }
+      else {
+        $scope.world.currentLocation.x = res.data.character.x_coord;
+        $scope.world.currentLocation.y = res.data.character.y_coord;
         $scope.loadNearbyChunks();
-      } else {
-        console.log('move not permitted');
       }
     });
   };

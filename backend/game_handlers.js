@@ -113,13 +113,15 @@ GameHandlers.prototype.command = function(req, res) {
 
   switch (req.body.command) {
     case 'move':
-      var terrain_code = getPixel(req.body.x, req.body.y);
+      var new_x = state.characters[characterId].x_coord + parseInt(req.body.x);
+      var new_y = state.characters[characterId].y_coord + parseInt(req.body.y);
+      var terrain_code = getPixel(new_x, new_y);
       if (terrain_code > 0) { //means its not water
-        state.characters[characterId].x_coord = parseInt(req.body.x);
-        state.characters[characterId].y_coord = parseInt(req.body.y);
-        res.send(true);
+        state.characters[characterId].x_coord = new_x;
+        state.characters[characterId].y_coord = new_y;
+        res.json({character: state.characters[characterId]});
       } else {
-        res.send(false);
+        res.json({error: "Cannot walk on water or fly"});
       }
     default:
       res.status(400);
