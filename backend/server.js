@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const http = require('http');
 const bodyParser = require('body-parser');
 
@@ -15,6 +16,12 @@ server.listen(port);
 app.use(express.static(__dirname + '/../frontend/views/compiled_html'));
 app.use(express.static(__dirname + '/../frontend'));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({
+  secret: process.env.GRAY_MANA_SESSSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 
 //start game
 handlers = new Handlers();

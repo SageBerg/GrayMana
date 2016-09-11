@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const session = require('express-session');
 
 const DB = require('./db').DB;
 const Auth = require('./auth_server').Auth;

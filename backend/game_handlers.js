@@ -97,4 +97,24 @@ GameHandlers.prototype.respondWithTreasureDrop = function(req, res) {
   res.json({treasureDrop: drop});
 }
 
+GameHandlers.prototype.command = function(req, res) {
+  //var characterId =
+  var email = auth.getEmailFromToken(req.body.token);
+
+  switch (req.body.command) {
+    case 'move':
+      var terrain_code = getPixel(req.body.x, req.body.y);
+      if (terrain_code > 0) { //means its not water
+        state.characters[email].x_coord = parseInt(req.body.x);
+        state.characters[email].y_coord = parseInt(req.body.y);
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    default:
+      res.status(400);
+      res.send();
+  }
+}
+
 exports.GameHandlers = GameHandlers;
