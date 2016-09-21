@@ -1,7 +1,7 @@
 .chest {
+  @extend .tile;
   background-color: gray;
-  height: 6px;
-  width: 6px;
+  
 }
 
 .grass {

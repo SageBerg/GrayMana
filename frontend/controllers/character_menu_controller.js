@@ -71,7 +71,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
       data: {characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
-      $window.location.href = '/game.html';
+      $scope.startPlayingAs();
     });
   }
 

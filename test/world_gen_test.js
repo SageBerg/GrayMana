@@ -23,3 +23,16 @@ describe('chooseTileCoords', function() {
     assert.equal(worldGen.chooseTileCoords(potentialTiles), "1 1");
   });
 });
+
+describe('spawnChests', function() {
+  it('should return an object with at least 95 keys', function() {
+    var chests = worldGen.spawnChests();
+    var count = 0;
+    for (var key in chests) {
+      if (chests.hasOwnProperty(key)) {
+        count += 1;
+      }
+    }
+    assert.isAbove(count, 95)
+  });
+});

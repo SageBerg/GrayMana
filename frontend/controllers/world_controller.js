@@ -1,6 +1,7 @@
 app.controller('worldController', function($scope, $http) {
 
   $scope.world = {
+    chests: {},
     chunkSize: 0,
     chunks: {},
     currentLocation: {x: 0, y: 0}
@@ -23,12 +24,23 @@ app.controller('worldController', function($scope, $http) {
       }).then(function(response) {
         $scope.world.currentLocation.x = response.data.x_coord;
         $scope.world.currentLocation.y = response.data.y_coord;
-        $scope.loadNearbyChunks();
+        $scope.getChests($scope.loadNearbyChunks)
       });
     });
   };
 
   $scope.startGame();
+
+  $scope.getChests = function(callbackForRendering) {
+    $http({
+      method: 'GET',
+      url: 'chests',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(res) {
+      $scope.world.chests = res.data;
+      callbackForRendering();
+    });
+  }
 
   $scope.loadNearbyChunks = function() {
     var current = $scope.getCurrentChunkCoords(0, 0);
@@ -87,8 +99,14 @@ app.controller('worldController', function($scope, $http) {
     var chunk = $scope.buildBlankChunk();
     for (var i = 0; i < $scope.world.chunkSize; i++) {
       for (var j = 0; j < $scope.world.chunkSize; j++) {
-        chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - ($scope.mid -1),
-                                      j + $scope.world.currentLocation.y - ($scope.mid -1));
+        if ($scope.world.chests[
+          (i + $scope.world.currentLocation.x - ($scope.mid - 1)) + ' ' + (j + $scope.world.currentLocation.y - ($scope.mid - 1))
+        ] !== undefined) {
+          chunk[i][j] = 3;
+        } else {
+          chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - ($scope.mid - 1),
+                                        j + $scope.world.currentLocation.y - ($scope.mid - 1));
+        }
       }
     }
     $('#map').html($scope.genChunkHTML(chunk));
@@ -124,7 +142,7 @@ app.controller('worldController', function($scope, $http) {
 
   $scope.genChunkHTML = function(chunk) {
     chunkHTML = '';
-    var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand'};
+    var terrainCodesToNames = {0: 'water', 1: 'grass', 2: 'sand', 3: 'chest'};
     for (var row = 0; row < $scope.world.chunkSize; row++) {
       for (var col = 0; col < $scope.world.chunkSize; col++) {
         var terrain = terrainCodesToNames[chunk[row][col]];

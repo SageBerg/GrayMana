@@ -11,7 +11,6 @@ Aesthetics:
 Bugs:
   Fix CSS on Learn Spells modal
   Eating with the e hotkey doesn't gray out the button when you run out of food
-  Enforce clients not jumping in water
   Server crashing (looks like chunking error)
   Users without sessions are crashing server, handle gracefully
   Off by one error on damage rendering
@@ -22,6 +21,7 @@ Bugs:
 
 Database:
   Disallow multiple accounts with same email
+  Add foreign key constraints
 
 
 Deployment:
@@ -75,6 +75,7 @@ Organization:
     Make blocks an object instead of integer
   Data:
     Get the spell data in one place, preferably Postgres
+    Don't store the chunk data both in the worldGen and the game state
   File:
     Continue breaking up the SCSS/CSS files by concern
     Vendor in font dependencies

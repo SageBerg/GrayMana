@@ -43,6 +43,10 @@ var getPixel = function (x, y) {
 
 var GameHandlers = function() {}
 
+GameHandlers.prototype.chests = function (req, res) {
+  res.send(worldGen.spawnChests());
+};
+
 GameHandlers.prototype.startGame = function(req, res) {
   var queryResult = database.allowedToPlayAsCharacter(req.body.characterId, req.session.userId);
   queryResult.on('end', function(result) {

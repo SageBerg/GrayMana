@@ -6,7 +6,7 @@ var WorldGen = function(chunkSize, chunks, database) {
 
 WorldGen.prototype.genChunk = function(chunkCoords, chunkSize) {
   var presetPotentialTiles = this.getPresetPotentialTiles(chunkCoords);
-  var chunk = this.build_chunk(chunkSize);
+  var chunk = this.buildChunk(chunkSize);
 
   var filled = new Set();
   var potentialTerrains = {'water': new Set(), 'grass': new Set(),
@@ -26,7 +26,7 @@ WorldGen.prototype.genChunk = function(chunkCoords, chunkSize) {
   return chunk;
 }
 
-WorldGen.prototype.build_chunk = function(chunkSize) {
+WorldGen.prototype.buildChunk = function(chunkSize) {
   chunk = [];
   for (var i = 0; i < chunkSize; i++) {
     chunk.push([]);
@@ -48,7 +48,6 @@ WorldGen.prototype.loadPresetPotentialTiles = function(presetPotentialTiles,
   }
 }
 
-//TODO replace this hardcoding with user-supplied parameters
 WorldGen.prototype.setSpawns = function(potentialTiles, chunkSize) {
   var spawnCount = this.randInt(10) + 1;
   for (var i = 0; i < spawnCount; i++) {
@@ -234,5 +233,15 @@ WorldGen.prototype.addPresetPotentialTiles = function(tileArray,
     } //end switch
   } //end for
 }
+
+WorldGen.prototype.spawnChests = function() {
+  //make a route to get this data
+  //then, render them on the client side
+  var chests = {};
+  for (var i = 0; i < 100; i++) {
+    chests[this.randInt(100) + ' ' + this.randInt(100)] = true;
+  }
+  return chests;
+};
 
 exports.WorldGen = WorldGen;

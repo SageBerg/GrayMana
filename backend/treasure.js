@@ -129,12 +129,6 @@ TreasureGen.prototype.manaDrop = function() {
   return manaBundle;
 };
 
-TreasureGen.prototype.wizmarkDrop = function() {
-}
-
-TreasureGen.prototype.clueDrop = function() {
-}
-
 try {
   exports.TreasureGen = TreasureGen;
 } catch (exception) {
