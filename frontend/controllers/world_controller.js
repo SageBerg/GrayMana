@@ -99,14 +99,8 @@ app.controller('worldController', function($scope, $http) {
     var chunk = $scope.buildBlankChunk();
     for (var i = 0; i < $scope.world.chunkSize; i++) {
       for (var j = 0; j < $scope.world.chunkSize; j++) {
-        if ($scope.world.chests[
-          (i + $scope.world.currentLocation.x - ($scope.mid - 1)) + ' ' + (j + $scope.world.currentLocation.y - ($scope.mid - 1))
-        ] !== undefined) {
-          chunk[i][j] = 3;
-        } else {
           chunk[i][j] = $scope.getPixel(i + $scope.world.currentLocation.x - ($scope.mid - 1),
                                         j + $scope.world.currentLocation.y - ($scope.mid - 1));
-        }
       }
     }
     $('#map').html($scope.genChunkHTML(chunk));
@@ -135,6 +129,10 @@ app.controller('worldController', function($scope, $http) {
     }
     if (col < 0) {
       col += $scope.world.chunkSize;
+    }
+
+    if ($scope.world.chests[x + ' ' + y] !== undefined) {
+      return 3;
     }
 
     return $scope.world.chunks[chunkX + ' ' + chunkY][row][col];
