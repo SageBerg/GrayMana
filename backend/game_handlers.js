@@ -19,9 +19,10 @@ Promise.all(
 var syncState = function() {
   for (characterId in state.characters) {
     if (state.characters.hasOwnProperty(characterId)) {
-      database.updateCharacter(state.characters[characterId], characterId);
+      database.moveCharacter(state.characters[characterId], characterId);
     };
   };
+  console.log(state.characters);
 };
 
 setInterval(syncState, 1000);
@@ -44,6 +45,18 @@ var getPixel = function (x, y) {
 };
 
 var GameHandlers = function() {}
+
+GameHandlers.prototype.logout = function(req, res) {
+  delete state.characters[req.session.characterId];
+  req.session.destroy(function(err) {
+    if (err) {
+      res.status(500);
+      res.send();
+    } else {
+      res.send();
+    }
+  });
+};
 
 GameHandlers.prototype.chests = function (req, res) {
   res.send(worldGen.spawnChests());

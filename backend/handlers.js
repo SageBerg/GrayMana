@@ -24,6 +24,11 @@ Handlers.prototype.login = function(req, res) {
   var queryResult = database.auth(email, password);
   queryResult.on('end', function(result) {
     if (result.rowCount === 1) {
+      if (req.session.userId) {
+        res.status(401);
+        res.send();
+        return;
+      }
       req.session.regenerate(function(err) {
         if (err) {
           res.status(500);
@@ -38,17 +43,6 @@ Handlers.prototype.login = function(req, res) {
     }
   });
 };
-
-Handlers.prototype.logout = function(req, res) {
-  req.session.destroy(function(err) {
-    if (err) {
-      res.status(500);
-      res.send();
-    } else {
-      res.send();
-    }
-  });
-}
 
 Handlers.prototype.getCharacters = function(req, res) {
   var queryResult = database.getCharacters(req.session.userId);
@@ -83,6 +77,6 @@ Handlers.prototype.newCharacter = function(req, res) {
   queryResult.on('end', function(result) {
     res.send();
   })
-}
+};
 
 exports.Handlers = Handlers;

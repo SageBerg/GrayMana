@@ -35,7 +35,7 @@ app.post('/login', handlers.login);
 app.get('/characters', handlers.authMiddleware, handlers.getCharacters);
 app.post('/characters', handlers.authMiddleware, handlers.newCharacter);
 app.post('/accounts', handlers.newAccount, handlers.login);
-app.post('/logout', handlers.authMiddleware, handlers.logout);
+app.post('/logout', handlers.authMiddleware, gameHandlers.logout);
 
 //set up game routes
 app.post('/game', handlers.authMiddleware, gameHandlers.startGame);
