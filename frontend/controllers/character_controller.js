@@ -4,26 +4,13 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.$on('loadCharacter', function(event) {
     $http({
       method: 'get',
-      url: 'load_character',
+      url: 'character',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       characterStateService.character.x_coord += res.data.x_coord;
       characterStateService.character.y_coord += res.data.y_coord;
     });
   });
-
-/*
-  $scope.requestNewItem(item, quantity) {
-    $http({
-      method: 'POST',
-      url: 'new_item',
-      data: {item: item, quantity: quanity},
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then(function(res) {
-      characterStateService.character.inventory[item] += res.data[item];
-    });
-  }
-*/
 
   $scope.$on('eat', function(event) {
     $scope.eat();
@@ -37,7 +24,7 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.getTreasure = function() {
     $http({
       method: 'GET',
-      url: 'get_treasure',
+      url: 'treasure',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $scope.getMana(res.data.treasureDrop.manaDrop);

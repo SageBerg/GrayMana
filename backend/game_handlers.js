@@ -63,7 +63,7 @@ GameHandlers.prototype.startGame = function(req, res) {
   });
 }
 
-GameHandlers.prototype.respondWithChunk = function(req, res) {
+GameHandlers.prototype.chunk = function(req, res) {
   if (state.chunks[req.params.coords] !== undefined) {
     res.json(state.chunks[req.params.coords]);
   } else {
@@ -73,11 +73,11 @@ GameHandlers.prototype.respondWithChunk = function(req, res) {
   }
 }
 
-GameHandlers.prototype.respondWithChunkSize = function(req, res) {
+GameHandlers.prototype.chunkSize = function(req, res) {
   res.json(state.chunkSize);
 }
 
-GameHandlers.prototype.respondWithCharacter = function(req, res) {
+GameHandlers.prototype.character = function(req, res) {
   var characterId = req.session.characterId;
   if (state[characterId] === undefined) {
     var queryResult = database.getCharacter(characterId);
@@ -94,19 +94,7 @@ GameHandlers.prototype.respondWithCharacter = function(req, res) {
   }
 }
 
-GameHandlers.prototype.respondWithMove = function(req, res) {
-  var characterId = req.session.characterId;
-  var terrain_code = getPixel(req.body.x, req.body.y);
-  if (terrain_code > 0) { //means its not water
-    state.characters[characterId].x_coord = parseInt(req.body.x);
-    state.characters[characterId].y_coord = parseInt(req.body.y);
-    res.send(true);
-  } else {
-    res.send(false);
-  }
-}
-
-GameHandlers.prototype.respondWithTreasureDrop = function(req, res) {
+GameHandlers.prototype.treasure = function(req, res) {
   var manaDrop = treasureGen.manaDrop();
   var runeDrop = treasureGen.runeDrop();
   var drop = {'manaDrop': manaDrop, 'runeDrop': runeDrop};

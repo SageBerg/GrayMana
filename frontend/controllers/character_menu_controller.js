@@ -15,7 +15,7 @@ app.controller('characterMenuController', function($scope, $http, $window) {
   $scope.startPlayingAs = function(characterId) {
     $http({
       method: 'POST',
-      url: 'start_game',
+      url: 'game',
       data: {characterId: characterId},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {

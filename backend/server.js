@@ -38,12 +38,12 @@ app.post('/accounts', handlers.newAccount, handlers.login);
 app.post('/logout', handlers.authMiddleware, handlers.logout);
 
 //set up game routes
-app.post('/start_game', handlers.authMiddleware, gameHandlers.startGame);
-app.get('/chunks/:coords', handlers.authMiddleware, gameHandlers.respondWithChunk);
-app.get('/chunk_size', handlers.authMiddleware, gameHandlers.respondWithChunkSize);
-app.get('/character', handlers.authMiddleware, gameHandlers.respondWithCharacter);
-app.post('/move', handlers.authMiddleware, gameHandlers.respondWithMove);
-app.get('/get_treasure', handlers.authMiddleware, gameHandlers.respondWithTreasureDrop);
+app.post('/game', handlers.authMiddleware, gameHandlers.startGame);
+
+app.get('/chunks/:coords', handlers.authMiddleware, gameHandlers.chunk);
+app.get('/chunk_size', handlers.authMiddleware, gameHandlers.chunkSize);
+app.get('/character', handlers.authMiddleware, gameHandlers.character);
+app.get('/treasure', handlers.authMiddleware, gameHandlers.treasure);
 app.get('/chests', handlers.authMiddleware, gameHandlers.chests)
 
 app.post('/command', handlers.authMiddleware, gameHandlers.command);
