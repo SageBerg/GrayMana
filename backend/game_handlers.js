@@ -1,11 +1,13 @@
 const TreasureGen = require('./treasure').TreasureGen;
 const WorldGen = require('./world_gen').WorldGen;
 const DB = require('./db').DB;
-const Auth = require('./auth_server').Auth;
+const Auth = require('./auth').Auth;
+
 var state = require('./state').state;
 
 const database = new DB();
 const auth = new Auth();
+const treasureGen = new TreasureGen();
 
 var worldGen = null;
 Promise.all(
@@ -105,7 +107,6 @@ GameHandlers.prototype.respondWithMove = function(req, res) {
 }
 
 GameHandlers.prototype.respondWithTreasureDrop = function(req, res) {
-  var treasureGen = new TreasureGen();
   var manaDrop = treasureGen.manaDrop();
   var runeDrop = treasureGen.runeDrop();
   var drop = {'manaDrop': manaDrop, 'runeDrop': runeDrop};

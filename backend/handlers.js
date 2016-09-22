@@ -1,7 +1,7 @@
 const session = require('express-session');
 
 const DB = require('./db').DB;
-const Auth = require('./auth_server').Auth;
+const Auth = require('./auth').Auth;
 
 const database = new DB();
 const auth = new Auth();
@@ -65,13 +65,13 @@ Handlers.prototype.newAccount = function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   if (auth.validateEmail(email) === false) {
-    //log invalid email
+    //TODO log invalid email
   } else if (password.length < 8) {
-    //log password too short
+    //TODO log password too short
   } else {
     var queryResult = database.createNewAccount(email, password);
     queryResult.on('end', function(result) {
-      next(); //log in with the new account
+      next(); //TODO log in with the new account
       //TODO alert client of failure
     });
   }
@@ -79,7 +79,7 @@ Handlers.prototype.newAccount = function(req, res, next) {
 
 Handlers.prototype.newCharacter = function(req, res) {
   var queryResult = database.createNewCharacter(req.body.characterName, req.body.characterSchool, req.session.userId);
-  //refactor to send character id so the player can start playing immediately
+  //TODO refactor to send character id so the player can start playing immediately
   queryResult.on('end', function(result) {
     res.send();
   })
