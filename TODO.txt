@@ -11,7 +11,6 @@ Aesthetics:
 Bugs:
   Fix CSS on Learn Spells modal
   Eating with the e hotkey doesn't gray out the button when you run out of food
-  Server crashing (looks like chunking error)
   Users without sessions are crashing server, handle gracefully
   Off by one error on damage rendering
   Add more exception handling to make application more robust
@@ -31,6 +30,10 @@ Deployment:
   Set up a "Let's Encrypt" certificate
 
 
+Disaster Recovery:
+  Make Postgres data redundant
+
+
 Docs:
   Developer Docs:
     Automate setting up the Postgres tables
@@ -42,48 +45,36 @@ Docs:
 
 Features:
   Abilities:
-    Light spell
-    Learn spell system
-    Prepare spells system
+    Learn spells
+    Prepare spells
+    Equip spells
     Cast spells with no effect
   Account System:
-    Saving character
     Delete user
-    Logout and kill session
   Damage:
     Damage system with eating
   Leader Board:
     Richest faction
   Movement:
-    No walking on water
   Options:
     Sound settings
     Display settings
-  Terrain:
-    Larger biomes
-    Edge smoothing
-    Elevation
-    Rivers and lakes
   World:
-    Day and night cycle
-
 
 Organization:
   API:
-    Pass token in cookie so not everything is a POST request
   Code:
-    Make blocks an object instead of integer
+    Make blocks an object instead of integer ?
   Data:
     Get the spell data in one place, preferably Postgres
     Don't store the chunk data both in the worldGen and the game state
   File:
-    Continue breaking up the SCSS/CSS files by concern
     Vendor in font dependencies
 
 
 Performance:
   Minify everything sent to client (& make Angular controllers minify friendly)
-
+  Use gzip
 
 Security:
   Cheating:
@@ -104,6 +95,7 @@ Style:
 
 
 Testing:
+  Learn to use Protractor.js for front-end testing
   Increase unit test coverage
   Write integration tests
   Set up test coverage widget on GitHub
