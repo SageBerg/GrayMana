@@ -11,7 +11,7 @@ DB.prototype.allowedToPlayAsCharacter = function(characterId, userId) {
   return this.psqlClient.query('SELECT id FROM characters WHERE id = $1 AND user_id = $2', [characterId, userId]);
 };
 
-DB.prototype.updateCharacter = function(character, characterId) {
+DB.prototype.moveCharacter = function(character, characterId) {
   this.psqlClient.query('UPDATE characters SET x_coord = $1, y_coord = $2 WHERE id = $3', [character.x_coord, character.y_coord, characterId]);
 };
 
