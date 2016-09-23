@@ -21,7 +21,10 @@ app.use(session({
   secret: process.env.GRAY_MANA_SESSSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: {
+    maxAge: 600 * 1000, //session expires after six minutes of inactivity 
+    secure: false //switch secure to true once using HTTPS
+  }
 }));
 
 app.use(logging.middleware);

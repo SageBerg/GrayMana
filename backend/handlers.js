@@ -24,11 +24,14 @@ Handlers.prototype.login = function(req, res) {
   var queryResult = database.auth(email, password);
   queryResult.on('end', function(result) {
     if (result.rowCount === 1) {
+
+      //disallow multiple sessions with same account
       if (req.session.userId) {
         res.status(401);
         res.send();
         return;
       }
+
       req.session.regenerate(function(err) {
         if (err) {
           res.status(500);
