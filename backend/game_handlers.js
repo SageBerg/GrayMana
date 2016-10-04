@@ -58,67 +58,6 @@ GameHandlers.prototype.logout = function(req, res) {
   });
 };
 
-GameHandlers.prototype.chests = function (req, res) {
-  res.send(worldGen.spawnChests());
-};
-
-GameHandlers.prototype.startGame = function(req, res) {
-  var queryResult = database.allowedToPlayAsCharacter(req.body.characterId,
-    req.session.userId);
-
-  queryResult.on('end', function(result) {
-    if (result.rowCount === 1) {
-      req.session.characterId = req.body.characterId;
-      res.status(200);
-      res.send();
-    } else {
-      res.status(401);
-      res.send();
-    }
-  });
-}
-
-GameHandlers.prototype.chunk = function(req, res) {
-  if (state.chunks[req.params.coords] !== undefined) {
-    res.json(state.chunks[req.params.coords]);
-  } else {
-    var chunk = worldGen.genChunk(req.params.coords, state.chunkSize);
-    state.chunks[req.params.coords] = chunk;
-    res.json(chunk);
-  }
-}
-
-GameHandlers.prototype.chunkSize = function(req, res) {
-  res.json(state.chunkSize);
-}
-
-GameHandlers.prototype.character = function(req, res) {
-  var characterId = req.session.characterId;
-  if (state[characterId] === undefined) {
-    var queryResult = database.getCharacter(characterId);
-    queryResult.on('row', function(row) {
-      if (row.x_coord !== undefined && row.y_coord !== undefined) {
-
-        state.characters[characterId] = {x_coord: row.x_coord, y_coord:
-          row.y_coord};
-
-        res.json({'x_coord': row.x_coord, 'y_coord': row.y_coord});
-      } else {
-        res.send();
-      }
-    });
-  } else {
-    res.json(state[characterId]);
-  }
-}
-
-GameHandlers.prototype.treasure = function(req, res) {
-  var manaDrop = treasureGen.manaDrop();
-  var runeDrop = treasureGen.runeDrop();
-  var drop = {'manaDrop': manaDrop, 'runeDrop': runeDrop};
-  res.json({treasureDrop: drop});
-}
-
 GameHandlers.prototype.command = function(req, res) {
   var characterId = req.session.characterId;
 
@@ -138,6 +77,67 @@ GameHandlers.prototype.command = function(req, res) {
       res.status(400);
       res.send();
   }
+};
+
+GameHandlers.prototype.chests = function (req, res) {
+  res.send(worldGen.spawnChests());
+};
+
+GameHandlers.prototype.chunk = function(req, res) {
+  if (state.chunks[req.params.coords] !== undefined) {
+    res.json(state.chunks[req.params.coords]);
+  } else {
+    var chunk = worldGen.genChunk(req.params.coords, state.chunkSize);
+    state.chunks[req.params.coords] = chunk;
+    res.json(chunk);
+  }
+};
+
+GameHandlers.prototype.chunkSize = function(req, res) {
+  res.json(state.chunkSize);
+};
+
+GameHandlers.prototype.character = function(req, res) {
+  var characterId = req.session.characterId;
+  if (state[characterId] === undefined) {
+    var queryResult = database.getCharacter(characterId);
+    queryResult.on('row', function(row) {
+      if (row.x_coord !== undefined && row.y_coord !== undefined) {
+
+        state.characters[characterId] = {x_coord: row.x_coord, y_coord:
+          row.y_coord};
+
+        res.json({'x_coord': row.x_coord, 'y_coord': row.y_coord});
+      } else {
+        res.send();
+      }
+    });
+  } else {
+    res.json(state[characterId]);
+  }
+};
+
+GameHandlers.prototype.startGame = function(req, res) {
+  var queryResult = database.allowedToPlayAsCharacter(req.body.characterId,
+    req.session.userId);
+
+  queryResult.on('end', function(result) {
+    if (result.rowCount === 1) {
+      req.session.characterId = req.body.characterId;
+      res.status(200);
+      res.send();
+    } else {
+      res.status(401);
+      res.send();
+    }
+  });
+};
+
+GameHandlers.prototype.treasure = function(req, res) {
+  var manaDrop = treasureGen.manaDrop();
+  var runeDrop = treasureGen.runeDrop();
+  var drop = {'manaDrop': manaDrop, 'runeDrop': runeDrop};
+  res.json({treasureDrop: drop});
 }
 
 exports.GameHandlers = GameHandlers;
