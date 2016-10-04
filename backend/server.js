@@ -1,33 +1,33 @@
-const express = require('express');
-const session = require('express-session');
-const http = require('http');
 const bodyParser = require('body-parser');
+const express = require('express');
+const http = require('http');
+const session = require('express-session');
 
-const Handlers = require('./handlers').Handlers;
 const GameHandlers = require('./game_handlers').GameHandlers;
+const Handlers = require('./handlers').Handlers;
 const logging = require('./logging');
 
 //start server
 const app = express();
 const server = http.createServer(app);
 const port = process.env.PORT || 3002;
-server.listen(port);
 
 //configure server
+server.listen(port);
+
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../frontend/views/compiled_html'));
 app.use(express.static(__dirname + '/../frontend'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(logging.middleware);
 app.use(session({
   secret: process.env.GRAY_MANA_SESSSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 600 * 1000, //session expires after six minutes of inactivity 
+    maxAge: 600 * 1000, //session expires after six minutes of inactivity
     secure: false //switch secure to true once using HTTPS
   }
 }));
-
-app.use(logging.middleware);
 
 //start game
 handlers = new Handlers();

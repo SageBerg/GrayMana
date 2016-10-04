@@ -1,10 +1,10 @@
 const session = require('express-session');
 
-const DB = require('./db').DB;
 const Auth = require('./auth').Auth;
+const DB = require('./db').DB;
 
-const database = new DB();
 const auth = new Auth();
+const database = new DB();
 
 var Handlers = function() {};
 

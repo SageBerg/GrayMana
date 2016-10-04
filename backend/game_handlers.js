@@ -1,12 +1,12 @@
+const Auth = require('./auth').Auth;
+const DB = require('./db').DB;
 const TreasureGen = require('./treasure').TreasureGen;
 const WorldGen = require('./world_gen').WorldGen;
-const DB = require('./db').DB;
-const Auth = require('./auth').Auth;
 
 var state = require('./state').state;
 
-const database = new DB();
 const auth = new Auth();
+const database = new DB();
 const treasureGen = new TreasureGen();
 
 var worldGen = null;
