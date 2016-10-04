@@ -63,7 +63,8 @@ WorldGen.prototype.populateChunk = function(potentials, filled, chunk) {
     for (var key in potentials) {
       if (potentials.hasOwnProperty(key)) {
         if (potentials[key].size > 0) {
-          this.addTile(potentials[key], filled, chunk, terrainNamesToCodes[key]);
+          this.addTile(potentials[key], filled, chunk, terrainNamesToCodes[key]
+            );
         }
       } //end if
     } //end for
@@ -170,7 +171,8 @@ WorldGen.prototype.upPresetPotentialTiles = function(upInfluencerChunk,
   presetPotentialTiles) {
   if (this.chunks[upInfluencerChunk] !== undefined) {
     var relevantRow = this.chunks[upInfluencerChunk][this.chunkSize - 1];
-    this.addPresetPotentialTiles(relevantRow, presetPotentialTiles, '\"0 \" + i');
+    this.addPresetPotentialTiles(relevantRow, presetPotentialTiles, '\"0 \" + i'
+      );
   }
 }
 
@@ -206,12 +208,13 @@ WorldGen.prototype.leftPresetPotentialTiles = function(leftInfluencerChunk,
     for (var i = 0; i < this.chunkSize; i++) {
       try {
         relevantCol.push(this.chunks[leftInfluencerChunk][i][this.chunkSize - 1]
-        );
+          );
       } catch(exception) {
         console.log(exception);
       }
     }
-    this.addPresetPotentialTiles(relevantCol, presetPotentialTiles, 'i + \" 0\"');
+    this.addPresetPotentialTiles(relevantCol, presetPotentialTiles, 'i + \" 0\"'
+      );
   }
 }
 

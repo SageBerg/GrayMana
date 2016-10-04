@@ -68,7 +68,8 @@ app.controller('characterMenuController', function($scope, $http, $window) {
     $http({
       method: 'POST',
       url: 'characters',
-      data: {characterName: $scope.newCharacter.characterName, characterSchool: $scope.newCharacter.characterSchool},
+      data: {characterName: $scope.newCharacter.characterName, characterSchool:
+        $scope.newCharacter.characterSchool},
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(res) {
       $scope.startPlayingAs();

@@ -75,7 +75,8 @@ Handlers.prototype.newAccount = function(req, res, next) {
 };
 
 Handlers.prototype.newCharacter = function(req, res) {
-  var queryResult = database.createNewCharacter(req.body.characterName, req.body.characterSchool, req.session.userId);
+  var queryResult = database.createNewCharacter(req.body.characterName,
+    req.body.characterSchool, req.session.userId);
   //TODO refactor to send character id so the player can start playing immediately
   queryResult.on('end', function(result) {
     res.send();

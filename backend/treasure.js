@@ -1,63 +1,4 @@
-'use strict';
-
-//using require for unit testing
-try {
-  var SPELL_LIST = require('./globals').SPELL_LIST;
-} catch (exception) {
-}
-
-var SPELL_LIST = [
-  'Clean',
-  'Detox',
-  'Dispel Magic',
-  'Organize',
-  'Resist Magic',
-  'Levitate',
-  'Gavity',
-  'Pessure',
-  'Bulid',
-  'Burst',
-  'Shield',
-  'Sentinel',
-  'Heat',
-  'Heat Wall',
-  'Heat Minion',
-  'Weather',
-  'Warm Egg',
-  'Mana Chest',
-  'Clone',
-  'Summon Food',
-  'Toughen',
-  'Increase Mana Maximum',
-  'Quickness',
-  'Flight',
-  'Teleport',
-  'Portal',
-  'Breathing',
-  'Heal',
-  'Sleep',
-  'Stun',
-  'Resurrect',
-  'Regenerate',
-  'Befriend',
-  'Found Faction',
-  'Induct to Faction',
-  'Message',
-  'Storage',
-  'Quest',
-  'Banner',
-  'Market',
-  'Detect Magic',
-  'Light',
-  'Map',
-  'Profile Person',
-  'Alert',
-  'Scry',
-  'Coordinates',
-  'Advertise',
-  'Invisibility',
-  'Hide Magic'
-];
+const SPELL_LIST = require('../assets/spells').SPELL_LIST;
 
 var TreasureGen = function() {
   this.manaColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo',
@@ -91,6 +32,7 @@ TreasureGen.prototype.runeDrop = function() {
   var runes = [];
   var runeCount = 0;
   while (Math.random() < this.runeProbability && runeCount < this.maxRunes) {
+
     runes.push(this.chooseRune());
     runeCount += 1;
   }
@@ -99,7 +41,8 @@ TreasureGen.prototype.runeDrop = function() {
 
 TreasureGen.prototype.manaDrop = function() {
   var manaBundle = {manaColor: null, manaAmount: 0};
-  manaBundle.manaColor = this.manaColors[this.randInt(this.manaColors.length)];
+  manaBundle.manaColor =
+    this.manaColors[this.randInt(this.manaColors.length)];
   var manaAmount = 0;
   var manaRoll = this.randInt(this.manaSpread);
   if (manaRoll < 1024) {

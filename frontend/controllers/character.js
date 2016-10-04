@@ -1,4 +1,5 @@
-app.controller('characterController', function($scope, $http, characterStateService) {
+app.controller('characterController', function($scope, $http,
+  characterStateService) {
   $scope.alphabet ='abcdefghijklmnopqrstuvwxyz ';
 
   $scope.$on('loadCharacter', function(event) {
@@ -38,7 +39,8 @@ app.controller('characterController', function($scope, $http, characterStateServ
 
   $scope.eat = function() {
     characterStateService.character.inventory['apple'] -= 1;
-    console.log(characterStateService.character.inventory['apple'] + ' apples left.');
+    console.log(characterStateService.character.inventory['apple'] +
+      ' apples left.');
   }
 
   $scope.sleep = function() {
@@ -67,7 +69,8 @@ app.controller('characterController', function($scope, $http, characterStateServ
     var color = manaDrop.manaColor;
     characterStateService.character.mana[color] += manaDrop.manaAmount;
 
-    var fill = 100 - Math.min(10, characterStateService.character.mana[color]) * 10;
+    var fill = 100 - Math.min(10, characterStateService.character.mana[color])
+      * 10;
     $scope.manaHeights[color].height = fill + '%';
   }
 
@@ -203,7 +206,8 @@ app.controller('characterController', function($scope, $http, characterStateServ
   $scope.takeDamage = function(amount, color) {
     characterStateService.character.damage[color] += amount;
     console.log(characterStateService.character.damage)
-    $scope.widthObj[color].width = parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
+    $scope.widthObj[color].width =
+      parseInt(($scope.widthObj[color].width).slice(0, -1)) + amount + '%';
   };
 
 });

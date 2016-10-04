@@ -47,8 +47,9 @@ app.controller('authController', function($scope, $http, $window) {
   }
 
   $scope.validateEmail = function(email) {
-    //credit for the next line goes to community wiki at http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    //credit:
+      //stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 

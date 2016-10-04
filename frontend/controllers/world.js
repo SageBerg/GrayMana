@@ -144,7 +144,8 @@ app.controller('worldController', function($scope, $http) {
     for (var row = 0; row < $scope.world.chunkSize; row++) {
       for (var col = 0; col < $scope.world.chunkSize; col++) {
         var terrain = terrainCodesToNames[chunk[row][col]];
-        if (row === ($scope.mid - 1) && col === ($scope.mid - 1) ) { //draw player in center of map
+        if (row === ($scope.mid - 1) && col === ($scope.mid - 1) ) {
+          //draw player in center of map
           chunkHTML += '<div class=\"player-character\"></div>';
         } else {
           chunkHTML += '<div class=' + terrain + '></div>';
@@ -177,7 +178,7 @@ app.controller('worldController', function($scope, $http) {
     });
   };
 
-  //these are all backwards but, I haven't been able to figure out where the problem is
+  //these are all backwards, need to fix
   $scope.$on('moveLeft', function(event) {
     $scope.move(0, -1);
   });

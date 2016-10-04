@@ -11,7 +11,8 @@ app.controller('controlsController', function($scope, hotKeyService) {
 
   $scope.wheelHandler = function(e) {
     e.preventDefault();
-    var prev_spell_slot = document.getElementById('spell-slot-' + $scope.HUDState.selectedSpellSlot);
+    var prev_spell_slot = document.getElementById('spell-slot-' +
+      $scope.HUDState.selectedSpellSlot);
     prev_spell_slot.removeAttribute('class', 'selected-spell-slot');
     prev_spell_slot.setAttribute('class', 'spell-logo-frame');
     var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
@@ -26,8 +27,10 @@ app.controller('controlsController', function($scope, hotKeyService) {
         $scope.HUDState.selectedSpellSlot = 1;
       }
     }
-    var current_spell_slot = document.getElementById("spell-slot-" + $scope.HUDState.selectedSpellSlot);
-    current_spell_slot.setAttribute('class', 'selected-spell-slot spell-logo-frame');
+    var current_spell_slot = document.getElementById("spell-slot-" +
+      $scope.HUDState.selectedSpellSlot);
+    current_spell_slot.setAttribute('class',
+      'selected-spell-slot spell-logo-frame');
   };
 
   $scope.bindKeys = function() {

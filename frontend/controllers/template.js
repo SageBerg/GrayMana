@@ -6,7 +6,7 @@ app.controller('templateController', function($scope, $http, $window) {
       method: 'POST',
       url: 'logout',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }) //.then(function(res){});
+    });
   };
 
   $scope.$on('changeToCharacterTemplate', function() {

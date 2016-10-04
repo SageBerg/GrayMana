@@ -63,7 +63,9 @@ GameHandlers.prototype.chests = function (req, res) {
 };
 
 GameHandlers.prototype.startGame = function(req, res) {
-  var queryResult = database.allowedToPlayAsCharacter(req.body.characterId, req.session.userId);
+  var queryResult = database.allowedToPlayAsCharacter(req.body.characterId,
+    req.session.userId);
+
   queryResult.on('end', function(result) {
     if (result.rowCount === 1) {
       req.session.characterId = req.body.characterId;
@@ -96,7 +98,10 @@ GameHandlers.prototype.character = function(req, res) {
     var queryResult = database.getCharacter(characterId);
     queryResult.on('row', function(row) {
       if (row.x_coord !== undefined && row.y_coord !== undefined) {
-        state.characters[characterId] = {x_coord: row.x_coord, y_coord: row.y_coord};
+
+        state.characters[characterId] = {x_coord: row.x_coord, y_coord:
+          row.y_coord};
+
         res.json({'x_coord': row.x_coord, 'y_coord': row.y_coord});
       } else {
         res.send();

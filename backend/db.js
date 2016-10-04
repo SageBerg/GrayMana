@@ -3,35 +3,42 @@ const postgres = require('pg');
 var DB = function() {
   var conParam = 'postgres://' + process.env.PSQL_USER + ':' +
     process.env.PSQL_PASSWORD + '@localhost:5432/graymana';
+
   this.psqlClient = new postgres.Client(conParam);
   this.psqlClient.connect();
 };
 
 DB.prototype.allowedToPlayAsCharacter = function(characterId, userId) {
-  return this.psqlClient.query('SELECT id FROM characters WHERE id = $1 AND user_id = $2', [characterId, userId]);
+  return this.psqlClient.query('SELECT id FROM characters WHERE id = $1 AND ' +
+    'user_id = $2', [characterId, userId]);
 };
 
 DB.prototype.moveCharacter = function(character, characterId) {
-  this.psqlClient.query('UPDATE characters SET x_coord = $1, y_coord = $2 WHERE id = $3', [character.x_coord, character.y_coord, characterId]);
+  this.psqlClient.query('UPDATE characters SET x_coord = $1, y_coord = $2 ' +
+    'WHERE id = $3', [character.x_coord, character.y_coord, characterId]);
 };
 
 DB.prototype.getUserIdQuery = function(email) {
-  return this.psqlClient.query('SELECT id FROM users WHERE email LIKE $1', [email]);
+  return this.psqlClient.query('SELECT id FROM users WHERE email LIKE $1',
+    [email]);
 };
 
 DB.prototype.createNewCharacter = function(name, school, userId) {
-  return this.psqlClient.query('INSERT INTO characters (name, school, user_id, world_id, x_coord, y_coord) VALUES ($1, $2, $3, 1, 0, 0)', [name, school, userId]);
+  return this.psqlClient.query('INSERT INTO characters (name, school, ' +
+    'user_id, world_id, x_coord, y_coord) VALUES ($1, $2, $3, 1, 0, 0)',
+    [name, school, userId]
+  );
 };
 
 DB.prototype.getCharacter = function(characterId) {
-  return this.psqlClient.query('SELECT x_coord, y_coord FROM characters WHERE id = $1', [characterId]);
+  return this.psqlClient.query('SELECT x_coord, y_coord FROM characters ' +
+    'WHERE id = $1', [characterId]);
 };
 
 DB.prototype.saveChunkToDB = function(chunkCoords, chunk) {
   var psqlChunk = this.parseJavaScriptChunkToPostgresChunk(chunk);
   this.psqlClient.query('INSERT INTO chunks (chunk, world_id, coords) VALUES ' +
-    '($1, 1, $2)', [psqlChunk, chunkCoords]
-  );
+    '($1, 1, $2)', [psqlChunk, chunkCoords]);
 };
 
 DB.prototype.parseJavaScriptChunkToPostgresChunk = function(chunk) {
@@ -64,15 +71,13 @@ DB.prototype.auth = function(email, password) {
 };
 
 DB.prototype.createNewAccount = function(email, password) {
-  return this.psqlClient.query(
-    'INSERT INTO users (email, password) VALUES ($1, $2)', [email, password]
-  );
+  return this.psqlClient.query('INSERT INTO users (email, password) VALUES ' +
+    '($1, $2)', [email, password]);
 };
 
 DB.prototype.getCharacters = function(userId) {
-  return this.psqlClient.query(
-    'SELECT name, id FROM characters WHERE user_id = $1 ORDER BY id', [userId]
-  );
+  return this.psqlClient.query('SELECT name, id FROM characters WHERE ' +
+    'user_id = $1 ORDER BY id', [userId]);
 };
 
 exports.DB = DB;
