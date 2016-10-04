@@ -9,7 +9,7 @@ Aesthetics:
 
 
 Bugs:
-  Fix CSS on Learn Spells modal
+  Fix CSS for Learn Spells modal
   Eating with the e hotkey doesn't gray out the button when you run out of food
   Users without sessions are crashing server, handle gracefully
   Off by one error on damage rendering
@@ -57,6 +57,7 @@ Features:
     Richest faction
   Movement:
   Options:
+    Include the logout option for the character selection/creation screen
     Sound settings
     Display settings
   World:
@@ -76,9 +77,9 @@ Performance:
   Minify everything sent to client (& make Angular controllers minify friendly)
   Use gzip
 
+
 Security:
   Cheating:
-    Stop trusting the client with character location
   Information Security:
     Write validation for user input
     Set up HTTPS with Express
@@ -86,7 +87,7 @@ Security:
 
 
 Style:
-  Add 'use strict' to all JavaScript files
+  Add 'use strict' to new JavaScript files
   Remove all whitespace from ends of lines
   Standardize one line of whitespace at ends of files
   Try out TypeScript to replace some of the back end JavaScript
