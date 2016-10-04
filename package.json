@@ -1,12 +1,9 @@
 {
-  "name": "gray_mana",
+  "name": "Gray Mana",
   "version": "0.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {
-    "test": "test",
-    "start": "node server.js"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/SageBerg/GrayMana.git"
